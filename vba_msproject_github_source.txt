@@ -1,0 +1,3161 @@
+
+Attribute VB_Name = "Module1"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub THJR_TTP_Gantt()
+Sort Key1:="Text10", Renumber:=True
+SelectTaskColumn Column:="Text10"
+For Each Project_Task In ActiveSelection.Tasks
+        
+        '  Sub AddAssignment()
+        Dim tskTask As Task
+        Dim rsResource As Resource
+        Dim asAssignment As Assignment
+        Dim colAssn As Collection
+        Dim iIdx As Integer
+        
+        Set tskTask = ActiveProject.Tasks(7)
+        Set rsResource = ActiveProject.Resources("TBA")
+        Set colAssn = New Collection
+        For Each asAssignment In tskTask.Assignments
+                colAssn.Add asAssignment.Work
+        Next asAssignment
+        Set asAssignment = tskTask.Assignments.Add(tskTask.ID, rsResource.ID)
+        colAssn.Add 10 * 8 * 60 ' work is stored as minutes
+        For iIdx = 1 To colAssn.Count
+                tskTask.Assignments(iIdx).Work = colAssn(iIdx)
+        Next iIdx
+End Sub
+Next Project_Task
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub THJR_TTP2()
+ActiveSelection.Tasks(1).ResourceNames
+SelectTaskColumn Column:="Resource Names"
+For Each Project_Task In ActiveSelection.Tasks
+        If InStr(1, Project_Task.ResourceNames, "TTP TBA") Then
+                SetTaskField field:="Resource Names", Value:="Tax Technology Team"
+        End If
+Next Project_Task
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub Macro1()
+Attribute Macro1.VB_Description = "Macro Macro1\nMacro Recorded May 20 by XZXZXZXZXZXZ."
+Macro Macro1
+Macro Recorded May 20 by XZXZXZXZXZXZ.
+SelectTaskField Row:=7, Column:="Name", RowRelative:=False
+SelectTaskField Row:=7, Column:="Name", RowRelative:=False
+SetTaskField field:="Name", Value:="Information Security Requirembents (ISO 27001)", TaskID:=7, ProjectName:="\\Vboxsvr\securedata\Data\Client CPA\Workstream1_ProjectManagement\CPA Global Cosmos Gannt v2.mpp"
+SelectTaskField Row:=3, Column:="Name", RowRelative:=False
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub vba_mpp_test()
+SelectTaskField Row:=7, Column:="Name", RowRelative:=False
+SetTaskField field:="Name", Value:="Information Security Requiremnnents (ISO 27001)" ', TaskID:=7, ProjectName:="\\Vboxsvr\securedata\Data\Client CPA\Workstream1_ProjectManagement\CPA Global Cosmos Gannt v2.mpp"
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub vba_mpp_test2()
+xtext = "Information Security Requiremnnents (ISO 27001)"
+xrow = 7
+x = SetTaskField("Name", xtext, , , xrow, 1)
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub loop2()
+Sort Key1:="Text10", Renumber:=True
+SelectTaskColumn Column:="Text10"
+For Each Project_Task In ActiveSelection.Tasks
+        renum = renum + 10
+        ' Debug.Print Project_Task.ID & " " & Project_Task.Text10
+        'Project_Task.Text10 = renum
+        
+        xprod_id = "ProdID: " & Project_Task.Text3 & ""
+        xdays = (Project_Task.Duration / 480) & "d "
+        xstart = Format(Project_Task.Start, "ddd dd/mmm")
+        xfinish = Format(Project_Task.Finish, "ddd dd/mmm")
+        xname = Project_Task.Name
+        xd = ""
+        If Len(Project_Task.Text3) > 1 Then
+                Project_Task.Text5 = xname & " [" & xdays & xd & xstart & " to " & xfinish & "]" & xd & xprod_id
+                Else
+                Project_Task.Text5 = xname & " [" & xfinish & "]" & xd
+                
+        End If
+        
+        Debug.Print Project_Task.Text5
+        
+Next Project_Task
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub vba_mpp_test4()
+http://zo-d.com/blog/archives/programming/working-with-the-tasks-collection.html
+http://zo-d.com/blog/archives/programming/working-with-the-project-object.html
+For Each Project_Task In pjApp.ActiveProject.Tasks
+        http://office.microsoft.com/en-us/project-help/available-fields-HA010236930.aspx (task fields in ms project)
+        For Each Project_Task In ActiveProject.Tasks
+                ' If Not Project_Task Is Nothing Then
+                '   assignCFVal = Project_Task.SetField(FieldNameToFieldConstant("VBATestField"))
+                '   Debug.Print Project_Task.Name & "~" & assignCFVal
+                'Debug.Print Project_Task.Name & "~"
+                Debug.Print Project_Task.ID & "~"
+                
+                ' End If
+        Next Project_Task
+        
+        
+        
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub test_field_list()
+Dim oTbl, oFld
+For Each oTbl In ThisProject.TaskTables
+        'Debug.Print oTbl.Name
+        
+        For Each oFld In oTbl.TableFields
+                'If InStr(1, oFld.Title, " ") Then
+                Debug.Print oTbl.Name, oFld.Title, oFld.field
+                Next
+                Next
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub vba_mpp_test3()
+http://zo-d.com/blog/archives/programming/working-with-the-tasks-collection.html
+Dim ts As Tasks
+Set ts = ActiveProject.Tasks
+For Each t In ts
+        If Not t Is Nothing Then ' dont crash if blank
+                Debug.Print t.Text5
+                Debug.Print t.Name
+        End If
+Next t
+Putting it all together we have this generic structure to loop through all tasks in a project:
+Dim ts As Tasks
+Dim t As Task
+Set ts = ActiveProject.Tasks
+For Each t In ts
+        If Not t Is Nothing Then
+                If Not t.Summary Then
+                        do something
+                        End If
+                End If
+        Next t
+        
+        
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub test3()
+Private Sub setfieldtitletryout()
+Dim i As Integer
+Dim c As Long
+For i = 1 To 30
+        c = FieldNameToFieldConstant("Text" & i, pjTask)
+        Debug.Print "Text" & i; " has constant " & c
+        Debug.Print "  Name of Text" & i; " is " & FieldConstantToFieldName(c) ' well what a surprise...
+        SetFieldTitle(c, ListOfNames(i)) ' Oviously doesn't work, because the function doesn't exist :-(
+        Debug.Print "  Title of Text" & i; " is " & FieldConstantToFieldTitle(c) ' unfortunately doen't exist too
+        Next
+End Sub
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub test_it()
+setPField field:="Text4", newValue:="Phase2", proj:=ActiveProject
+End Sub
+Private Function setPField(ByVal field As String, ByVal newValue As String, ByRef proj As Project)
+pfield = FieldNameToFieldConstant(field, pjProject)
+proj.ProjectSummaryTask.SetField FieldID:=pfield, Value:=newValue
+End Function
+Public Sub ListTasks()
+Dim objProject As MSProject.Project
+Dim objTask As MSProject.Task
+Dim objTableField As MSProject.TableField
+Dim objTaskTable As MSProject.Table
+Set objProject = Application.ActiveProject
+Set objTaskTable = objProject.TaskTables(objProject.CurrentTable)
+On Error Resume Next 'added by tim
+For Each objTask In objProject.Tasks
+        If Not objTask Is Nothing Then ' check for blank rows
+                Debug.Print "New task ID#" & objTask.ID
+                For Each objTableField In objTaskTable.TableFields
+                        Debug.Print "  " & GetFieldName(objTableField) & "= " & objTask.GetField(objTableField.field)
+                Next objTableField
+        End If
+        Next
+        
+        Set objProject = Nothing
+        Set objTask = Nothing
+        Set objTableField = Nothing
+        Set objTaskTable = Nothing
+End Sub
+Private Function GetFieldName(ByVal objField As MSProject.TableField) As String
+ find the field name (actually colmn heading) for a field (column) in a data table
+Dim lngFieldID As Long
+Dim strResult As String
+lngFieldID = objField.field
+With objField.Application
+strResult = Trim(objField.Title) ' first choice is to use the title specified for the column in the table
+If Len(strResult) = 0 Then
+        If lngFieldID > 0 Then ' added by tim
+                ' try to get the custom field name- this will come back blank if it's not a custom field
+                strResult = Trim((CustomFieldGetName(lngFieldID)))
+        End If
+End If
+If Len(strResult) = 0 Then
+        If lngFieldID > 0 Then ' added by tim
+                
+                strResult = Trim(.FieldConstantToFieldName(lngFieldID)) ' use the field name
+        End If
+End If
+End With
+GetFieldName = strResult
+End Function
+Attribute VB_Name = "Module1"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub THJR_TTP_Gantt()
+Sort Key1:="Text10", Renumber:=True
+SelectTaskColumn Column:="Text10"
+For Each Project_Task In ActiveSelection.Tasks
+        
+        '  Sub AddAssignment()
+        Dim tskTask As Task
+        Dim rsResource As Resource
+        Dim asAssignment As Assignment
+        Dim colAssn As Collection
+        Dim iIdx As Integer
+        
+        Set tskTask = ActiveProject.Tasks(7)
+        Set rsResource = ActiveProject.Resources("TBA")
+        Set colAssn = New Collection
+        For Each asAssignment In tskTask.Assignments
+                colAssn.Add asAssignment.Work
+        Next asAssignment
+        Set asAssignment = tskTask.Assignments.Add(tskTask.ID, rsResource.ID)
+        colAssn.Add 10 * 8 * 60 ' work is stored as minutes
+        For iIdx = 1 To colAssn.Count
+                tskTask.Assignments(iIdx).Work = colAssn(iIdx)
+        Next iIdx
+End Sub
+Next Project_Task
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub THJR_TTP2()
+ActiveSelection.Tasks(1).ResourceNames
+SelectTaskColumn Column:="Resource Names"
+For Each Project_Task In ActiveSelection.Tasks
+        If InStr(1, Project_Task.ResourceNames, "TTP TBA") Then
+                SetTaskField field:="Resource Names", Value:="Tax Technology Team"
+        End If
+Next Project_Task
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub Macro1()
+Attribute Macro1.VB_Description = "Macro Macro1\nMacro Recorded May 20 by XZXZXZXZXZXZ."
+Macro Macro1
+Macro Recorded May 20 by XZXZXZXZXZXZ.
+SelectTaskField Row:=7, Column:="Name", RowRelative:=False
+SelectTaskField Row:=7, Column:="Name", RowRelative:=False
+SetTaskField field:="Name", Value:="Information Security Requirembents (ISO 27001)", TaskID:=7, ProjectName:="\\Vboxsvr\securedata\Data\Client CPA\Workstream1_ProjectManagement\CPA Global Cosmos Gannt v2.mpp"
+SelectTaskField Row:=3, Column:="Name", RowRelative:=False
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub vba_mpp_test()
+SelectTaskField Row:=7, Column:="Name", RowRelative:=False
+SetTaskField field:="Name", Value:="Information Security Requiremnnents (ISO 27001)" ', TaskID:=7, ProjectName:="\\Vboxsvr\securedata\Data\Client CPA\Workstream1_ProjectManagement\CPA Global Cosmos Gannt v2.mpp"
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub vba_mpp_test2()
+xtext = "Information Security Requiremnnents (ISO 27001)"
+xrow = 7
+x = SetTaskField("Name", xtext, , , xrow, 1)
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub loop2()
+Sort Key1:="Text10", Renumber:=True
+SelectTaskColumn Column:="Text10"
+For Each Project_Task In ActiveSelection.Tasks
+        renum = renum + 10
+        ' Debug.Print Project_Task.ID & " " & Project_Task.Text10
+        'Project_Task.Text10 = renum
+        
+        xprod_id = "ProdID: " & Project_Task.Text3 & ""
+        xdays = (Project_Task.Duration / 480) & "d "
+        xstart = Format(Project_Task.Start, "ddd dd/mmm")
+        xfinish = Format(Project_Task.Finish, "ddd dd/mmm")
+        xname = Project_Task.Name
+        xd = ""
+        If Len(Project_Task.Text3) > 1 Then
+                Project_Task.Text5 = xname & " [" & xdays & xd & xstart & " to " & xfinish & "]" & xd & xprod_id
+                Else
+                Project_Task.Text5 = xname & " [" & xfinish & "]" & xd
+                
+        End If
+        
+        Debug.Print Project_Task.Text5
+        
+Next Project_Task
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub vba_mpp_test4()
+http://zo-d.com/blog/archives/programming/working-with-the-tasks-collection.html
+http://zo-d.com/blog/archives/programming/working-with-the-project-object.html
+For Each Project_Task In pjApp.ActiveProject.Tasks
+        http://office.microsoft.com/en-us/project-help/available-fields-HA010236930.aspx (task fields in ms project)
+        For Each Project_Task In ActiveProject.Tasks
+                ' If Not Project_Task Is Nothing Then
+                '   assignCFVal = Project_Task.SetField(FieldNameToFieldConstant("VBATestField"))
+                '   Debug.Print Project_Task.Name & "~" & assignCFVal
+                'Debug.Print Project_Task.Name & "~"
+                Debug.Print Project_Task.ID & "~"
+                
+                ' End If
+        Next Project_Task
+        
+        
+        
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub test_field_list()
+Dim oTbl, oFld
+For Each oTbl In ThisProject.TaskTables
+        'Debug.Print oTbl.Name
+        
+        For Each oFld In oTbl.TableFields
+                'If InStr(1, oFld.Title, " ") Then
+                Debug.Print oTbl.Name, oFld.Title, oFld.field
+                Next
+                Next
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub vba_mpp_test3()
+http://zo-d.com/blog/archives/programming/working-with-the-tasks-collection.html
+Dim ts As Tasks
+Set ts = ActiveProject.Tasks
+For Each t In ts
+        If Not t Is Nothing Then ' dont crash if blank
+                Debug.Print t.Text5
+                Debug.Print t.Name
+        End If
+Next t
+Putting it all together we have this generic structure to loop through all tasks in a project:
+Dim ts As Tasks
+Dim t As Task
+Set ts = ActiveProject.Tasks
+For Each t In ts
+        If Not t Is Nothing Then
+                If Not t.Summary Then
+                        do something
+                        End If
+                End If
+        Next t
+        
+        
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub test3()
+Private Sub setfieldtitletryout()
+Dim i As Integer
+Dim c As Long
+For i = 1 To 30
+        c = FieldNameToFieldConstant("Text" & i, pjTask)
+        Debug.Print "Text" & i; " has constant " & c
+        Debug.Print "  Name of Text" & i; " is " & FieldConstantToFieldName(c) ' well what a surprise...
+        SetFieldTitle(c, ListOfNames(i)) ' Oviously doesn't work, because the function doesn't exist :-(
+        Debug.Print "  Title of Text" & i; " is " & FieldConstantToFieldTitle(c) ' unfortunately doen't exist too
+        Next
+End Sub
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub test_it()
+setPField field:="Text4", newValue:="Phase2", proj:=ActiveProject
+End Sub
+Private Function setPField(ByVal field As String, ByVal newValue As String, ByRef proj As Project)
+pfield = FieldNameToFieldConstant(field, pjProject)
+proj.ProjectSummaryTask.SetField FieldID:=pfield, Value:=newValue
+End Function
+Public Sub ListTasks()
+Dim objProject As MSProject.Project
+Dim objTask As MSProject.Task
+Dim objTableField As MSProject.TableField
+Dim objTaskTable As MSProject.Table
+Set objProject = Application.ActiveProject
+Set objTaskTable = objProject.TaskTables(objProject.CurrentTable)
+On Error Resume Next 'added by tim
+For Each objTask In objProject.Tasks
+        If Not objTask Is Nothing Then ' check for blank rows
+                Debug.Print "New task ID#" & objTask.ID
+                For Each objTableField In objTaskTable.TableFields
+                        Debug.Print "  " & GetFieldName(objTableField) & "= " & objTask.GetField(objTableField.field)
+                Next objTableField
+        End If
+        Next
+        
+        Set objProject = Nothing
+        Set objTask = Nothing
+        Set objTableField = Nothing
+        Set objTaskTable = Nothing
+End Sub
+Private Function GetFieldName(ByVal objField As MSProject.TableField) As String
+ find the field name (actually colmn heading) for a field (column) in a data table
+Dim lngFieldID As Long
+Dim strResult As String
+lngFieldID = objField.field
+With objField.Application
+strResult = Trim(objField.Title) ' first choice is to use the title specified for the column in the table
+If Len(strResult) = 0 Then
+        If lngFieldID > 0 Then ' added by tim
+                ' try to get the custom field name- this will come back blank if it's not a custom field
+                strResult = Trim((CustomFieldGetName(lngFieldID)))
+        End If
+End If
+If Len(strResult) = 0 Then
+        If lngFieldID > 0 Then ' added by tim
+                
+                strResult = Trim(.FieldConstantToFieldName(lngFieldID)) ' use the field name
+        End If
+End If
+End With
+GetFieldName = strResult
+End Function
+Attribute VB_Name = "Module2"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub sort_zz()
+Attribute sort_zz.VB_Description = "Macro sort_zz\nMacro Recorded May 21 by XZXZXZXZXZXZ."
+Macro sort_zz
+Macro Recorded May 21 by XZXZXZXZXZXZ.
+Sort Key1:="Text10", Renumber:=False
+SelectTaskColumn Column:="Text10"
+End Sub
+Attribute VB_Name = "Module2"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub sort_zz()
+Attribute sort_zz.VB_Description = "Macro sort_zz\nMacro Recorded May 21 by XZXZXZXZXZXZ."
+Macro sort_zz
+Macro Recorded May 21 by XZXZXZXZXZXZ.
+Sort Key1:="Text10", Renumber:=False
+SelectTaskColumn Column:="Text10"
+End Sub
+Attribute VB_Name = "Module3"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub vba_project_sort()
+Sort Key1:="Text10", Renumber:=True
+SelectTaskColumn Column:="Text10"
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub vba_project_sort_id()
+Sort Key1:="Text3", Renumber:=False
+SelectTaskColumn Column:="Text3"
+End Sub
+Attribute VB_Name = "Module3"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub vba_project_sort()
+Sort Key1:="Text10", Renumber:=True
+SelectTaskColumn Column:="Text10"
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub vba_project_sort_id()
+Sort Key1:="Text3", Renumber:=False
+SelectTaskColumn Column:="Text3"
+End Sub
+Attribute VB_Name = "Module4"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub Macro2()
+Attribute Macro2.VB_Description = "Macro Macro2\nMacro Recorded Jul 24 by XZXZXZXZXZXZ."
+Macro Macro2
+Macro Recorded Jul 24 by XZXZXZXZXZXZ.
+SelectTaskField Row:=6, Column:="Resource Names"
+SelectTaskField Row:=-1, Column:="Resource Names"
+SelectTaskField Row:=1, Column:="Resource Names"
+End Sub
+Attribute VB_Name = "Module4"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub Macro2()
+Attribute Macro2.VB_Description = "Macro Macro2\nMacro Recorded Jul 24 by XZXZXZXZXZXZ."
+Macro Macro2
+Macro Recorded Jul 24 by XZXZXZXZXZXZ.
+SelectTaskField Row:=6, Column:="Resource Names"
+SelectTaskField Row:=-1, Column:="Resource Names"
+SelectTaskField Row:=1, Column:="Resource Names"
+End Sub
+Attribute VB_Name = "Module5"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub JT_column_add()
+Attribute JT_column_add.VB_Description = "Macro Macro3\nMacro Recorded 9/13/2012 by XZXZXZXZXZXZ."
+TableEditEx Name:="&Entry", TaskTable:=True, NewName:="", NewFieldName:="% Complete", Width:=20, ShowInMenu:=True, LockFirstColumn:=True, DateFormat:=255, RowHeight:=1, ColumnPosition:=8
+TableApply Name:="&Entry"
+TableEditEx Name:="&Entry", TaskTable:=True, NewName:="", NewFieldName:="Outline Number", Width:=20, ShowInMenu:=True, LockFirstColumn:=True, DateFormat:=255, RowHeight:=1, ColumnPosition:=9
+TableApply Name:="&Entry"
+TableEditEx Name:="&Entry", TaskTable:=True, NewName:="", NewFieldName:="Critical", Width:=20, ShowInMenu:=True, LockFirstColumn:=True, DateFormat:=255, RowHeight:=1, ColumnPosition:=10
+TableApply Name:="&Entry"
+TableEditEx Name:="&Entry", TaskTable:=True, NewName:="", NewFieldName:="Status", Width:=20, ShowInMenu:=True, LockFirstColumn:=True, DateFormat:=255, RowHeight:=1, ColumnPosition:=11
+TableApply Name:="&Entry"
+TableEditEx Name:="&Entry", TaskTable:=True, NewName:="", NewFieldName:="Summary", Width:=20, ShowInMenu:=True, LockFirstColumn:=True, DateFormat:=255, RowHeight:=1, ColumnPosition:=12
+TableApply Name:="&Entry"
+End Sub
+Attribute VB_Name = "Module5"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub JT_column_add()
+Attribute JT_column_add.VB_Description = "Macro Macro3\nMacro Recorded 9/13/2012 by XZXZXZXZXZXZ."
+TableEditEx Name:="&Entry", TaskTable:=True, NewName:="", NewFieldName:="% Complete", Width:=20, ShowInMenu:=True, LockFirstColumn:=True, DateFormat:=255, RowHeight:=1, ColumnPosition:=8
+TableApply Name:="&Entry"
+TableEditEx Name:="&Entry", TaskTable:=True, NewName:="", NewFieldName:="Outline Number", Width:=20, ShowInMenu:=True, LockFirstColumn:=True, DateFormat:=255, RowHeight:=1, ColumnPosition:=9
+TableApply Name:="&Entry"
+TableEditEx Name:="&Entry", TaskTable:=True, NewName:="", NewFieldName:="Critical", Width:=20, ShowInMenu:=True, LockFirstColumn:=True, DateFormat:=255, RowHeight:=1, ColumnPosition:=10
+TableApply Name:="&Entry"
+TableEditEx Name:="&Entry", TaskTable:=True, NewName:="", NewFieldName:="Status", Width:=20, ShowInMenu:=True, LockFirstColumn:=True, DateFormat:=255, RowHeight:=1, ColumnPosition:=11
+TableApply Name:="&Entry"
+TableEditEx Name:="&Entry", TaskTable:=True, NewName:="", NewFieldName:="Summary", Width:=20, ShowInMenu:=True, LockFirstColumn:=True, DateFormat:=255, RowHeight:=1, ColumnPosition:=12
+TableApply Name:="&Entry"
+End Sub
+Attribute VB_Name = "Module6"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub jt_saveas()
+Attribute jt_saveas.VB_Description = "Macro Macro3\nMacro Recorded 9/13/2012 by XZXZXZXZXZXZ."
+XPath = "\\VBOXSVR\securedata\Data\Client JT Reporting\week010\"
+fname = ActiveProject.Name
+xdate = Format(Date, "dd-mmm-yyyy-")
+FileSaveAs Name:=XPath & xdate & fname, FormatID:="MSProject.MPP"
+MsgBox XPath & xdate & fname
+End Sub
+Attribute VB_Name = "Module6"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub jt_saveas()
+Attribute jt_saveas.VB_Description = "Macro Macro3\nMacro Recorded 9/13/2012 by XZXZXZXZXZXZ."
+XPath = "\\VBOXSVR\securedata\Data\Client JT Reporting\week010\"
+fname = ActiveProject.Name
+xdate = Format(Date, "dd-mmm-yyyy-")
+FileSaveAs Name:=XPath & xdate & fname, FormatID:="MSProject.MPP"
+MsgBox XPath & xdate & fname
+End Sub
+Attribute VB_Name = "Module7"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub jt_open()
+Attribute jt_open.VB_Description = "Macro jt_open\nMacro Recorded 10/4/2012 by XZXZXZXZXZXZ."
+Macro jt_open
+Macro Recorded 10/4/2012 by XZXZXZXZXZXZ.
+Dim xarray(10)
+xarray(1) = "Alignment_&_Governance.xml"
+xarray(2) = "Finance_&_Tax.xml"
+xarray(3) = "Human_Capital.XML"
+xarray(4) = "Legal,_Regulatory_&_Infrastructure.xml"
+xarray(5) = "Operations.XML"
+xarray(6) = "Sales_&_Marketing.xml"
+For x = 1 To 6
+        zfile = xarray(x)
+        FileOpenEx Name:="V:\Data\Client JT Reporting\Week006\" & zfile, ReadOnly:=False, Merge:=0, FormatID:="MSProject.XML"
+        Call JT_column_add
+        Call jt_saveas
+        
+Next x
+End Sub
+Attribute VB_Name = "Module7"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub jt_open()
+Attribute jt_open.VB_Description = "Macro jt_open\nMacro Recorded 10/4/2012 by XZXZXZXZXZXZ."
+Macro jt_open
+Macro Recorded 10/4/2012 by XZXZXZXZXZXZ.
+Dim xarray(10)
+xarray(1) = "Alignment_&_Governance.xml"
+xarray(2) = "Finance_&_Tax.xml"
+xarray(3) = "Human_Capital.XML"
+xarray(4) = "Legal,_Regulatory_&_Infrastructure.xml"
+xarray(5) = "Operations.XML"
+xarray(6) = "Sales_&_Marketing.xml"
+For x = 1 To 6
+        zfile = xarray(x)
+        FileOpenEx Name:="V:\Data\Client JT Reporting\Week006\" & zfile, ReadOnly:=False, Merge:=0, FormatID:="MSProject.XML"
+        Call JT_column_add
+        Call jt_saveas
+        
+Next x
+End Sub
+Attribute VB_Name = "XZXZXZ_resource_allocationx"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub XZXZXZ_resource_allocation()
+Attribute XZXZXZ_resource_allocation.VB_Description = "Macro Macro2\nMacro Recorded Fri 27/01/17 by Tim."
+Macro Macro2
+Macro Recorded Fri 27/01/17 by Tim.
+SelectTaskField Row:=0, Column:="Name"
+SetTaskField Field:="Resource Names", Value:="t[50%]", AllSelectedTasks:=True
+End Sub
+Attribute VB_Name = "filtersxxx"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub filter01()
+Attribute filter01.VB_Description = "Macro filter01\nMacro Recorded Mon 06/02/17 by Tim."
+Macro filter01
+Macro Recorded Mon 06/02/17 by Tim.
+SelectTaskColumn Column:="Start"
+SetAutoFilter FieldName:="Start", FilterType:=pjAutoFilterCustom, Test1:="is less than", Criteria1:="1/3/2017"
+SelectTaskColumn Column:="Finish"
+SetAutoFilter FieldName:="Finish", FilterType:=pjAutoFilterCustom, Test1:="is less than", Criteria1:="1/3/2017"
+SetAutoFilter FieldName:="Text1", FilterType:=pjAutoFilterIn, Criteria1:="YES"
+End Sub
+Attribute VB_Name = "loop_this_week"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub tes()
+x = x & ",XZXZXZRoss-Gower"
+x = x & ",Matthew Planterose"
+x = x & ",Peter Edwards"
+x = x & ",Steve Jenner"
+x = x & ",Bruno Melim"
+x = x & ",Marc Lubout"
+x = x & ",Mark Herridge"
+x = x & ",Mark Thomas"
+x = x & ",Matt Liot"
+x = x & ",Chris Coates"
+x = x & ",Newtel"
+x = x & ",PCCW"
+x = x & ",SD Team"
+x = x & ",MCS"
+x = x & ",Matt Planterose"
+x = x & ",Tom Hacquoil"
+x = x & ",XZXZXZXZXZXZ"
+xarray = Split(x, ",")
+For q = 1 To UBound(xarray)
+        xname = xarray(q)
+        Debug.Print xname
+        Call LOOP_list_due_tasks(xname)
+Next q
+Call LOOP_list_due_tasks(xname)
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function LOOP_list_due_tasks(xresourcenamex)
+https://social.msdn.microsoft.com/Forums/sqlserver/en-US/474d7236-86da-4e57-bf94-9fa49cba31af/vba-for-ms-project-looping-through-tasks?forum=isvvba
+Macro to Highlight "Night Shift" Tasks
+http://www.techrepublic.com/blog/it-consultant/use-vba-to-highlight-missing-baseline-finish-dates-in-microsoft-project-2010/
+Dim xd As String
+xd = vbTab & "|"
+Dim T As Task
+Dim SubProjId As Long
+Dim TskSub As Task
+Show all Sub-tasks
+SelectSheet
+ OutlineShowAllTask
+On Error Resume Next
+For Each T In ActiveProject.Tasks
+        xc = xc + 1
+        
+        'If t.Finish < DateAdd("d", 30, Now) Then
+        ' Debug.Print xc, t.name, t.Start, t.Finish
+        'Debug.Print xc, Left(t.name, 30) 't.Start, t.Finish
+        'End If
+        
+        T.Text1 = UCase(T.Text1)
+        
+        If T.Rollup = False Then
+                T.Text3 = x
+                If InStr(1, T.ResourceNames, xresourcenamex) Then
+                        If InStr(1, T.Text1, "YES") Then
+                                
+                                xmins = xmins + T.Work
+                                If T.Start < Date Then
+                                        T.Date1 = T.Start
+                                        T.Start = #2/8/2017#
+                                        
+                                End If
+                                T.Text3 = "x" & T.Work
+                                xtext = xtext & vbCrLf & T.name & xd & T.Start & xd & Int(T.Work / 60) & "hours"
+                                
+                                
+                        End If
+                        
+                End If
+                
+        End If
+        
+        
+Next T
+xtext = xtext & vbCrLf & "Total..." & Int(xmins / 60)
+MsgBox xmins / 60
+xresourcenamex = Replace(xresourcenamex, " ", "")
+fname = ActiveProject.Path & "\tempexport_" & xresourcenamex & ".txt"
+Call PRINT_INFO(xtext, fname)
+Debug.Print xtext
+End Function
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function PRINT_INFO(ByVal PARAM_TEXT As String, ByVal xoutput As String) 'vba_excel report cells, create file, print file, notepad
+Dim FILENUMBER1 As Integer
+Dim xpath As String
+Dim xfilename As String
+xpath = ActiveWorkbook.Path & "\"
+xfilename = "TEMP" & Format(Now(), "yymmdd") & "-" & Format(Now(), "HHMM") & ".txt"
+xfilename = xoutput
+FILENUMBER1 = FreeFile
+Open xpath & xfilename For Output As #FILENUMBER1 '
+Print #FILENUMBER1, PARAM_TEXT
+Close #FILENUMBER1
+Call open_file(xpath & xfilename)
+End Function
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function open_file(xfilename As String)
+vba_excel report cells, create file, print file, notepad
+Dim ReturnValue, i
+ReturnValue = Shell("notepad.EXE " & xfilename, 1)  ' Run Calculator.
+AppActivate ReturnValue
+End Function
+Attribute VB_Name = "loop_zapper"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub Macro2()
+Attribute Macro2.VB_Description = "Macro Macro2\nMacro Recorded Tue 31/01/17 by Tim."
+Macro Macro2
+Macro Recorded Tue 31/01/17 by Tim.
+SelectTaskColumn Column:="Text15"
+ColumnDelete
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub LOOP_zapper()
+https://social.msdn.microsoft.com/Forums/sqlserver/en-US/474d7236-86da-4e57-bf94-9fa49cba31af/vba-for-ms-project-looping-through-tasks?forum=isvvba
+Macro to Highlight "Night Shift" Tasks
+Dim T As Task
+Dim SubProjId As Long
+Dim TskSub As Task
+Show all Sub-tasks
+On Error Resume Next
+SelectSheet
+OutlineShowAllTasks
+For Each T In ActiveProject.Tasks
+        ''''  T.Delete
+        
+        
+        
+Next T
+EditGoTo ID:=1
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub zapper01()
+Macro zapper01
+Macro Recorded Tue 31/01/17 by Tim.
+For q = 1 To 1000
+        SelectRow Row:=0
+        EditDelete
+        
+Next q
+End Sub
+Attribute VB_Name = "Module11"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub Macro7()
+Attribute Macro7.VB_Description = "Macro Macro7\nMacro Recorded Thu 02/02/17 by Tim."
+Macro Macro7
+Macro Recorded Thu 02/02/17 by Tim.
+Font32Ex CellColor:=-16777216
+End Sub
+Attribute VB_Name = "Module18"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub Macro9()
+Attribute Macro9.VB_Description = "Macro Macro9\nMacro Recorded Wed 08/02/17 by Tim."
+Macro Macro9
+Macro Recorded Wed 08/02/17 by Tim.
+ViewApply name:="Resource &Sheet"
+SelectResourceField Row:=4, Column:="Name"
+SelectResourceField Row:=0, Column:="Name"
+ActiveProject.Resources("Matt Planterose").Calendar.WeekDays(1).Shift1.Start = "10:00"
+ActiveProject.Resources("Matt Planterose").Calendar.WeekDays(1).Shift1.Finish = "18:00"
+ActiveProject.Resources("Matt Planterose").Calendar.WeekDays(1).Shift2.Clear
+ActiveProject.Resources("Matt Planterose").Calendar.WeekDays(1).Shift3.Clear
+ActiveProject.Resources("Matt Planterose").Calendar.WeekDays(1).Shift4.Clear
+ActiveProject.Resources("Matt Planterose").Calendar.WeekDays(1).Shift5.Clear
+ActiveProject.Resources("Matt Planterose").Calendar.WeekDays(2).Shift1.Start = "08:00"
+ActiveProject.Resources("Matt Planterose").Calendar.WeekDays(2).Shift1.Finish = "08:02"
+ActiveProject.Resources("Matt Planterose").Calendar.WeekDays(2).Shift2.Start = "13:00"
+ActiveProject.Resources("Matt Planterose").Calendar.WeekDays(2).Shift2.Finish = "17:00"
+ActiveProject.Resources("Matt Planterose").Calendar.WeekDays(2).Shift3.Clear
+ActiveProject.Resources("Matt Planterose").Calendar.WeekDays(2).Shift4.Clear
+ActiveProject.Resources("Matt Planterose").Calendar.WeekDays(2).Shift5.Clear
+ActiveProject.Resources("Matt Planterose").Calendar.WeekDays(3).Default
+ActiveProject.Resources("Matt Planterose").Calendar.WeekDays(4).Default
+ActiveProject.Resources("Matt Planterose").Calendar.WeekDays(5).Working = False
+ActiveProject.Resources("Matt Planterose").Calendar.WeekDays(6).Working = False
+ActiveProject.Resources("Matt Planterose").Calendar.WeekDays(7).Shift1.Start = "10:00"
+ActiveProject.Resources("Matt Planterose").Calendar.WeekDays(7).Shift1.Finish = "18:00"
+ActiveProject.Resources("Matt Planterose").Calendar.WeekDays(7).Shift2.Clear
+ActiveProject.Resources("Matt Planterose").Calendar.WeekDays(7).Shift3.Clear
+ActiveProject.Resources("Matt Planterose").Calendar.WeekDays(7).Shift4.Clear
+ActiveProject.Resources("Matt Planterose").Calendar.WeekDays(7).Shift5.Clear
+InformationDialog
+End Sub
+Attribute VB_Name = "Module2"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub TEST001()
+Attribute TEST001.VB_Description = "Macro Macro4\nMacro Recorded Tue 31/01/17 by Tim."
+Application.TableEdit name:="Entry", TaskTable:=True, NewName:="", FieldName:="", _
+NewFieldName:="Work", Title:="", Width:=10, Align:=2, ShowInMenu:=True, _
+LockFirstColumn:=True, DateFormat:=255, RowHeight:=1, ColumnPosition:=1, AlignTitle:=1
+Application.TableApply name:="Entry"
+End Sub
+Attribute VB_Name = "Module3"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub Macro2()
+Attribute Macro2.VB_Description = "Macro Macro2\nMacro Recorded Wed 08/02/17 by Tim."
+Macro Macro2
+Macro Recorded Wed 08/02/17 by Tim.
+FilePageSetupPage Portrait:=False, PaperSize:=pjPaperA3
+FilePageSetupLegendEx LegendOn:=1
+End Sub
+Attribute VB_Name = "Module4"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub Macro1()
+Attribute Macro1.VB_Description = "Macro Macro1\nMacro Recorded Wed 08/02/17 by Tim."
+Macro Macro1
+Macro Recorded Wed 08/02/17 by Tim.
+DocumentExport FileName:="C:\Users\Tim\Documents\Data2017\MS-Project\Testing001\zzBIG SOC AND INFRASTRUCTURE PROJECT.pdf"
+FileSaveAs name:="", FormatID:=""
+End Sub
+Attribute VB_Name = "Module6"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub Macro6()
+Attribute Macro6.VB_Description = "Macro Macro6\nMacro Recorded Wed 01/02/17 by Tim."
+Macro Macro6
+Macro Recorded Wed 01/02/17 by Tim.
+End Sub
+Attribute VB_Name = "Module7"
+Attribute VB_Name = "Module8"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub Macro1()
+Attribute Macro1.VB_Description = "Macro Macro1\nMacro Recorded Thu 02/02/17 by Tim."
+Macro Macro1
+Macro Recorded Thu 02/02/17 by Tim.
+ConsolidateProjects Filenames:="C:\Users\Tim\Documents\Data2017\MS-Project\Testing001\resourcepool.mpp", NewWindow:=False, HideSubtasks:=True
+SelectTaskField Row:=8, Column:="Start"
+ResourceSharing Pool:=True
+End Sub
+Attribute VB_Name = "ResourceSharingz"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub ResourceSharingx()
+Attribute ResourceSharingx.VB_Description = "Macro Macro1\nMacro Recorded Wed 01/02/17 by Tim."
+ResourceSharing Share:=True, name:="C:\Users\Tim\Documents\Data2017\MS-Project\ResourcePool.mpp"
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub res_01()
+Macro zztemp
+Macro Recorded Thu 02/02/17 by Tim.
+ConsolidateProjects Filenames:="C:\Users\Tim\Documents\Data2017\MS-Project\Testing001\resourcepool.mpp", NewWindow:=False, HideSubtasks:=True
+OutlineShowSubTasks
+x = ActiveProject.Path & "\ResourcePool.mpp"
+ResourceSharing Share:=True, name:=x
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub res_02()
+Debug.Print ActiveProject.name
+x = ActiveProject.Path & "\ResourcePool.mpp"
+Debug.Print x
+ResourceSharing Share:=True, name:=x
+End Sub
+Attribute VB_Name = "resource_names_list"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub LOOP_resource_list()
+https://social.msdn.microsoft.com/Forums/sqlserver/en-US/474d7236-86da-4e57-bf94-9fa49cba31af/vba-for-ms-project-looping-through-tasks?forum=isvvba
+Macro to Highlight "Night Shift" Tasks
+Dim T As Task
+Dim seenbefore, XPARENT_DETAILS As String
+On Error Resume Next
+Dim SubProjId As Long
+Dim TskSub As Task
+Show all Sub-tasks
+SelectSheet
+OutlineShowAllTasks
+xseenalready = ""
+For Each T In ActiveProject.Tasks
+        
+        
+        If InStr(1, T.Text1, "YES") Then
+                For q = 1 To T.Resources.Count
+                        xname = T.Resources(q).name
+                        If InStr(1, xseenalready, xname) Then
+                                'skip
+                                Else
+                                
+                                
+                                xseenalready = xseenalready & xname
+                                Debug.Print xname
+                        End If
+                        
+                        Next
+                        
+                End If
+                
+                
+                Call REPLNAME("SJ", "Steve Jenner")
+        Next T
+        EditGoTo ID:=1
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub LOOP_resource_names()
+https://social.msdn.microsoft.com/Forums/sqlserver/en-US/474d7236-86da-4e57-bf94-9fa49cba31af/vba-for-ms-project-looping-through-tasks?forum=isvvba
+Macro to Highlight "Night Shift" Tasks
+Dim T As Task
+Dim seenbefore, XPARENT_DETAILS As String
+On Error Resume Next
+Dim SubProjId As Long
+Dim TskSub As Task
+Show all Sub-tasks
+SelectSheet
+OutlineShowAllTasks
+For Each T In ActiveProject.Tasks
+        
+        
+        If InStr(1, LCase(t.ResourceNames), LCase("TRG")) Then t.ResourceNames = Replace(t.ResourceNames, "TRG", "XZXZXZRoss-Gower[50%],")
+                If InStr(1, LCase(t.ResourceNames), LCase("TRG")) Then t.ResourceNames = Replace(t.ResourceNames, "XZXZXZRoss_Gower", "XZXZXZRoss-Gower,")
+                        Matthew Planterose <Matthew.Planterose@XZXZXZ.cloud>
+                        T.ResourceNames = Replace(T.ResourceNames, "MP", "Matthew Planterose")
+                        T.ResourceNames = Replace(T.ResourceNames, "PE", "Peter Edwards")
+                        T.ResourceNames = Replace(T.ResourceNames, "SJ", "Steve Jenner")
+                        T.ResourceNames = Replace(T.ResourceNames, "TRG", "XZXZXZRoss-Gower")
+                        T.ResourceNames = Replace(T.ResourceNames, "ML", "Marc Lubout")
+                        T.ResourceNames = Replace(T.ResourceNames, "BM", "Bruno Melim")
+                        
+                        
+                        For q = 1 To T.Resources.Count
+                                xname = T.Resources(q).name
+                                T.ResourceNames = Replace(T.ResourceNames, xname, xname & "[50%]")
+                                Debug.Print T.Resources(q).name, T.Resources(q).name & "[50%]"
+                                Next
+                                
+                                Call REPLNAME("SJ", "Steve Jenner")
+                        Next T
+                        EditGoTo ID:=1
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub REPLNAME(ByRef XOLD, ByRef XNEW)
+If InStr(1, T.ResourceNames, XOLD) Then T.ResourceNames = Replace(T.ResourceNames, XOLD, XNEW)
+        Debug.Print XOLD, XNEW
+End Sub
+Attribute VB_Name = "project_name"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub Macro3()
+Attribute Macro3.VB_Description = "Macro Macro3\nMacro Recorded Tue 31/01/17 by Tim."
+Macro Macro3
+Macro Recorded Tue 31/01/17 by Tim.
+ConsolidateProjects Filenames:="C:\Users\Tim\Documents\Data2017\MS-Project\Project_Infraimp.mpp", NewWindow:=False, HideSubtasks:=True
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub namex()
+Private Sub Project_Open(ByVal pj As Project)
+ActiveProject.ProjectSummaryTask.name = "XZXZXZ_" & ActiveProject.name
+End Sub
+Attribute VB_Name = "resource_names_repl"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub prime_loop()
+Call LOOP_resource_names("TBC", "XZXZXZRoss-Gower")
+ Call LOOP_resource_names("/", ",")
+x = x & ",XZXZXZRoss-Gower"
+x = x & ",Matthew Planterose"
+x = x & ",Peter Edwards"
+x = x & ",Steve Jenner"
+x = x & ",Bruno Melim"
+x = x & ",Marc Lubout"
+x = x & ",Mark Herridge"
+x = x & ",Mark Thomas"
+x = x & ",Matt Liot"
+x = x & ",Chris Coates"
+x = x & ",Newtel"
+x = x & ",PCCW"
+x = x & ",SD Team"
+x = x & ",MCS"
+x = x & ",Matt Planterose"
+x = x & ",Tom Hacquoil"
+x = x & ",XZXZXZXZXZXZ"
+xarray = Split(x, ",")
+For q = 1 To UBound(xarray)
+        xname = xarray(q)
+        Debug.Print xname
+        Call LOOP_resource_names(xname, "POOL_" & xname)
+Next q
+Call LOOP_resource_names("xcxcxcxcx", "POOL_MARK")
+Call LOOP_resource_names("tim", "POOL_TIM")
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub xreplxxxx()
+Call LOOP_resource_names("Matthew Planterose", "Matt Planterose")
+Call LOOP_resource_names("XZXZXZRoss_Gower", "XZXZXZRoss-Gower")
+Call LOOP_resource_names("xxx", "")
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function LOOP_resource_names(xfind, xreplace)
+https://social.msdn.microsoft.com/Forums/sqlserver/en-US/474d7236-86da-4e57-bf94-9fa49cba31af/vba-for-ms-project-looping-through-tasks?forum=isvvba
+Macro to Highlight "Night Shift" Tasks
+Dim T As Task
+Dim seenbefore, XPARENT_DETAILS As String
+On Error Resume Next
+Dim SubProjId As Long
+Dim TskSub As Task
+Show all Sub-tasks
+SelectSheet
+OutlineShowAllTasks
+For Each T In ActiveProject.Tasks
+        
+        
+        If InStr(1, LCase(t.ResourceNames), LCase("TRG")) Then t.ResourceNames = Replace(t.ResourceNames, "TRG", "XZXZXZRoss-Gower[50%],")
+                If InStr(1, LCase(t.ResourceNames), LCase("TRG")) Then t.ResourceNames = Replace(t.ResourceNames, "XZXZXZRoss_Gower", "XZXZXZRoss-Gower,")
+                        Matthew Planterose <Matthew.Planterose@XZXZXZ.cloud>
+                        t.ResourceNames = Replace(t.ResourceNames, "MP", "Matthew Planterose")
+                        t.ResourceNames = Replace(t.ResourceNames, "PE", "Peter Edwards")
+                        t.ResourceNames = Replace(t.ResourceNames, "SJ", "Steve Jenner")
+                        t.ResourceNames = Replace(t.ResourceNames, "TRG", "XZXZXZRoss-Gower")
+                        '  t.ResourceNames = Replace(t.ResourceNames, "ML", "Marc Lubout")
+                        '   t.ResourceNames = Replace(t.ResourceNames, "BM", "Bruno Melim")
+                        
+                        T.ResourceNames = Replace(T.ResourceNames, xfind, xreplace)
+                        For q = 1 To T.Resources.Count
+                                xname = T.Resources(q).name
+                                T.ResourceNames = Replace(T.ResourceNames, "[99%]", "")
+                                'Debug.Print T.Resources(q).name, T.Resources(q).name & "[50%]"
+                                Next
+                                
+                                Call REPLNAME("SJ", "Steve Jenner")
+                        Next T
+                        EditGoTo ID:=1
+End Function
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub REPLNAME(ByRef XOLD, ByRef XNEW)
+If InStr(1, T.ResourceNames, XOLD) Then T.ResourceNames = Replace(T.ResourceNames, XOLD, XNEW)
+        Debug.Print XOLD, XNEW
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub list_resources_list()
+https://social.msdn.microsoft.com/Forums/sqlserver/en-US/474d7236-86da-4e57-bf94-9fa49cba31af/vba-for-ms-project-looping-through-tasks?forum=isvvba
+Macro to Highlight "Night Shift" Tasks
+Dim T As Task
+Dim seenbefore, XPARENT_DETAILS As String
+On Error Resume Next
+Dim SubProjId As Long
+Dim TskSub As Task
+Show all Sub-tasks
+SelectSheet
+OutlineShowAllTasks
+For Each T In ActiveProject.Tasks
+        
+        
+        For q = 1 To T.Resources.Count
+                xname = T.Resources(q).name
+                
+                If InStr(1, seenbefore, xname) Then
+                        skip
+                        Else
+                        seenbefore = seenbefore & "//" & xname
+                        xline = " x = x & '," & T.Resources(q).name  ', t.Resources(q).name & "; [50%]; ""
+                        Debug.Print Replace(xline, "'", Chr(34))
+                End If
+                Next
+                
+        Next T
+        EditGoTo ID:=1
+End Sub
+Attribute VB_Name = "SET_CALENDAR"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub SET_CALENDAR()
+Attribute SET_CALENDAR.VB_Description = "Macro Macro5\nMacro Recorded Tue 31/01/17 by Tim."
+Macro Macro5
+Macro Recorded Tue 31/01/17 by Tim.
+TimescaleEdit MajorUnits:=2, MinorUnits:=3, MajorLabel:=9, MinorLabel:=17, MinorTicks:=True, Separator:=True, TierCount:=2
+End Sub
+Attribute VB_Name = "add_colsx"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub add_cols()
+Attribute add_cols.VB_Description = "Macro Macro2\nMacro Recorded Tue 31/01/17 by Tim."
+Macro Macro2
+Macro Recorded Tue 31/01/17 by Tim.
+ SelectTaskColumn Column:="Text2"
+ TableEditEx name:="&Entry", TaskTable:=True, NewName:="", NewFieldName:="Text1", Width:=30, ShowInMenu:=True, LockFirstColumn:=True, DateFormat:=255, RowHeight:=1, ColumnPosition:=4
+TableApply name:="&Entry"
+SelectTaskColumn Column:="Text15"
+ColumnDelete
+TableEditEx name:="&Entry", TaskTable:=True, NewName:="", FieldName:="Text1", NewFieldName:="Text15", Title:="", ColumnPosition:=4
+TableEditEx name:="&Entry", TaskTable:=True, NewFieldName:="Text1", Title:="T1_RAG", ColumnPosition:=4
+TableEditEx name:="&Entry", TaskTable:=True, NewFieldName:="Text2", Title:="T2_Note", ColumnPosition:=5
+TableEditEx name:="&Entry", TaskTable:=True, NewFieldName:="Text3", Title:="T3_Effort", ColumnPosition:=6
+TableEditEx name:="&Entry", TaskTable:=True, NewFieldName:="Work", ColumnPosition:=3
+TableApply name:="&Entry"
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub TEST003()
+SelectTaskColumn Column:="Indicators", Additional:=4
+SelectTaskColumn Column:="Text2"
+SelectTaskColumn Column:="TEXT1", Additional:=1
+ColumnDelete
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub set_view()
+x = x & ",Indicators"
+x = x & ",Task Mode"
+x = x & ",Name"
+x = x & ",Duration"
+x = x & ",Work"
+x = x & ",Text1"
+x = x & ",Text2"
+x = x & ",Text3"
+x = x & ",Resource Names"
+x = x & ",% Complete"
+x = x & ",Constraint Type"
+x = x & ",Start"
+x = x & ",Finish"
+xarray = Split(x, ",")
+widths_array = ",10,10,40,10,10,10,10,10,40,10,22,22,10,10"
+widths_array = Split(widths_array, ",")
+For q = 1 To UBound(xarray)
+        xfieldname = xarray(q)
+        xwidth = widths_array(q)
+        xcolpos = q
+        xalign = 0 '2
+        
+        Application.TableEdit name:="Entry", TaskTable:=True, NewName:="", FieldName:="", _
+        NewFieldName:=xfieldname, Title:="", Width:=xwidth, Align:=xalign, ShowInMenu:=True, _
+        LockFirstColumn:=True, DateFormat:=255, RowHeight:=1, ColumnPosition:=xcolpos, AlignTitle:=1
+Next q
+Application.TableApply name:="Entry"
+End Sub
+Attribute VB_Name = "calendar_work_dates"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub calendar_work_dates()
+Attribute calendar_work_dates.VB_Description = "Macro Macro8\nMacro Recorded Mon 06/02/17 by Tim."
+Macro Macro8
+Macro Recorded Mon 06/02/17 by Tim.
+SelectResourceField Row:=0, Column:="Name"
+Projects("resourcepool.mpp").Resources("XZXZXZRoss-Gower").Calendar.WeekDays(1).Shift1.Start = "10:00"
+Projects("resourcepool.mpp").Resources("XZXZXZRoss-Gower").Calendar.WeekDays(1).Shift1.Finish = "18:00"
+Projects("resourcepool.mpp").Resources("XZXZXZRoss-Gower").Calendar.WeekDays(1).Shift2.Clear
+Projects("resourcepool.mpp").Resources("XZXZXZRoss-Gower").Calendar.WeekDays(1).Shift3.Clear
+Projects("resourcepool.mpp").Resources("XZXZXZRoss-Gower").Calendar.WeekDays(1).Shift4.Clear
+Projects("resourcepool.mpp").Resources("XZXZXZRoss-Gower").Calendar.WeekDays(1).Shift5.Clear
+Projects("resourcepool.mpp").Resources("XZXZXZRoss-Gower").Calendar.WeekDays(2).Shift1.Start = "08:00"
+Projects("resourcepool.mpp").Resources("XZXZXZRoss-Gower").Calendar.WeekDays(2).Shift1.Finish = "08:01"
+Projects("resourcepool.mpp").Resources("XZXZXZRoss-Gower").Calendar.WeekDays(2).Shift2.Start = "13:00"
+Projects("resourcepool.mpp").Resources("XZXZXZRoss-Gower").Calendar.WeekDays(2).Shift2.Finish = "17:00"
+Projects("resourcepool.mpp").Resources("XZXZXZRoss-Gower").Calendar.WeekDays(2).Shift3.Clear
+Projects("resourcepool.mpp").Resources("XZXZXZRoss-Gower").Calendar.WeekDays(2).Shift4.Clear
+Projects("resourcepool.mpp").Resources("XZXZXZRoss-Gower").Calendar.WeekDays(2).Shift5.Clear
+Projects("resourcepool.mpp").Resources("XZXZXZRoss-Gower").Calendar.WeekDays(3).Default
+Projects("resourcepool.mpp").Resources("XZXZXZRoss-Gower").Calendar.WeekDays(4).Default
+Projects("resourcepool.mpp").Resources("XZXZXZRoss-Gower").Calendar.WeekDays(5).Working = False
+Projects("resourcepool.mpp").Resources("XZXZXZRoss-Gower").Calendar.WeekDays(6).Working = False
+Projects("resourcepool.mpp").Resources("XZXZXZRoss-Gower").Calendar.WeekDays(7).Shift1.Start = "10:00"
+Projects("resourcepool.mpp").Resources("XZXZXZRoss-Gower").Calendar.WeekDays(7).Shift1.Finish = "18:00"
+Projects("resourcepool.mpp").Resources("XZXZXZRoss-Gower").Calendar.WeekDays(7).Shift2.Clear
+Projects("resourcepool.mpp").Resources("XZXZXZRoss-Gower").Calendar.WeekDays(7).Shift3.Clear
+Projects("resourcepool.mpp").Resources("XZXZXZRoss-Gower").Calendar.WeekDays(7).Shift4.Clear
+Projects("resourcepool.mpp").Resources("XZXZXZRoss-Gower").Calendar.WeekDays(7).Shift5.Clear
+InformationDialog
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub LOOP_resource_list()
+https://social.msdn.microsoft.com/Forums/sqlserver/en-US/474d7236-86da-4e57-bf94-9fa49cba31af/vba-for-ms-project-looping-through-tasks?forum=isvvba
+Macro to Highlight "Night Shift" Tasks
+Dim T As Task
+Dim seenbefore, XPARENT_DETAILS As String
+On Error Resume Next
+Dim SubProjId As Long
+Dim TskSub As Task
+Show all Sub-tasks
+SelectSheet
+OutlineShowAllTasks
+xseenalready = ""
+For Each T In ActiveProject.Tasks
+        
+        
+        If InStr(1, T.Text1, "YES") Then
+                For q = 1 To T.Resources.Count
+                        xname = T.Resources(q).name
+                        If InStr(1, xseenalready, xname) Then
+                                'skip
+                                Else
+                                
+                                
+                                xseenalready = xseenalready & xname
+                                Debug.Print xname
+                                calendar_work (xname)
+                        End If
+                        
+                        Next
+                        
+                End If
+                
+                
+                
+        Next T
+        EditGoTo ID:=1
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function calendar_work(xnamex)
+ActiveProject.Resources("Matt Planterose").Calendar.WeekDays(1).Shift1.Start = "10:00"
+ActiveProject.Resources("Matt Planterose").Calendar.WeekDays(1).Shift1.Finish = "18:00"
+Projects("resourcepool.mpp").Resources(xnamex).Calendar.WeekDays(1).Shift1.Start = "10:00"
+Projects("resourcepool.mpp").Resources(xnamex).Calendar.WeekDays(1).Shift1.Finish = "18:00"
+Projects("resourcepool.mpp").Resources(xnamex).Calendar.WeekDays(1).Shift2.Clear
+ActiveProject.Resources(xnamex).Calendar.WeekDays(1).Shift1.Start = "10:00"
+ActiveProject.Resources(xnamex).Calendar.WeekDays(1).Shift1.Finish = "18:00"
+ActiveProject.Resources(xnamex).Calendar.WeekDays(1).Shift2.Clear
+ActiveProject.Resources(xnamex).Calendar.WeekDays(1).Shift3.Clear
+ActiveProject.Resources(xnamex).Calendar.WeekDays(1).Shift4.Clear
+ActiveProject.Resources(xnamex).Calendar.WeekDays(1).Shift5.Clear
+ActiveProject.Resources(xnamex).Calendar.WeekDays(2).Shift1.Start = "08:00"
+ActiveProject.Resources(xnamex).Calendar.WeekDays(2).Shift1.Finish = "08:01"
+ActiveProject.Resources(xnamex).Calendar.WeekDays(2).Shift2.Start = "13:00"
+ActiveProject.Resources(xnamex).Calendar.WeekDays(2).Shift2.Finish = "17:00"
+ActiveProject.Resources(xnamex).Calendar.WeekDays(2).Shift3.Clear
+ActiveProject.Resources(xnamex).Calendar.WeekDays(2).Shift4.Clear
+ActiveProject.Resources(xnamex).Calendar.WeekDays(2).Shift5.Clear
+ActiveProject.Resources(xnamex).Calendar.WeekDays(3).Default
+ActiveProject.Resources(xnamex).Calendar.WeekDays(4).Default
+ActiveProject.Resources(xnamex).Calendar.WeekDays(5).Working = False
+ActiveProject.Resources(xnamex).Calendar.WeekDays(6).Working = False
+ActiveProject.Resources(xnamex).Calendar.WeekDays(7).Shift1.Start = "10:00"
+ActiveProject.Resources(xnamex).Calendar.WeekDays(7).Shift1.Finish = "18:00"
+ActiveProject.Resources(xnamex).Calendar.WeekDays(7).Shift2.Clear
+ActiveProject.Resources(xnamex).Calendar.WeekDays(7).Shift3.Clear
+ActiveProject.Resources(xnamex).Calendar.WeekDays(7).Shift4.Clear
+ActiveProject.Resources(xnamex).Calendar.WeekDays(7).Shift5.Clear
+  InformationDialog
+End Function
+Attribute VB_Name = "XZXZXZ_project"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub whoami()
+x = ActiveProject.Path & "\" & ActiveProject.name
+x = InputBox(x, x, x)
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub LOOP_TEST1()
+https://social.msdn.microsoft.com/Forums/sqlserver/en-US/474d7236-86da-4e57-bf94-9fa49cba31af/vba-for-ms-project-looping-through-tasks?forum=isvvba
+Macro to Highlight "Night Shift" Tasks
+Dim T As Task
+Dim SubProjId As Long
+Dim TskSub As Task
+Show all Sub-tasks
+SelectSheet
+OutlineShowAllTasks
+For Each T In ActiveProject.Tasks
+        If Not T Is Nothing Then
+                ' t.Text1 = t.Duration
+                Debug.Print " " & T.Duration & ""
+                If Len(T.Text1) < 1 Then
+                        T.Duration = "0 d"
+                        Else
+                        T.Duration = T.Text1
+                End If
+                
+                
+        End If
+Next T
+EditGoTo ID:=1
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub LOOP_TEST2()
+https://social.msdn.microsoft.com/Forums/sqlserver/en-US/474d7236-86da-4e57-bf94-9fa49cba31af/vba-for-ms-project-looping-through-tasks?forum=isvvba
+Macro to Highlight "Night Shift" Tasks
+Dim T As Task
+Dim seenbefore, XPARENT_DETAILS As String
+On Error Resume Next
+Dim SubProjId As Long
+Dim TskSub As Task
+Show all Sub-tasks
+SelectSheet
+OutlineShowAllTasks
+For Each T In ActiveProject.Tasks
+        
+        
+        
+        If T.Rollup = False Then
+                
+                't.OutlineChildren,  t.OutlineParent
+                'Debug.Print xc, t.Type, t.Name, t.Rollup
+                
+                If InStr(1, seenbefore, T.name) Then
+                        'SKIP
+                        Else
+                        xc = xc + 1
+                        'Debug.Print XPARENT_DETAILS, t.Name
+                        Debug.Print xc & " " & XPARENT_DETAILS & ">>" & T.name
+                        seenbefore = seenbefore & "[" & T.name & "]"
+                End If
+                Else
+                XPADDING = "....................................................................."
+                XPARENT_DETAILS = Left(T.name & XPADDING, 50)
+                XPARENT_DETAILS = Left(T.name, 990)
+        End If
+Next T
+EditGoTo ID:=1
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub LOOP_resources()
+https://social.msdn.microsoft.com/Forums/sqlserver/en-US/474d7236-86da-4e57-bf94-9fa49cba31af/vba-for-ms-project-looping-through-tasks?forum=isvvba
+Macro to Highlight "Night Shift" Tasks
+Dim T As Task
+Dim seenbefore, XPARENT_DETAILS As String
+On Error Resume Next
+Dim SubProjId As Long
+Dim TskSub As Task
+Show all Sub-tasks
+SelectSheet
+OutlineShowAllTasks
+For Each T In ActiveProject.Tasks
+        
+        
+        
+        If T.Rollup = False Then
+                
+                't.OutlineChildren,  t.OutlineParent
+                'Debug.Print xc, t.Type, t.Name, t.Rollup
+                
+                If InStr(1, seenbefore, T.name) Then
+                        'SKIP
+                        Else
+                        xc = xc + 1
+                        'Debug.Print XPARENT_DETAILS, t.Name
+                        Debug.Print xc & " " & XPARENT_DETAILS & ">>" & T.name
+                        seenbefore = seenbefore & "[" & T.name & "]"
+                End If
+                Else
+                XPADDING = "....................................................................."
+                XPARENT_DETAILS = Left(T.name & XPADDING, 50)
+                XPARENT_DETAILS = Left(T.name, 990)
+        End If
+Next T
+EditGoTo ID:=1
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub a1_saveas_project_hours()
+xpath = ActiveProject.Path & "\"
+xdate = "bakup" & Format(Now, "yyyymmdd-hhmm")
+xname = LCase(xpath & ActiveProject.name)
+xname2 = Replace(xname, ".mpp", "_" & xdate & ".mpp")
+ActiveProject.SaveAs (xname2)
+ActiveProject.SaveAs UCase(xname)
+x = xname2
+Debug.Print x
+x = InputBox(x, x, x)
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub a1_saveas_project_days()
+xpath = ActiveProject.Path & "\"
+xdate = "bakup" & Format(Now, "yyyymmdd")
+xname = LCase(xpath & ActiveProject.name)
+xname2 = Replace(xname, ".mpp", "_" & xdate & ".mpp")
+ActiveProject.SaveAs (xname2)
+ActiveProject.SaveAs UCase(xname)
+x = xname2
+Debug.Print x
+x = InputBox(x, x, x)
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub a1_saveas_project_HRS()
+xpath = ActiveProject.Path & "\"
+xdate = "bakup" & Format(Now, "yyyymmdd-HHMM")
+xname = LCase(xpath & ActiveProject.name)
+xname2 = Replace(xname, ".mpp", "_" & xdate & ".mpp")
+ActiveProject.SaveAs (xname2)
+ActiveProject.SaveAs UCase(xname)
+x = xname2
+Debug.Print x
+x = InputBox(x, x, x)
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub a1_saveas_project_wkno()
+xpath = ActiveProject.Path & "\"
+x = Format(Now, "ww")
+If Len(x) < 2 Then x = "0" & x
+        xdate = "WeekNo" & x
+        xname = xpath & ActiveProject.name
+        xname2 = Replace(xname, ".mpp", "_" & xdate & ".mpp")
+        
+        ActiveProject.SaveAs LCase(xname2)
+        ActiveProject.SaveAs UCase(xname)
+        
+        x = xname2
+        Debug.Print x
+        x = InputBox(x, x, x)
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function PRINT_INFO1(ByVal PARAM_TEXT As String, ByVal xoutput As String) 'vba_excel report cells, create file, print file, notepad
+Dim FILENUMBER1 As Integer
+Dim xpath As String
+Dim xfilename As String
+xpath = ActiveWorkbook.Path & "\"
+xfilename = "TEMP" & Format(Now(), "yymmdd") & "-" & Format(Now(), "HHMM") & ".txt"
+xfilename = xoutput
+FILENUMBER1 = FreeFile
+Open xpath & xfilename For Output As #FILENUMBER1 '
+Print #FILENUMBER1, PARAM_TEXT
+Close #FILENUMBER1
+Call open_file(xpath & xfilename)
+End Function
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function open_file(xfilename As String)
+vba_excel report cells, create file, print file, notepad
+Dim ReturnValue, i
+ReturnValue = Shell("notepad.EXE " & xfilename, 1)  ' Run Calculator.
+AppActivate ReturnValue
+End Function
+Attribute VB_Name = "color_rows"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub test()
+For q = 2 To 5
+        Call trcolorcell(q)
+        
+Next q
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub trcolorcell(xrowx)
+Attribute trcolorcell.VB_Description = "Macro Macro8\nMacro Recorded Tue 07/02/17 by Tim."
+SelectTaskField Row:=xrowx, Column:="Name"
+Font32Ex CellColor:=49407
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub SetTaskNameFontDone()
+Dim T As Task
+For Each T In ActiveSelection.Tasks
+        
+        Font32Ex Color:=8355711
+        Font32Ex Strikethrough:=True
+Next T
+End Sub
+Attribute VB_Name = "ConsolidateProjectsz"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub ConsolidateProjectsx()
+Attribute ConsolidateProjectsx.VB_Description = "Macro Macro6\nMacro Recorded Wed 01/02/17 by Tim."
+Macro Macro6
+Macro Recorded Wed 01/02/17 by Tim.
+ConsolidateProjects Filenames:="C:\Users\Tim\Documents\Data2017\MS-Project\Project_Soc2KPMG Plan.mpp", NewWindow:=False, AttachToSources:=False, HideSubtasks:=True
+End Sub
+Attribute VB_Name = "email_project"
+Public Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub PrintFilteredResourcesChanged()
+ Macro PrintFilteredResources - loop on filters and then print
+ $Id: PrintFilteredResources.txt,v 1.7 2000/08/23 23:24:10 phil Exp $
+ Note: Ignores task dates that are 100% complete
+ Todo: Handling multiple resource names better
+       Select report from list instead of looping through them all
+On Error Resume Next                ' keep going on an error
+ViewApply name:="RJTSchedule"
+SelectBeginning                     ' restart from the beginning
+For Each Resource In ActiveProject.Resources
+        
+        If Resource.Work > 0 Then
+                
+                FilterEdit name:=Resource.name, TaskFilter:=True, Create:=True, OverwriteExisting:=True, FieldName:="Baseline Start", test:="does not equal", Value:="[Start]", ShowInMenu:=False, ShowSummaryTasks:=True
+                
+                '       FilterEdit name:=Resource.name, TaskFilter:=True, FieldName:="", NewFieldName:="Resource Names", test:="contains", Value:=Resource.name, Operation:="And", ShowSummaryTasks:=True
+                
+                '      FilterApply name:=Resource.name ' apply the filter
+                
+                If (Err.Number) Then            ' saw an error applying filter
+                        
+                        MsgBox "ERROR: " & Err.Description
+                        
+                        Err.Clear                   ' clear out the error
+                        
+                        GoTo NextResource           ' jump to the next resource
+                        
+                End If
+                
+                Start = 0                       ' reset start date
+                
+                Finish = 0                      ' reset finish date
+                
+                SelectAll
+                
+                If (ActiveSelection = 0) Then
+                        
+                        GoTo NextResource
+                        
+                End If
+                
+                For Each Task In ActiveSelection.Tasks
+                        
+                        'MsgBox "Checking task: " & Task.Name
+                        
+                        If Not (Task Is Nothing) Then
+                                
+                                If (InStr(1, Task.ResourceNames, Resource.name) And (Task.PercentComplete < 100)) Then
+                                        
+                                        TryStart = Task.Start
+                                        
+                                        TryFinish = Task.Finish
+                                        
+                                        If (Start = 0) Then Start = TryStart    ' need a start date
+                                                
+                                                If (Finish = 0) Then Finish = TryFinish ' need a finish date
+                                                        
+                                                        ' see if we found an earlier start date / later finish date
+                                                        
+                                                        If (DateDiff("d", TryStart, Start) > 0) Then Start = TryStart
+                                                                
+                                                                If (DateDiff("d", TryFinish, Finish) < 0) Then Finish = TryFinish
+                                                                        
+                                                                End If
+                                                                
+                                                        End If
+                                                        
+                                                Next Task
+                                                
+                                                If (Start = 0) Then           ' no start date, nothing to see
+                                                        
+                                                        'MsgBox "NOTE: No tasks found for resource: " & Resource.Name
+                                                        
+                                                        GoTo NextResource           ' jump to the next resource
+                                                        
+                                                End If
+                                                
+                                                Start = DateAdd("d", -3, Start)                     ' adjust a few days
+                                                
+                                                Finish = DateAdd("d", 3, Finish)                    ' adjust a few days
+                                                
+                                                
+                                                
+                                                ' generate and save seperate .pdf files for each resource thanks to RobSampson
+                                                
+                                                strFullName = ActiveProject.FullName
+                                                
+                                                strBaseName = Mid(strFullName, InStrRev(strFullName, "\") + 1)
+                                                
+                                                strBaseName = Left(strBaseName, InStrRev(strBaseName, ".") - 1)
+                                                
+                                                Set objShell = CreateObject("WScript.Shell")
+                                                
+                                                strMyDocs = objShell.RegRead("C:\Users\Tim\ownCloud\Documents\XZXZXZ_Shared\MS-Project")
+                                                
+                                                If Right(strMyDocs, 1) <> "\" Then strMyDocs = strMyDocs & "\"
+                                                        
+                                                        strSource = strMyDocs & strBaseName & ".pdf"
+                                                        
+                                                        strTarget = "CC:\Users\Tim\ownCloud\Documents\XZXZXZ_Shared\MS-Project\zz" & strBaseName & "_" & Resource.name & ".pdf"
+                                                        
+                                                        FilePrintSetup "Adobe PDF"
+                                                        
+                                                        FilePrint FromDate:=Start, ToDate:=Finish
+                                                        
+                                                        Sleep 10000
+                                                        
+                                                        FileCopy strSource, strTarget
+                                                        
+                                                        ' Email variables:
+                                                        
+                                                        strTo = Resource.EMailAddress
+                                                        
+                                                        strSubject = "Subject Here"
+                                                        
+                                                        strBody = "Please find attached a copy of your resource schedule:" & vbCrLf
+                                                        
+                                                        If strTo <> "" Then
+                                                                
+                                                                SendEmailWithOutlook strSubject, strTo, strBody, strTarget
+                                                                
+                                                                Else
+                                                                
+                                                                MsgBox "Unknown email address for resource: " & Resource.name
+                                                                
+                                                        End If
+                                                        
+                                                End If
+                                                
+                                                NextResource:
+                                                
+                                        Next Resource
+                                        
+                                        FilterApply name:="All Tasks"                   ' apply the filter
+                                        
+                                        BaselineSave All:=True, Copy:=0, Into:=0    ' reset baseline
+                                        
+                                        ViewApply name:="&Gantt Chart"
+                                        
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub SendEmailWithOutlook(strSubject, strTo, strBody, strAttachment)
+Const olMailItem = 0
+Const olFormatPlain = 1
+On Error Resume Next
+boolOutlookOpen = True
+Set objOutlook = GetObject(, "Outlook.Application")
+If objOutlook Is Nothing Then
+        
+        Set objOutlook = CreateObject("Outlook.Application")
+        
+        objOutlook.Visible = True
+        
+        boolOutlookOpen = False
+        
+End If
+Err.Clear
+Set objNameSpace = objOutlook.GetNamespace("mapi")
+Set objMailItem = objOutlook.CreateItem(olMailItem)
+With objMailItem
+.BodyFormat = olFormatPlain
+.To = strTo
+.Subject = strSubject
+.Body = strBody
+If strAttachment <> "" Then .Attachments.Add (strAttachment)
+        
+        .Send
+        
+        If Err.Number <> 0 Then MsgBox "Failed to send message. Error " & Err.Number & ": " & Err.Description
+                
+                End With
+                
+                If Err.Number = 0 Then
+                        
+                        objOutlook.sendandreceive False
+                        
+                End If
+                
+                If Not boolOutlookOpen Then
+                        
+                        objOutlook.Quit
+                        
+                End If
+                
+                Err.Clear
+                
+                On Error GoTo 0
+                
+End Sub
+Attribute VB_Name = "LOOP_COLOR"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub ColorFormatOL()
+Dim T As Task
+Dim i As Integer
+On Error Resume Next
+http://visiblevisual.com/jupgrade/index.php/ms-project-net/225-set-cell-and-font-color
+https://msdn.microsoft.com/en-us/library/office/ff863572.aspx
+http://stackoverflow.com/questions/31154574/changing-background-row-color-according-to-task-levels-in-ms-project-vba
+i = 1
+Font32Ex CellColor:=-16777216
+For Each T In ActiveProject.Tasks
+        
+        
+        SelectRow Row:=i, rowrelative:=False
+        
+        '  Select Case t.OutlineLevel
+        '      Case 1
+        '      Font32Ex CellColor:=&HB37F15
+        '      Case 2
+        '      Font32Ex CellColor:=&HD6982E
+        '     Case 3
+        ''     Font32Ex CellColor:=&HF6BE41
+        '     Case 4
+        '     Font32Ex CellColor:=&HF7D577'
+        
+        
+        '  End Select
+        T.Text4 = ""
+        If T.OutlineLevel = 1 Then Font32Ex CellColor:=&HB37F15
+                
+                
+                #==========================================
+                If T.Start < Now Then
+                        If T.Finish < DateAdd("d", 10, Now) Then
+                                If T.Rollup = False Then
+                                        
+                                        Font32Ex CellColor:=RGB(0, 80, 80) '&HF7D577 '
+                                        T.Text4 = "should start & finish < 10days"
+                                        
+                                End If
+                        End If
+                End If
+                #==========================================
+                
+                
+                #==========================================
+                If T.Start < Now Then
+                        If T.Finish < Now Then
+                                If T.Rollup = False Then
+                                        
+                                        Font32Ex CellColor:=RGB(0, 80, 80) '&HF7D577 '
+                                        T.Text4 = "should start & finish by now"
+                                        
+                                End If
+                        End If
+                End If
+                #==========================================
+                
+                
+                i = i + 1
+        Next T
+        
+        MsgBox i & " No ROWS @" & Now
+End Sub
+Attribute VB_Name = "LOOP_julian_flag"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub LOOP_julian_flag()
+https://social.msdn.microsoft.com/Forums/sqlserver/en-US/474d7236-86da-4e57-bf94-9fa49cba31af/vba-for-ms-project-looping-through-tasks?forum=isvvba
+Macro to Highlight "Night Shift" Tasks
+Dim T As Task
+Dim SubProjId As Long
+Dim TskSub As Task
+Show all Sub-tasks
+On Error Resume Next
+SelectSheet
+OutlineShowAllTasks
+For Each T In ActiveProject.Tasks
+        ''''  T.Delete
+        
+        If T.Rollup Then
+                T.Text4 = "Julian Report"
+        End If
+        
+        
+        
+        
+Next T
+EditGoTo ID:=1
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function trclean(xtext)
+xpermittedchars = "abcdefghijklmnopqrstuvwxyz1234567890 "
+xpermittedchars = xpermittedchars & UCase("abcdefghijklmnopqrstuvwxyz1234567890 ")
+For Z = 1 To Len(xtext)
+        
+        xchar = Mid(xtext, Z, 1)
+        If InStr(1, xpermittedchars, xchar) Then
+                x = x & xchar
+        End If
+        
+        Next
+        trclean = x
+End Function
+Attribute VB_Name = "LOOP_notes"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub LOOP_notes()
+https://social.msdn.microsoft.com/Forums/sqlserver/en-US/474d7236-86da-4e57-bf94-9fa49cba31af/vba-for-ms-project-looping-through-tasks?forum=isvvba
+Macro to Highlight "Night Shift" Tasks
+Dim T As Task
+Dim SubProjId As Long
+Dim TskSub As Task
+Show all Sub-tasks
+On Error Resume Next
+SelectSheet
+OutlineShowAllTasks
+For Each T In ActiveProject.Tasks
+        ''''  T.Delete
+        
+        If Len(T.Notes) > 1 Then
+                T.Text3 = "Note:" & Left(trclean(T.Notes), 100) ''<< put notes in text 3
+        End If
+        
+        
+        
+Next T
+EditGoTo ID:=1
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function trclean(xtext)
+xpermittedchars = "abcdefghijklmnopqrstuvwxyz1234567890 "
+xpermittedchars = xpermittedchars & UCase("abcdefghijklmnopqrstuvwxyz1234567890 ")
+For Z = 1 To Len(xtext)
+        
+        xchar = Mid(xtext, Z, 1)
+        If InStr(1, xpermittedchars, xchar) Then
+                x = x & xchar
+        End If
+        
+        Next
+        trclean = x
+End Function
+Attribute VB_Name = "loop_resource_task_lists"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub tes()
+x = x & ",XZXZXZRoss-Gower"
+x = x & ",Matthew Planterose"
+x = x & ",Peter Edwards"
+x = x & ",Steve Jenner"
+x = x & ",Bruno Melim"
+x = x & ",Marc Lubout"
+x = x & ",Mark Herridge"
+x = x & ",Mark Thomas"
+x = x & ",Matt Liot"
+x = x & ",Chris Coates"
+x = x & ",Newtel"
+x = x & ",PCCW"
+x = x & ",SD Team"
+x = x & ",MCS"
+x = x & ",Matt Planterose"
+x = x & ",Tom Hacquoil"
+x = x & ",XZXZXZXZXZXZ"
+xarray = Split(x, ",")
+For q = 1 To UBound(xarray)
+        xname = xarray(q)
+        Debug.Print xname
+        Call LOOP_list_due_tasks(xname)
+Next q
+Call LOOP_list_due_tasks(xname)
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function LOOP_list_due_tasks(xresourcenamex)
+https://social.msdn.microsoft.com/Forums/sqlserver/en-US/474d7236-86da-4e57-bf94-9fa49cba31af/vba-for-ms-project-looping-through-tasks?forum=isvvba
+Macro to Highlight "Night Shift" Tasks
+http://www.techrepublic.com/blog/it-consultant/use-vba-to-highlight-missing-baseline-finish-dates-in-microsoft-project-2010/
+Dim xd As String
+xd = vbTab & ","
+Dim T As Task
+Dim SubProjId As Long
+Dim TskSub As Task
+Show all Sub-tasks
+SelectSheet
+ OutlineShowAllTask
+On Error Resume Next
+For Each T In ActiveProject.Tasks
+        xc = xc + 1
+        
+        'If t.Finish < DateAdd("d", 30, Now) Then
+        ' Debug.Print xc, t.name, t.Start, t.Finish
+        'Debug.Print xc, Left(t.name, 30) 't.Start, t.Finish
+        'End If
+        
+        T.Text1 = UCase(T.Text1)
+        
+        If T.Rollup = False Then
+                T.Text3 = x
+                If InStr(1, T.ResourceNames, xresourcenamex) Then
+                        If InStr(1, T.Text1, "YES") Then
+                                
+                                xmins = xmins + T.Work
+                                If T.Start < Date Then
+                                        T.Date1 = T.Start
+                                        T.Start = #2/8/2017#
+                                        
+                                End If
+                                T.Text3 = "x" & T.Work
+                                xtname = Replace(T.name, ",", " ")
+                                'http://www.tek-tips.com/viewthread.cfm?qid=1516553
+                                pname = Replace(T.OutlineParent.name, ",", " ")
+                                pname = Replace(T.OutlineParent.GetField(pjTaskName), ",", " ")
+                                xtext = xtext & T.UniqueID & xd & pname & xd & xtname & xd & T.Start & xd & Int(T.Work / 60) & "hours" & vbCrLf
+                                Debug.Print ">>>>>>>>>", T.OutlineParent.name
+                                
+                        End If
+                        
+                End If
+                
+        End If
+        
+        
+Next T
+xtext = xtext & vbCrLf & "Total..." & Int(xmins / 60)
+MsgBox xmins / 60
+xresourcenamex = Replace(xresourcenamex, " ", "")
+fname = ActiveProject.Path & "\tempexport_" & xresourcenamex & ".csv"
+Call PRINT_INFO(xtext, fname)
+Debug.Print xtext
+End Function
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function PRINT_INFO(ByVal PARAM_TEXT As String, ByVal xoutput As String) 'vba_excel report cells, create file, print file, notepad
+Dim FILENUMBER1 As Integer
+Dim xpath As String
+Dim xfilename As String
+xpath = ActiveWorkbook.Path & "\"
+xfilename = "TEMP" & Format(Now(), "yymmdd") & "-" & Format(Now(), "HHMM") & ".txt"
+xfilename = xoutput
+FILENUMBER1 = FreeFile
+Open xpath & xfilename For Output As #FILENUMBER1 '
+Print #FILENUMBER1, PARAM_TEXT
+Close #FILENUMBER1
+Call open_file(xpath & xfilename)
+End Function
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function open_file(xfilename As String)
+vba_excel report cells, create file, print file, notepad
+Dim ReturnValue, i
+ReturnValue = Shell("notepad.EXE " & xfilename, 1)  ' Run Calculator.
+AppActivate ReturnValue
+End Function
+Attribute VB_Name = "Module10"
+Attribute VB_Name = "Module1"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub Macro1()
+Attribute Macro1.VB_Description = "Macro Macro1\nMacro Recorded Wed 08/02/17 by Tim."
+Macro Macro1
+Macro Recorded Wed 08/02/17 by Tim.
+FilePageSetup
+End Sub
+Attribute VB_Name = "Module12"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub zztemp()
+Attribute zztemp.VB_Description = "Macro zztemp\nMacro Recorded Thu 02/02/17 by Tim."
+Macro zztemp
+Macro Recorded Thu 02/02/17 by Tim.
+SelectTaskField Row:=2, Column:="Name"
+Font32Ex CellColor:=255
+End Sub
+Attribute VB_Name = "Module13"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub Macro9()
+Attribute Macro9.VB_Description = "Macro Macro9\nMacro Recorded Tue 07/02/17 by Tim."
+Macro Macro9
+Macro Recorded Tue 07/02/17 by Tim.
+End Sub
+Attribute VB_Name = "Module14"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub Macro9()
+Attribute Macro9.VB_Description = "Macro Macro9\nMacro Recorded Tue 07/02/17 by Tim."
+Macro Macro9
+Macro Recorded Tue 07/02/17 by Tim.
+SetAutoFilter FieldName:="Text1", FilterType:=pjAutoFilterIn, Criteria1:="NO"
+End Sub
+Attribute VB_Name = "Module15"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub Macro8()
+Attribute Macro8.VB_Description = "Macro Macro8\nMacro Recorded Wed 08/02/17 by Tim."
+Macro Macro8
+Macro Recorded Wed 08/02/17 by Tim.
+End Sub
+Attribute VB_Name = "Module16"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub pdf2()
+Attribute pdf2.VB_Description = "Macro pdf2\nMacro Recorded Wed 08/02/17 by Tim."
+Macro pdf2
+Macro Recorded Wed 08/02/17 by Tim.
+FilePrint
+End Sub
+Attribute VB_Name = "Module17"
+Attribute VB_Name = "Module5"
+Attribute VB_Name = "Module9"
+Attribute VB_Name = "PDF"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub PDF()
+Attribute PDF.VB_Description = "Macro pdf\nMacro Recorded Wed 08/02/17 by Tim."
+Macro pdf
+Macro Recorded Wed 08/02/17 by Tim.
+   DocumentExport FileName:="C:\Users\Tim\Documents\Data2017\MS-Project\Testing001\BIG SOC AND INFRASTRUCTURE PROJECT.pdf"
+FileSaveAs name:="", FormatID:=""
+Call PDF_doit("Matt Liot")
+Call PDF_doit("Chris Coates")
+Call PDF_doit("Mark Herridge")
+Call PDF_doit("Matt Planterose")
+Call PDF_doit("Bruno Melim")
+Call PDF_doit("Peter Edwards")
+Call PDF_doit("XZXZXZRoss-Gower")
+Call PDF_doit("Marc Lubout")
+Call PDF_doit("Dev Team")
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub pdf22()
+x = x & ",Mark Herridge"
+x = x & ",Mark Thomas"
+x = x & ",Tom Hacquoil"
+x = x & ",Matt Planterose"
+x = x & ",Steve Jenner"
+x = x & ",TBC"
+x = x & ",XZXZXZRoss-Gower"
+x = x & ",Peter Edwards"
+x = x & ",Chris Coates"
+x = x & ",MCS"
+x = x & ",Marc Lubout"
+x = x & ",SD Team"
+x = x & ",Matt Liot"
+x = x & ",Bart Claremont"
+x = x & ",Bruno Melim"
+x = x & ",Dev Team"
+On Error Resume Next
+xarray = Split(x, ",")
+For q = 1 To UBound(xarray)
+        xname = xarray(q)
+        Call PDF_doit(xname)
+Next q
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub LOOP_resource_list()
+https://social.msdn.microsoft.com/Forums/sqlserver/en-US/474d7236-86da-4e57-bf94-9fa49cba31af/vba-for-ms-project-looping-through-tasks?forum=isvvba
+Macro to Highlight "Night Shift" Tasks
+Dim T As Task
+Dim seenbefore, XPARENT_DETAILS As String
+On Error Resume Next
+Dim SubProjId As Long
+Dim TskSub As Task
+Show all Sub-tasks
+SelectSheet
+OutlineShowAllTasks
+xseenalready = ""
+For Each T In ActiveProject.Tasks
+        
+        
+        If InStr(1, T.Text1, "YES") Then
+                For q = 1 To T.Resources.Count
+                        xname = T.Resources(q).name
+                        If InStr(1, xseenalready, xname) Then
+                                'skip
+                                Else
+                                
+                                
+                                xseenalready = xseenalready & xname
+                                Debug.Print xname
+                        End If
+                        
+                        Next
+                        
+                End If
+                
+                
+                Call REPLNAME("SJ", "Steve Jenner")
+        Next T
+        EditGoTo ID:=1
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub LOOP_resource_PDF()
+https://social.msdn.microsoft.com/Forums/sqlserver/en-US/474d7236-86da-4e57-bf94-9fa49cba31af/vba-for-ms-project-looping-through-tasks?forum=isvvba
+Macro to Highlight "Night Shift" Tasks
+Dim T As Task
+Dim seenbefore, XPARENT_DETAILS As String
+On Error Resume Next
+Dim SubProjId As Long
+Dim TskSub As Task
+Show all Sub-tasks
+SelectSheet
+OutlineShowAllTasks
+xseenalready = ""
+For Each T In ActiveProject.Tasks
+        
+        
+        If InStr(1, T.Text1, "YES") Then
+                For q = 1 To T.Resources.Count
+                        xname = T.Resources(q).name
+                        If InStr(1, xseenalready, xname) Then
+                                'skip
+                                Else
+                                
+                                
+                                xseenalready = xseenalready & xname
+                                Call PDF_doit(xname)
+                                'Debug.Print xname
+                        End If
+                        
+                        Next
+                        
+                End If
+                
+                
+                Call REPLNAME("SJ", "Steve Jenner")
+        Next T
+        EditGoTo ID:=1
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function PDF_doit(xname)
+On Error Resume Next
+Macro pdf
+Macro Recorded Wed 08/02/17 by Tim.
+   DocumentExport FileName:="C:\Users\Tim\Documents\Data2017\MS-Project\Testing001\BIG SOC AND INFRASTRUCTURE PROJECT.pdf"
+FileSaveAs name:="", FormatID:=""
+xname = "Mark Herridge"
+xname = "Bruno Melim"
+xname = "Matt Planterose"
+SetAutoFilter FieldName:="Resource Names", FilterType:=pjAutoFilterIn, Criteria1:=xname
+DocumentExport FileName:="C:\Users\Tim\ownCloud\Documents\XZXZXZ_Shared\MS-Project\temp_task_" & xname & ".pdf"
+End Function
+Attribute VB_Name = "PDF"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub PDF()
+Attribute PDF.VB_Description = "Macro pdf\nMacro Recorded Wed 08/02/17 by Tim."
+Macro pdf
+Macro Recorded Wed 08/02/17 by Tim.
+DocumentExport FileName:="C:\Users\Tim\ownCloud\Documents\XZXZXZ_Shared\MS-Project\zzTEMP BIG SOC AND INFRASTRUCTURE PROJECT.pdf"
+FileSaveAs name:="", FormatID:=""
+Call PDF_doit("Matt Liot")
+Call PDF_doit("Chris Coates")
+Call PDF_doit("Mark Herridge")
+Call PDF_doit("Matt Planterose")
+Call PDF_doit("Bruno Melim")
+Call PDF_doit("Peter Edwards")
+Call PDF_doit("XZXZXZRoss-Gower")
+Call PDF_doit("Marc Lubout")
+Call PDF_doit("Dev Team")
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub pdf22()
+x = x & ",Mark Herridge"
+x = x & ",Mark Thomas"
+x = x & ",Tom Hacquoil"
+x = x & ",Matt Planterose"
+x = x & ",Steve Jenner"
+x = x & ",TBC"
+x = x & ",XZXZXZRoss-Gower"
+x = x & ",Peter Edwards"
+x = x & ",Chris Coates"
+x = x & ",MCS"
+x = x & ",Marc Lubout"
+x = x & ",SD Team"
+x = x & ",Matt Liot"
+x = x & ",Bart Claremont"
+x = x & ",Bruno Melim"
+x = x & ",Dev Team"
+On Error Resume Next
+xarray = Split(x, ",")
+For q = 1 To UBound(xarray)
+        xname = xarray(q)
+        Call PDF_doit(xname)
+Next q
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub LOOP_resource_list()
+https://social.msdn.microsoft.com/Forums/sqlserver/en-US/474d7236-86da-4e57-bf94-9fa49cba31af/vba-for-ms-project-looping-through-tasks?forum=isvvba
+Macro to Highlight "Night Shift" Tasks
+Dim T As Task
+Dim seenbefore, XPARENT_DETAILS As String
+On Error Resume Next
+Dim SubProjId As Long
+Dim TskSub As Task
+Show all Sub-tasks
+SelectSheet
+OutlineShowAllTasks
+xseenalready = ""
+For Each T In ActiveProject.Tasks
+        
+        
+        If InStr(1, T.Text1, "YES") Then
+                For q = 1 To T.Resources.Count
+                        xname = T.Resources(q).name
+                        If InStr(1, xseenalready, xname) Then
+                                'skip
+                                Else
+                                
+                                
+                                xseenalready = xseenalready & xname
+                                Debug.Print xname
+                        End If
+                        
+                        Next
+                        
+                End If
+                
+                
+                Call REPLNAME("SJ", "Steve Jenner")
+        Next T
+        EditGoTo ID:=1
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub LOOP_resource_PDF()
+https://social.msdn.microsoft.com/Forums/sqlserver/en-US/474d7236-86da-4e57-bf94-9fa49cba31af/vba-for-ms-project-looping-through-tasks?forum=isvvba
+Macro to Highlight "Night Shift" Tasks
+Dim T As Task
+Dim seenbefore, XPARENT_DETAILS As String
+On Error Resume Next
+Dim SubProjId As Long
+Dim TskSub As Task
+Show all Sub-tasks
+SelectSheet
+OutlineShowAllTasks
+xseenalready = ""
+For Each T In ActiveProject.Tasks
+        
+        
+        
+        If InStr(1, T.Text1, "YES") Then
+                For q = 1 To T.Resources.Count
+                        xname = T.Resources(q).name
+                        If InStr(1, xseenalready, xname) Then
+                                'skip
+                                Else
+                                
+                                
+                                xseenalready = xseenalready & xname
+                                Call PDF_doit(xname)
+                                'Debug.Print xname
+                        End If
+                        
+                        Next
+                        
+                End If
+                
+                
+                Call REPLNAME("SJ", "Steve Jenner")
+        Next T
+        EditGoTo ID:=1
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function PDF_doit(xname)
+On Error Resume Next
+Macro pdf
+Macro Recorded Wed 08/02/17 by Tim.
+   DocumentExport FileName:="C:\Users\Tim\Documents\Data2017\MS-Project\Testing001\BIG SOC AND INFRASTRUCTURE PROJECT.pdf"
+FileSaveAs name:="", FormatID:=""
+xname = "Mark Herridge"
+xname = "Bruno Melim"
+xname = "Matt Planterose"
+SetAutoFilter FieldName:="Resource Names", FilterType:=pjAutoFilterIn, Criteria1:=xname
+DocumentExport FileName:="C:\Users\Tim\ownCloud\Documents\XZXZXZ_Shared\MS-Project\soc2_task_" & xname & ".pdf"
+End Function
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub PRINT_for_julian()
+https://msdn.microsoft.com/en-us/library/office/ff862889.aspx
+Application.FilePrint ShowIEPrintDialog:=True
+https://msdn.microsoft.com/en-us/library/office/ff864537.aspx
+FilePageSetupPage Portrait:=False, PaperSize:=pjPaperA3, PercentScale:=90
+ FilePageSetupLegendEx LegendOn:=1
+FilePageSetupLegendEx LegendOn:=0
+FilePrint PageBreaks:=False, OnePageWide:=True ', Preview:=True
+x = "C:\Users\Tim\ownCloud\Documents\XZXZXZ_Shared\MS-Project\zzBIG SOC AND INFRASTRUCTURE PROJECT.pdf"
+ DocumentExport FileName:="C:\Users\Tim\ownCloud\Documents\XZXZXZ_Shared\MS-Project\zzBIG SOC AND INFRASTRUCTURE PROJECT.pdf"
+FileSaveAs name:=x, FormatID:=\22
+End Sub
+Attribute VB_Name = "resource_ames"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub LOOP_resource_list()
+https://social.msdn.microsoft.com/Forums/sqlserver/en-US/474d7236-86da-4e57-bf94-9fa49cba31af/vba-for-ms-project-looping-through-tasks?forum=isvvba
+Macro to Highlight "Night Shift" Tasks
+Dim T As Task
+Dim seenbefore, XPARENT_DETAILS As String
+On Error Resume Next
+Dim SubProjId As Long
+Dim TskSub As Task
+Show all Sub-tasks
+SelectSheet
+OutlineShowAllTasks
+xseenalready = ""
+For Each T In ActiveProject.Tasks
+        
+        
+        If InStr(1, T.Text1, "YES") Then
+                For q = 1 To T.Resources.Count
+                        xname = T.Resources(q).name
+                        If InStr(1, xseenalready, xname) Then
+                                'skip
+                                Else
+                                
+                                
+                                xseenalready = xseenalready & xname
+                                Debug.Print xname
+                        End If
+                        
+                        Next
+                        
+                End If
+                
+                
+                Call REPLNAME("SJ", "Steve Jenner")
+        Next T
+        EditGoTo ID:=1
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub LOOP_resource_names()
+https://social.msdn.microsoft.com/Forums/sqlserver/en-US/474d7236-86da-4e57-bf94-9fa49cba31af/vba-for-ms-project-looping-through-tasks?forum=isvvba
+Macro to Highlight "Night Shift" Tasks
+Dim T As Task
+Dim seenbefore, XPARENT_DETAILS As String
+On Error Resume Next
+Dim SubProjId As Long
+Dim TskSub As Task
+Show all Sub-tasks
+SelectSheet
+OutlineShowAllTasks
+For Each T In ActiveProject.Tasks
+        
+        
+        If InStr(1, LCase(t.ResourceNames), LCase("TRG")) Then t.ResourceNames = Replace(t.ResourceNames, "TRG", "XZXZXZRoss-Gower[50%],")
+                If InStr(1, LCase(t.ResourceNames), LCase("TRG")) Then t.ResourceNames = Replace(t.ResourceNames, "XZXZXZRoss_Gower", "XZXZXZRoss-Gower,")
+                        Matthew Planterose <Matthew.Planterose@XZXZXZ.cloud>
+                        T.ResourceNames = Replace(T.ResourceNames, "MP", "Matthew Planterose")
+                        T.ResourceNames = Replace(T.ResourceNames, "PE", "Peter Edwards")
+                        T.ResourceNames = Replace(T.ResourceNames, "SJ", "Steve Jenner")
+                        T.ResourceNames = Replace(T.ResourceNames, "TRG", "XZXZXZRoss-Gower")
+                        T.ResourceNames = Replace(T.ResourceNames, "ML", "Marc Lubout")
+                        T.ResourceNames = Replace(T.ResourceNames, "BM", "Bruno Melim")
+                        
+                        
+                        For q = 1 To T.Resources.Count
+                                xname = T.Resources(q).name
+                                T.ResourceNames = Replace(T.ResourceNames, xname, xname & "[50%]")
+                                Debug.Print T.Resources(q).name, T.Resources(q).name & "[50%]"
+                                Next
+                                
+                                Call REPLNAME("SJ", "Steve Jenner")
+                        Next T
+                        EditGoTo ID:=1
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub REPLNAME(ByRef XOLD, ByRef XNEW)
+If InStr(1, T.ResourceNames, XOLD) Then T.ResourceNames = Replace(T.ResourceNames, XOLD, XNEW)
+        Debug.Print XOLD, XNEW
+End Sub
+Attribute VB_Name = "sub_prokjects"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub InsertSubProjects()
+Declare the variables
+Dim projPath As String
+Dim projFile As String
+Specify the path
+projPath = "C:\Users\Tim\ownCloud\Documents\XZXZXZ_Shared\MS-Project\"
+projPath = ActiveProject.Path & "\"
+Get the first file
+projFile = Dir(projPath & "proj*.mpp", vbNormal)
+Do While Len(projFile) > 0
+        Debug.Print projFile
+        ConsolidateProjects Filenames:=projFile, NewWindow:=False, HideSubtasks:=True
+        
+        Get the next file
+        projFile = Dir
+        
+        Loop
+        
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub add_sub_projects2()
+https://msdn.microsoft.com/en-us/library/office/ff861090.aspx
+xpath = ActiveProject.Path & "\"
+x = x & ",Project_BCMS.mpp"
+x = x & ",Project_Infraimp.mpp"
+x = x & ",Project_Soc1ManagedServices Plan.mpp"
+x = x & ",Project_Soc2KPMG One-Off Plan.mpp"
+x = x & ",Project_Soc2KPMG Plan.mpp"
+x = x & ",Project_NonConformances.mpp"
+x = x & ",Programme_ResourcePool.mpp"
+x = x & ","
+xarray = Split(x, ",")
+For q = 1 To UBound(xarray)
+        fname = xarray(q)
+        Debug.Print fname
+        
+        ConsolidateProjects Filenames:=xpath & fname, NewWindow:=False, HideSubtasks:=True
+Next q
+End Sub
+Attribute VB_Name = "vba_export_modulesC"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub vba_export_modules()
+#http://www.cpearson.com/Excel/VBE.aspx
+ reference to extensibility library
+xprefix = ActiveProject.Path & "\vba_"
+xprefix = "C:\Users\Tim\Documents\Data2017\VBA\VBAProject\vba_"
+Dim objMyProj As VBProject
+Dim objVBComp As VBComponent
+Set objMyProj = Application.VBE.ActiveVBProject
+For Each objVBComp In objMyProj.VBComponents
+        If objVBComp.Type = vbext_ct_StdModule Then
+                Debug.Print "Exporting " & xprefix & objVBComp.name & Format(Date, "yyyymmdd-") & ".txt"
+                
+                objVBComp.Export xprefix & objVBComp.name & Format(Date, "yyyymmdd-") & ".bas"
+                objVBComp.Export xprefix & objVBComp.name & Format(Date, "yyyymmdd-") & ".txt"
+                
+        End If
+        Next
+        MsgBox "done"
+End Sub

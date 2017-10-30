@@ -1,0 +1,1262 @@
+
+Attribute VB_Name = "cOLOR_SELECTIONX"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub cOLOR_SELECTION()
+XCOLOR1 = RGB(0, 128, 128)
+XCOLOR2 = RGB(64, 0, 128)
+XCOLOR3 = RGB(128, 96, 0)
+XCOLOR4 = RGB(128, 32, 0)
+Dim XARRAY_COLOR(10)
+XARRAY_COLOR(1) = RGB(0, 128, 128)
+XARRAY_COLOR(2) = RGB(64, 0, 128)
+XARRAY_COLOR(3) = RGB(128, 96, 0)
+XARRAY_COLOR(4) = RGB(128, 32, 0)
+Set sld = Application.ActiveWindow.View.Slide
+For Q = 1 To sld.Shapes.Count
+        c = c + 1
+        If c > 4 Then c = 1
+                sld.Shapes(Q).TextFrame.TextRange.Font.Color = XARRAY_COLOR(c)
+                sld.Shapes(Q).TextFrame.TextRange.Font.Color = XARRAY_COLOR(c)
+                sld.Shapes(Q).TextFrame.TextRange.Font.Color = XARRAY_COLOR(c)
+                sld.Shapes(Q).TextFrame.TextRange.Font.Color = XARRAY_COLOR(c)
+                
+                Next
+End Sub
+Attribute VB_Name = "number_discs_on_slide"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub number_discs_on_slidex()
+x = 0
+On Error Resume Next
+x = 1
+For Z = 1 To ActivePresentation.Slides.Count
+        Z = 4
+        For Q = 1 To ActivePresentation.Slides(Z).Shapes.Count
+                xtype = ActivePresentation.Slides(Z).Shapes(Q).Type
+                xauto = ActivePresentation.Slides(Z).Shapes(Q).AutoShapeType
+                xd = " / "
+                
+                '  ActivePresentation.Slides(Z).Shapes(q).TextFrame.TextRange.Text = xtype & xd & xauto
+                
+                
+                If ActivePresentation.Slides(Z).Shapes(Q).AutoShapeType = 9 Then '  9 = circle or disc
+                        '.Fill.Transparency = 0#
+                        '.LockAspectRatio = msoTrue
+                        '.Height = 200
+                        '.Width = 200
+                        
+                        xred = RGB(255, 0, 0)
+                        ' ActivePresentation.Slides(Z).Shapes(q).Fill.ForeColor.SchemeColor = 5 '3 '5 is green
+                        ActivePresentation.Slides(Z).Shapes(Q).Fill.ForeColor.RGB = xred
+                        
+                        ActivePresentation.Slides(Z).Shapes(Q).TextFrame.TextRange.Text = "" & x
+                        ActivePresentation.Slides(Z).Shapes(Q).TextFrame.TextRange.Font.Name = "arial"
+                        ActivePresentation.Slides(Z).Shapes(Q).TextFrame.TextRange.Font.Size = 13
+                        x = x + 1
+                        
+                End If
+                
+                
+        Next Q
+Next Z
+Debug.Print xtext
+End Sub
+Attribute VB_Name = "powerpoint_table"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub powerpoint_table()
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub Sample()
+Dim oShp As Shape
+With ActiveWindow.Selection.ShapeRange(1)
+Set oShp = .Table.Cell(1, 1).Shape
+With oShp.Fill
+.Visible = msoTrue
+.Solid
+.ForeColor.RGB = RGB(153, 204, 255)
+.Transparency = 0#
+End With
+End With
+End Sub
+http://www.office-archive.com/11-powerpoint/e81bc3eee00feed4.htm
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub powerpoint_table2()
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub Sample()
+Dim oShp As Shape
+With ActiveWindow.Selection.ShapeRange(1)
+Set oShp = .Table.Cell(1, 1).Shape
+oShp.TextFrame.TextRange.Font.Name = "arial"
+oShp.TextFrame.TextRange.Font.Size = 9
+oShp.TextFrame.TextRange.Text = "PhaseNo"
+End With
+End Sub
+http://www.office-archive.com/11-powerpoint/e81bc3eee00feed4.htm
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub powerpoint_table3()
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub Sample()
+Dim oShp As Shape
+With ActiveWindow.Selection.ShapeRange(1)
+Set oShp = .Table.Cell(1, 1).Shape
+oShp.TextFrame.TextRange.Font.Name = "arial"
+oShp.TextFrame.TextRange.Font.Size = 9
+oShp.TextFrame.TextRange.Text = "PhaseNo"
+End With
+End Sub
+http://www.office-archive.com/11-powerpoint/e81bc3eee00feed4.htm
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub table4()
+TabIndex = 1
+r = ActivePresentation.Slides(4).Shapes(TabIndex).Table.Rows.Count
+c = ActivePresentation.Slides(4).Shapes(TabIndex).Table.Columns.Count
+For r = 1 To 5
+        For c = 1 To 1
+                ActivePresentation.Slides(4).Shapes(TabIndex).Table.Cell(r, c).Shape.TextFrame.TextRange.Text = "cccccccccccc"
+                ActivePresentation.Slides(4).Shapes(TabIndex).Table.Cell(r, c).Shape.TextFrame.TextRange.Font.Size = 9
+                ActivePresentation.Slides(4).Shapes(TabIndex).Table.Cell(r, c).Shape.TextFrame.TextRange.Font.Name = "arial"
+                ActivePresentation.Slides(4).Shapes(1).Table.Rows(2).Height = 300
+                
+        Next c
+Next r
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub table5()
+xslide = 8
+For c = 1 To 10
+        
+        ActivePresentation.Slides(xslide).Shapes(1).Table.Columns(c).Width = 100
+Next c
+ActivePresentation.Slides(xslide).Shapes(1).Table.Columns(1).Width = 60
+ActivePresentation.Slides(xslide).Shapes(1).Table.Columns(7).Width = 120
+ActivePresentation.Slides(xslide).Shapes(1).Table.Columns(8).Width = 120
+ActivePresentation.Slides(xslide).Shapes(1).Table.Rows(6).Height = 110
+ActivePresentation.Slides(xslide).Shapes(1).Table.Rows(7).Height = 185
+ActivePresentation.Slides(xslide).Shapes(1).Table.Rows(8).Height = 185
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub table7()
+xslide = 7
+For c = 2 To 8
+        ActivePresentation.Slides(xslide).Shapes(1).Table.Rows().Height = 90
+Next c
+ActivePresentation.Slides(xslide).Shapes(1).Table.Rows(3).Height = 90
+ActivePresentation.Slides(xslide).Shapes(1).Table.Columns(8).Width = 120
+End Sub
+Attribute VB_Name = "PPT_DESIGN_SIZE"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub DESIGN_SIZE()
+With ActivePresentation.PageSetup
+.SlideSize = ppSlideSizeCustom
+.SlideWidth = 400
+.SlideHeight = 400
+.FirstSlideNumber = 1
+.SlideOrientation = msoOrientationVertical 'msoOrientationHorizontal
+.NotesOrientation = msoOrientationVertical
+End With
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub DESIGN_SIZE01_XZXZXZcard()
+With ActivePresentation.PageSetup
+.SlideSize = ppSlideSizeCustom
+.SlideWidth = (1050 * 0.9)
+.SlideHeight = (600 * 0.9)
+  .FirstSlideNumber = 1
+.SlideOrientation = msoOrientationHorizontal
+.NotesOrientation = msoOrientationVertical
+End With
+End Sub
+Attribute VB_Name = "whoamix"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub whoami()
+x = x & vbCrLf & "Date:" & Date
+x = x & vbCrLf & "Document:" & ActivePresentation.Name
+x = x & vbCrLf & "Path:" & ActivePresentation.Path
+x = x & vbCrLf & "Fname:" & ActivePresentation.Path & "\" & ActivePresentation.Name
+x = InputBox(x, x, x)
+Debug.Print x
+End Sub
+Attribute VB_Name = "aaa_save_asGIFs"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub aaa_save_asGIFs()
+Dim x As Integer
+Dim sImagePath As String
+Dim sImageName As String
+Dim oSlide As Slide '* Slide Object
+Dim lScaleWidth As Long '* Scale Width
+Dim lScaleHeight As Long '* Scale Height
+On Error GoTo Err_ImageSave
+xwide = ActivePresentation.PageSetup.SlideWidth '= 1050
+xhigh = ActivePresentation.PageSetup.SlideHeight   ' = 600
+sImagePath = ActivePresentation.Path & "\"
+For Each oSlide In ActivePresentation.Slides
+        s = s + 1
+        x = 0
+        For scaleno = 1 To 3
+                x = x + 1
+                
+                
+                sImageName = "1XZXZXZ_" & Format(s, "000") & Format(x, "000") & ".gif"
+                oSlide.Export sImagePath & sImageName, "gif", xwide, xhigh
+                
+                
+                sImageName = "2XZXZXZ_" & Format(s, "000") & Format(x, "000") & ".JPG"
+                oSlide.Export sImagePath & sImageName, "JPG", xwide, xhigh
+                
+                sImageName = "3XZXZXZ_" & Format(s, "000") & Format(x, "000") & ".PNG"
+                oSlide.Export sImagePath & sImageName, "PNG", xwide, xhigh
+                
+                
+                xwide = xwide * 0.8
+                xhigh = xhigh * 0.8
+                
+                
+        Next scaleno
+        
+Next oSlide
+Err_ImageSave:
+If Err <> 0 Then
+        MsgBox Err.Description
+End If
+Read more at http://vbadud.blogspot.com/2009/05/save-powerpoint-slides-as-images-using.html#yBkTciq0cfQECIyw.99
+stAppName = "C:\WINDOWS\system32\mspaint.exe"
+stfilename = sImagePath & "temp1.gif"
+Call Shell(stAppName & " " & stfilename, 1)
+Call Shell("explorer.exe" & " " & sImagePath, vbNormalFocus)
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub ExportSlides_TR()
+Dim xscale As Integer
+Dim ImageWidth As Integer
+Dim ImageHeight As Integer
+Dim OutputFolder As String
+Dim ImageBaseName As String
+xscale = 3
+ImageWidth = 2048 / xscale
+ImageHeight = 1536 / xscale
+OutputFolder = "C:\Temp\"
+OutputFolder = ActivePresentation.Path & "\"
+ImageBaseName = "Slide_"
+Dim oSl As Slide
+For Each oSl In ActivePresentation.Slides
+        oSl.Export OutputFolder & ImageBaseName & Format(oSl.SlideIndex, "0000") & "." & "PNG", _
+        "PNG", ImageWidth, ImageHeight
+Next     ' slide
+Debug.Print OutputFolder
+Call Shell("explorer.exe" & " " & OutputFolder, vbNormalFocus)
+End Sub
+Attribute VB_Name = "thjr_export_modules"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub vba_export_modules_local()
+#http://www.cpearson.com/Excel/VBE.aspx
+ reference to extensibility library
+#http://www.cpearson.com/Excel/VBE.aspx
+ reference to extensibility library
+Dim pk As vbext_ProcKind
+Dim objMyProj As VBProject
+Dim objVBComp As VBComponent
+XDATE = Format(Date, "yyyymmdd-")
+Set objMyProj = Application.VBE.ActiveVBProject
+For Each objVBComp In objMyProj.VBComponents
+        If objVBComp.Type = vbext_ct_StdModule Then
+                Debug.Print "Exporting " & Xprefix & objVBComp.Name & ".txt"
+                
+                Xprefix = ActivePresentation.Path & "vba_ppt01_"
+                objVBComp.Export Xprefix & objVBComp.Name & ".bas"
+                ' objVBComp.Export Xprefix & objVBComp.Name & ".txt"
+                
+        End If
+        Next
+        '#################################
+        If FLAG = "YES" Then
+                xline = "'\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"
+                xd = vbCrLf & xline & vbCrLf
+                For Each objVBComp In objMyProj.VBComponents
+                        If objVBComp.Type = vbext_ct_StdModule Then
+                                Fname = Xprefix & objVBComp.Name & ".txt"
+                                xtext = xtext & vbCrLf
+                                xtext = xtext & vbCrLf & xline
+                                xtext = xtext & vbCrLf & "'" & Fname
+                                xtext = xtext & vbCrLf & "'" & "By XZXZXZ, with full acknowlegment for components I have learned from the Internet!"
+                                xtext = xtext & vbCrLf & "'" & "No warranty, No guartentee, No liability, No responsibility - use at your own risk."
+                                xtext = xtext & vbCrLf & "'" & "www.XZXZXZ.com " & Format(Now, "ddd dd-mmm-yyyy")
+                                xtext = xtext & vbCrLf & xline
+                                xtext = xtext & vbCrLf
+                                xtext = xtext & get_info_fileio(Fname)
+                                
+                                
+                        End If
+                        
+                        Next
+                End If
+                '  Call PRINT_INFO(xtext, "C:\Users\Tim\Documents\Data2017\VBA\VBAPowerPoint\CONSOLIDATED_PPTcode" & XDATE & ".txt")
+                Shell ("explorer.exe " & ActivePresentation.Path)
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub vba_export_modules_central()
+#http://www.cpearson.com/Excel/VBE.aspx
+ reference to extensibility library
+#http://www.cpearson.com/Excel/VBE.aspx
+ reference to extensibility library
+Dim pk As vbext_ProcKind
+Dim objMyProj As VBProject
+Dim objVBComp As VBComponent
+XDATE = Format(Date, "yyyymmdd-")
+Set objMyProj = Application.VBE.ActiveVBProject
+For Each objVBComp In objMyProj.VBComponents
+        If objVBComp.Type = vbext_ct_StdModule Then
+                Debug.Print "Exporting " & Xprefix & objVBComp.Name & ".txt"
+                
+                Xprefix = "V:\Data2017\VBA\VBAPowerPoint\vba_ppt01_"
+                objVBComp.Export Xprefix & objVBComp.Name & ".bas"
+                ' objVBComp.Export Xprefix & objVBComp.Name & ".txt"
+                
+        End If
+        Next
+        '#################################
+        If FLAG = "YES" Then
+                xline = "'\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"
+                xd = vbCrLf & xline & vbCrLf
+                For Each objVBComp In objMyProj.VBComponents
+                        If objVBComp.Type = vbext_ct_StdModule Then
+                                Fname = Xprefix & objVBComp.Name & ".txt"
+                                xtext = xtext & vbCrLf
+                                xtext = xtext & vbCrLf & xline
+                                xtext = xtext & vbCrLf & "'" & Fname
+                                xtext = xtext & vbCrLf & "'" & "By XZXZXZ, with full acknowlegment for components I have learned from the Internet!"
+                                xtext = xtext & vbCrLf & "'" & "No warranty, No guartentee, No liability, No responsibility - use at your own risk."
+                                xtext = xtext & vbCrLf & "'" & "www.XZXZXZ.com " & Format(Now, "ddd dd-mmm-yyyy")
+                                xtext = xtext & vbCrLf & xline
+                                xtext = xtext & vbCrLf
+                                xtext = xtext & get_info_fileio(Fname)
+                                
+                                
+                        End If
+                        
+                        Next
+                End If
+                '  Call PRINT_INFO(xtext, "C:\Users\Tim\Documents\Data2017\VBA\VBAPowerPoint\CONSOLIDATED_PPTcode" & XDATE & ".txt")
+                Shell ("explorer.exe " & ActivePresentation.Path)
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function PRINT_INFO(ByVal PARAM_TEXT As String, ByVal xfilename As String)
+vba_excel report cells, create file, print file, notepad
+Dim FILENUMBER1 As Integer
+Dim xpath As String
+Dim xfilename As String
+xpath = Environ("TEMP")
+xfilename = "TEMP" & Format(Now(), "yymmdd") & "-" & Format(Now(), "HHMM") & ".HTML"
+FILENUMBER1 = FreeFile
+Open XPath & xfilename For Output As #FILENUMBER1 '
+Print #FILENUMBER1, PARAM_TEXT
+Close #FILENUMBER1
+Call open_file(XPath & xfilename)
+End Function
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function open_file(xfilename As String)
+vba_excel report cells, create file, print file, notepad
+Dim ReturnValue, I
+ReturnValue = Shell("notepad.EXE " & xfilename, 1)  ' Run Calculator.
+ReturnValue = Shell("C:\Program Files\Internet Explorer" & "\IEXPLORE.EXE " & xfilename, vbNormalFocus)
+ReturnValue = Shell("notepad.EXE " & xfilename, 1)  ' Run Calculator.
+AppActivate ReturnValue
+End Function
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function get_info_fileio(ByVal xfilename As String) As String
+vba fileio text2html dirr
+http://www.eggheadcafe.com/articles/20030627b.asp
+Debug.Print vbCrLf & xfilename
+Const ForReading = 1
+Const ForWriting = 2
+Const ForAppending = 8
+Const TristateUseDefault = -2
+Const TristateTrue = -1
+Const TristateFalse = 0
+Dim oFS
+Dim oFile
+Dim oStream
+Dim xtext As String
+Set oFS = Server.CreateObject("Scripting.FileSystemObject")
+Set oFS = CreateObject("Scripting.FileSystemObject")
+Set oFile = oFS.GetFile(xfilename)
+Set oStream = oFile.OpenAsTextStream(ForReading, TristateUseDefault)
+Do While Not oStream.AtEndOfStream
+        srecord = oStream.ReadLine
+        xtext = xtext & vbCrLf & srecord
+        'Response.Write sRecord
+        Loop
+        oStream.Close
+        get_info_fileio = xtext
+End Function
+Attribute VB_Name = "thjr_saveas"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub aa_saveas()
+name2 = ActivePresentation.Path & "\" & ActivePresentation.Name
+name1 = Replace(name2, ".ppt", Format(Now, "yymmdd-HHMM") & ".ppt")
+With Application.ActivePresentation
+.SaveCopyAs name1
+.SaveAs name2
+End With
+End Sub
+Attribute VB_Name = "ExportMe_GIF"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub ExportMe_GIF()
+Dim ExportPath As String   ' drive:\path to export to
+Dim Pixwidth As Integer    '  size in pixels of exported image
+Dim Pixheight As Integer
+Dim oSlide As Slide
+ Edit to suit
+Pixwidth = 1024    '  arbitrarily ... set whatever value you like here
+Pixwidth = 2048    '  arbitrarily ... set whatever value you like here
+Pixwidth = 2048 * 15
+ Set height proportional to slide height
+Pixheight = (Pixwidth * ActivePresentation.PageSetup.SlideHeight) / ActivePresentation.PageSetup.SlideWidth
+ExportPath = ActivePresentation.Path & "\"
+ExportPath = "C:\Users\Tim\Documents\Data2017\temp\"
+Set oSlide = ActiveWindow.View.Slide
+With oSlide
+.Export ExportPath & "Slide" & CStr(.SlideIndex) & ".JPG", "JPG", Pixwidth, Pixheight
+.Export ExportPath & "Slide" & CStr(.SlideIndex) & ".png", "png", Pixwidth, Pixheight
+.Export ExportPath & "Slide" & CStr(.SlideIndex) & ".tif", "tif", Pixwidth, Pixheight
+.Export ExportPath & "Slide" & CStr(.SlideIndex) & ".gif", "gif", Pixwidth, Pixheight
+End With
+Call Shell("explorer.exe" & " " & ExportPath, vbNormalFocus)
+End Sub
+Attribute VB_Name = "ExportSlidesToIndividualPDFx1"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub ExportSlidesToIndividualPDF2()
+Dim oPPT As Presentation, oSlide As Slide
+Dim sPath As String, sExt As String
+Set oPPT = ActivePresentation
+sPath = oPPT.FullName & "_Slide_"
+sExt = ".pdf"
+sPath = "h:\temp\"
+For Each oSlide In oPPT.Slides
+        I = oSlide.SlideNumber
+        oSlide.Select
+        oPPT.ExportAsFixedFormat _
+        Path:=sPath & "ProjGuide" & I & "(c)XZXZXZ" & sExt, _
+        FixedFormatType:=ppFixedFormatTypePDF, _
+        RangeType:=ppPrintSelection
+        Next
+        Set oPPT = Nothing
+        Call Shell("explorer.exe" & " " & "h:\temp\", vbNormalFocus)
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub ExportSlidesToIndividualPDF()
+Dim oPPT As Presentation, oSlide As Slide
+Dim sPath As String, sExt As String
+Set oPPT = ActivePresentation
+sPath = oPPT.FullName & "_Slide_"
+sExt = ".pdf"
+sPath = "h:\temp\"
+For Each oSlide In oPPT.Slides
+        Fname = sPath & "ProjGuidex" & I & "(c)XZXZXZ" & sExt
+        
+        Call DeleteFile(fname)
+        
+        I = oSlide.SlideNumber
+        oSlide.Select
+        oPPT.ExportAsFixedFormat _
+        Path:=sPath & "ProjxGuide" & I & "(c)XZXZXZ" & sExt, _
+        FixedFormatType:=ppFixedFormatTypePDF, _
+        RangeType:=ppPrintSelection
+        Next
+        Set oPPT = Nothing
+        Call Shell("explorer.exe" & " " & "h:\temp\", vbNormalFocus)
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub DeleteFile(ByVal FileToDelete As String)
+If FileExists(FileToDelete) Then 'See above
+        SetAttr FileToDelete, vbNormal
+        Kill FileToDelete
+End If
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function FileExists(ByVal FileToTest As String) As Boolean
+FileExists = (Dir(FileToTest) <> "")
+End Function
+Attribute VB_Name = "actievslide_grab"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub actievslide_grab()
+Dim sld As Slide
+Dim shp As Shape
+Set sld = Application.ActiveWindow.View.Slide
+Set shp = sld.Shapes.AddShape(Type:=msoShapeRectangle, _
+Left:=50, Top:=50, Width:=100,
+ Set myDocument = ActivePresentation.Slides(1)
+myDocument.Shapes.SelectAll
+sld.Shapes.SelectAll
+End Sub
+Attribute VB_Name = "AddNotestoPP"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub AddNotestoPP()
+Dim Sl As Slide, Sh As Shape, strNotesPageText As String
+strNotesPageText = "This Text will go in the notes area"
+Set Sl = ActivePresentation.Slides(1)
+~~> If no shapes to take Notes then add a shape first
+If Sl.NotesPage.Shapes.Count = 0 Then
+        Sl.NotesPage.Shapes.AddShape msoShapeRectangle, 0, 0, 0, 0
+        Sh = Sl.NotesPage.Shapes(1)
+        Sh.TextFrame.TextRange.Text = "TEST1"
+        '~~> If the ppt has shapes then see if they take text
+        Else
+        For Each Sh In Sl.NotesPage.Shapes
+                If Sh.HasTextFrame Then
+                        Sh.TextFrame.TextRange.Text = "TEST333"
+                        Exit For
+                End If
+        Next Sh
+End If
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function AddNotestoPP2(xtext_to_add, slide_No)
+Dim Sl As Slide, Sh As Shape, strNotesPageText As String
+strNotesPageText = xtext_to_add ' "This Text will go in the notes area"
+Set Sl = ActivePresentation.Slides(slide_No)
+~~> If no shapes to take Notes then add a shape first
+If Sl.NotesPage.Shapes.Count = 0 Then
+        Sl.NotesPage.Shapes.AddShape msoShapeRectangle, 0, 0, 0, 0
+        Sh = Sl.NotesPage.Shapes(1)
+        Sh.TextFrame.TextRange.Text = strNotesPageText
+        '~~> If the ppt has shapes then see if they take text
+        Else
+        For Each Sh In Sl.NotesPage.Shapes
+                If Sh.HasTextFrame Then
+                        Sh.TextFrame.TextRange.Text = strNotesPageText
+                        Exit For
+                End If
+        Next Sh
+End If
+End Function
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub AddNotestoPP3()
+Dim Sl As Slide, Sh As Shape, strNotesPageText As String
+For SLIDENO = 1 To 35
+        Set Sl = ActivePresentation.Slides(SLIDENO)
+        
+        
+        For Each Sh In Sl.NotesPage.Shapes
+                If Sh.HasTextFrame Then
+                        
+                        If Len(Sh.TextFrame.TextRange.Text) > Len("(C)XZXZXZ   ") Then
+                                'SKIP
+                                Else
+                                Sh.TextFrame.TextRange.Text = "By XZXZXZ"
+                                Sh.TextFrame.TextRange.Font.Size = 13
+                        End If
+                        
+                        Exit For
+                End If
+        Next Sh
+Next SLIDENO
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub Notes2Text()
+Dim intSlide As Integer
+Dim strFileName As String
+Dim strTemp As String
+Dim strNotes As String
+strFileName = "H:\Notes.txt" 'change to location and name of your choice
+strTemp = MsgBox("Include labels in the text file?", _
+vbQuestion + vbYesNoCancel, "Label Treatment")
+If strTemp = vbCancel Then Exit Sub
+        
+        Open strFileName For Output As #1
+        With ActivePresentation
+        If strTemp = vbYes Then
+                Print #1, "strFileName " & .Name
+                Print #1, "-----"
+                Print #1, ""
+        End If
+        For intSlide = 1 To .Slides.Count
+                If strTemp = vbYes Then Print #1, "Slide: " & intSlide
+                        strNotes = ActivePresentation.Slides(intSlide).NotesPage. _
+                        Shapes.Placeholders(2).TextFrame.TextRange.Text
+                        Print #1, strNotes
+                        If strTemp = vbYes Then Print #1, "========"
+                        Next intSlide
+                        End With
+                        Close #1
+                        
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub changenotestowhite()
+Dim osld As Slide
+Dim oShp As Shape
+Dim strNotes As String
+For Each osld In ActivePresentation.Slides
+        For Each oShp In osld.NotesPage.Shapes
+                If oShp.HasTextFrame Then
+                        If oShp.TextFrame.HasText Then
+                                oShp.TextFrame.TextRange.Font.Color = vbRed
+                        End If
+                End If
+        Next oShp
+Next osld
+End Sub
+Attribute VB_Name = "affect_shapes_on_slide"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub name_shapes_on_slide()
+On Error Resume Next
+Z = 1
+For Q = 1 To ActivePresentation.Slides(Z).Shapes.Count
+        xtype = ActivePresentation.Slides(Z).Shapes(Q).Type
+        xauto = ActivePresentation.Slides(Z).Shapes(Q).AutoShapeType
+        xtext = ActivePresentation.Slides(Z).Shapes(Q).TextFrame.TextRange.Text
+        Debug.Print "type:" & xtype & " auto:" & xauto & " txt:" & Left(xtext, 5)
+Next Q
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub affect_shapes_on_slide()
+On Error Resume Next
+For Z = 1 To 1
+        this is working on the speach bubbles!!
+        
+        For Q = 1 To ActivePresentation.Slides(Z).Shapes.Count
+                
+                If ActivePresentation.Slides(Z).Shapes(Q).AutoShapeType = 1 Then '  9 = circle or disc, 105 = speach bubble
+                        
+                        '.Fill.Transparency = 0#
+                        '.LockAspectRatio = msoTrue
+                        '.Height = 200
+                        '.Width = 200
+                        
+                        xred = RGB(255, 0, 0)
+                        'ActivePresentation.Slides(Z).Shapes(q).Fill.ForeColor.SchemeColor = 5 '3 '5 is green
+                        ActivePresentation.Slides(Z).Shapes(Q).Fill.ForeColor.RGB = vbWhite ' 14150650 ' vbWhite
+                        
+                        ActivePresentation.Slides(Z).Shapes(Q).TextFrame.TextRange.Font.Color = vbBlue 'vbBlack
+                        ActivePresentation.Slides(Z).Shapes(Q).TextFrame.TextRange.Font.Name = "arial"
+                        ActivePresentation.Slides(Z).Shapes(Q).TextFrame.TextRange.Font.Size = 14
+                        ActivePresentation.Slides(Z).Shapes(Q).TextFrame.TextRange.Font.Bold = False
+                        xtext_to_add = ActivePresentation.Slides(Z).Shapes(Q).TextFrame.TextRange.Text
+                        slide_No = Z
+                        ' Call AddNotestoPP2(xtext_to_add, slide_No)
+                        
+                        'http://pepitosolis.wordpress.com/2013/04/19/powerpoint-vba-formatting-a-shape-textbox/
+                        'change the line, word, sentence
+                        'http://cloford.com/resources/colours/namedcol.htm
+                        ActivePresentation.Slides(Z).Shapes(Q).TextFrame.TextRange.Lines(1).Font.Color = vbRed '36095
+                        
+                End If
+                
+                
+        Next Q
+        
+Next Z
+End Sub
+Attribute VB_Name = "bulletsx"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub bullet_query()
+Print PowerPoint.ActiveWindow.Selection.TextRange.ParagraphFormat.bullet.Style
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub bullet()
+http://www.java2s.com/Code/VBA-Excel-Access-Word/PowerPoint/FormattingtheBulletsforaTextRange.htm
+With ActiveSlide.Shapes(1).TextFrame.TextRange.ParagraphFormat.bullet
+.Type = ppBulletUnnumbered
+.Character = 254
+With .Font
+.Name = "Wingdings"
+.Size = 44
+.Color = RGB(255, 255, 255)
+End With
+End With
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub bulletText()
+http://social.msdn.microsoft.com/Forums/vstudio/en-US/83b6b0a0-232c-45f9-8877-6670009518fc/powerpoint-removing-bullets?forum=vsto
+Dim tRng As PowerPoint.TextRange
+Set tRng = PowerPoint.ActiveWindow.Selection.TextRange
+experiment with the following individually and see what they do
+regarding the styles, there are many choices
+tRng.ParagraphFormat.bullet = msoFalse
+tRng.ParagraphFormat.bullet = msoTrue
+tRng.ParagraphFormat.bullet.Style = ppBulletAlphaUCParenBoth ' 3 is bullet
+as for changing the bullets in mass, try the following code
+Dim tFrm As PowerPoint.TextFrame
+Set tFrm = PowerPoint.ActiveWindow.Selection.ShapeRange.TextFrame
+tFrm.TextRange.ParagraphFormat.bullet = msoFalse
+tFrm.TextRange.ParagraphFormat.bullet = ppBulletAlphaUCParenBoth
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub RemoveIndents()
+Dim oShp As Shape
+Dim x As Long
+For Z = 1 To ActiveWindow.Selection.ShapeRange.Count
+        Set oShp = ActiveWindow.Selection.ShapeRange(Z)
+        
+        With oShp
+        
+        With .TextFrame.Ruler
+        
+        For x = 1 To .Levels.Count
+                
+                .Levels(x).FirstMargin = 15
+                
+                .Levels(x).LeftMargin = 3
+                
+                Next
+                
+                End With
+                
+                End With
+        Next Z
+End Sub
+Attribute VB_Name = "Module_Step1_WhitebordCapture"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub Step1_ImportPictureAtSize2()
+Dim x As String
+x = x & ",Z:\Incorp Private Governance Work-Stream\XZXZXZ - Work-Streams\Meeting 2013-07-29\IMAG0584.jpg"
+x = x & ",Z:\Incorp Private Governance Work-Stream\XZXZXZ - Work-Streams\Meeting 2013-07-29\IMAG0585.jpg"
+x = x & ",Z:\Incorp Private Governance Work-Stream\XZXZXZ - Work-Streams\Meeting 2013-07-29\IMAG0586.jpg"
+x = x & ",Z:\Incorp Private Governance Work-Stream\XZXZXZ - Work-Streams\Meeting 2013-07-29\IMAG0587.jpg"
+#######################################################
+#######################################################
+#######################################################
+Dim fd As FileDialog
+Dim objfl As Variant
+Dim filnam As String
+... other code .....
+Set fd = Application.FileDialog(msoFileDialogFilePicker)
+With fd
+.ButtonName = "Select"
+ .AllowMultiSelect = False
+.AllowMultiSelect = True
+ .Filters.Add "Text Files", "*.txt;*.csv;*.tab;*.asc", 1
+.Title = "Choose Transactions file to import"
+.InitialView = msoFileDialogViewDetails
+.Show
+For Each objfl In .SelectedItems
+        filnam = objfl
+        ' Debug.Print filnam
+        x = x & "," & filnam
+Next objfl
+On Error GoTo 0
+End With
+Set fd = Nothing
+Debug.Print x
+Exit Sub
+#######################################################
+#######################################################
+#######################################################
+XPath = ActivePresentation.Path & "\"
+xarray = Split(x, ",")
+Dim oSlide As Slide
+Dim oPicture As Shape
+For xslideno = 1 To UBound(xarray)
+        Dim pptSlide As Slide
+        Dim pptLayout As CustomLayout
+        ' What layout/master should the new slide use?
+        ' Designs(1) = the first SlideMaster in the presentation
+        ' CustomLayouts(1) = a Title layout
+        ' To get other layout index numbers, look at the layout gallery
+        ' in PPT, count left to right, top to bottom
+        
+        Set pptLayout = ActivePresentation.Designs(1).SlideMaster.CustomLayouts(1)
+        Set pptSlide = ActivePresentation.Slides.AddSlide(2, pptLayout)
+        
+        Next
+        
+        For xslideno = 1 To UBound(xarray)
+                ' Change slide index position to the first slide
+                ActiveWindow.View.GotoSlide xslideno
+                
+                ' Set oSlide to the first slide in the presentation.
+                Set oSlide = ActiveWindow.Presentation.Slides(xslideno)
+                
+                ' Set oPicture to the picture file on your computer. Set Link To
+                ' File to false, Save With Document to true, and place it in the
+                ' upper left-hand corner of the slide, sized to 1 by 1 points.
+                '
+                ' NOTE: Before you run this code replace this text string:
+                '   "Put image path here!"
+                ' with the path to the image you want to import. For example:
+                '   "c:\MyImage.bmp"
+                'xfilename = "T:\Alan2\SnowImage" & Format(xslideno, "000") & ".jpg"
+                xfilename = XPath & xarray(xslideno)
+                ' Set oPicture = oSlide.Shapes.AddPicture(xfilename, _
+                '    msoFalse, msoTrue, 10, 10, 10, 10)
+                
+                'Set oPicture = oSlide.Shapes.AddPicture(xfilename, msoFalse, msoTrue, 1, 1, -1, -1) ' this is good
+                
+                'Set oPicture = oSlide.Shapes.AddPicture(xfilename, msoFalse, msoTrue, 90, 20, 550, 400)
+                Set oPicture = oSlide.Shapes.AddPicture(xfilename, msoFalse, msoTrue, 90, 20, 550, 350) ' landscape photo
+                Set oPicture = oSlide.Shapes.AddPicture(xfilename, msoFalse, msoTrue, 20, 125, 550 * 1.75, 350 * 1.75) ' landscape photo
+                
+                Set oPicture = oSlide.Shapes.AddPicture(xfilename, msoFalse, msoTrue, 30, 0, 350, 550) ' portrait photo
+                
+                'Set oPicture = oSlide.Shapes.AddPicture(xfilename, msoFalse, msoTrue, xleft, xtop, xwidth, xtall)
+                'xscale = 33
+                'Set oPicture = oSlide.Shapes.AddPicture(xfilename, msoFalse, msoTrue, 30, 10, 8 * xscale, 10 * xscale)
+                'Set oPicture = oSlide.Shapes.AddPicture(xfilename, msoFalse, msoTrue, 10, 15, 8 * xscale, 10 * xscale)
+                ' Now scale the picture to full size, with "Relative to original
+                ' picture size" set to true for both height and width.
+                
+                ' oPicture.ScaleHeight 1, msoTrue
+                ' oPicture.ScaleWidth 1, msoTrue
+                
+                ' Move the picture to the center of the slide. Select it.
+                'With ActivePresentation.PageSetup
+                '
+                '   oPicture.Left = (.SlideWidth \ 2) - (oPicture.Width \ 2)
+                '   oPicture.Top = (.SlideHeight \ 2) - (oPicture.Height \ 2)
+                '   oPicture.Select
+                'End With
+                
+                xname = Replace(xfilename, "Z:\public\site\CGAJ\Photos\", "")
+                ActivePresentation.Slides(xslideno).Shapes("Rectangle 3").TextFrame.TextRange.Text = xname
+        Next xslideno
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub Step1_ImportPictureAtSize()
+Dim x As String
+x = x & ",Z:\Incorp Private Governance Work-Stream\XZXZXZ - Work-Streams\Meeting 2013-07-29\IMAG0584.jpg"
+x = x & ",Z:\Incorp Private Governance Work-Stream\XZXZXZ - Work-Streams\Meeting 2013-07-29\IMAG0585.jpg"
+x = x & ",Z:\Incorp Private Governance Work-Stream\XZXZXZ - Work-Streams\Meeting 2013-07-29\IMAG0586.jpg"
+x = x & ",Z:\Incorp Private Governance Work-Stream\XZXZXZ - Work-Streams\Meeting 2013-07-29\IMAG0587.jpg"
+#######################################################
+#######################################################
+#######################################################
+Dim fd As FileDialog
+Dim objfl As Variant
+Dim filnam As String
+... other code .....
+Set fd = Application.FileDialog(msoFileDialogFilePicker)
+With fd
+.ButtonName = "Select"
+ .AllowMultiSelect = False
+.AllowMultiSelect = True
+ .Filters.Add "Text Files", "*.txt;*.csv;*.tab;*.asc", 1
+.Title = "Choose Transactions file to import"
+.InitialView = msoFileDialogViewDetails
+.Show
+For Each objfl In .SelectedItems
+        filnam = objfl
+        ' Debug.Print filnam
+        x = x & "," & filnam
+Next objfl
+On Error GoTo 0
+End With
+Set fd = Nothing
+Debug.Print x
+Exit Sub
+#######################################################
+#######################################################
+#######################################################
+XPath = ActivePresentation.Path & "\"
+xarray = Split(x, ",")
+Dim oSlide As Slide
+Dim oPicture As Shape
+For xslideno = 1 To UBound(xarray)
+        Dim pptSlide As Slide
+        Dim pptLayout As CustomLayout
+        ' What layout/master should the new slide use?
+        ' Designs(1) = the first SlideMaster in the presentation
+        ' CustomLayouts(1) = a Title layout
+        ' To get other layout index numbers, look at the layout gallery
+        ' in PPT, count left to right, top to bottom
+        
+        Set pptLayout = ActivePresentation.Designs(1).SlideMaster.CustomLayouts(1)
+        Set pptSlide = ActivePresentation.Slides.AddSlide(2, pptLayout)
+        
+        Next
+        
+        For xslideno = 1 To UBound(xarray)
+                ' Change slide index position to the first slide
+                ActiveWindow.View.GotoSlide xslideno
+                
+                ' Set oSlide to the first slide in the presentation.
+                Set oSlide = ActiveWindow.Presentation.Slides(xslideno)
+                
+                ' Set oPicture to the picture file on your computer. Set Link To
+                ' File to false, Save With Document to true, and place it in the
+                ' upper left-hand corner of the slide, sized to 1 by 1 points.
+                '
+                ' NOTE: Before you run this code replace this text string:
+                '   "Put image path here!"
+                ' with the path to the image you want to import. For example:
+                '   "c:\MyImage.bmp"
+                'xfilename = "T:\Alan2\SnowImage" & Format(xslideno, "000") & ".jpg"
+                xfilename = XPath & xarray(xslideno)
+                ' Set oPicture = oSlide.Shapes.AddPicture(xfilename, _
+                '    msoFalse, msoTrue, 10, 10, 10, 10)
+                
+                'Set oPicture = oSlide.Shapes.AddPicture(xfilename, msoFalse, msoTrue, 1, 1, -1, -1) ' this is good
+                
+                'Set oPicture = oSlide.Shapes.AddPicture(xfilename, msoFalse, msoTrue, 90, 20, 550, 400)
+                Set oPicture = oSlide.Shapes.AddPicture(xfilename, msoFalse, msoTrue, 90, 20, 550, 350) ' landscape photo
+                Set oPicture = oSlide.Shapes.AddPicture(xfilename, msoFalse, msoTrue, 30, 0, 350, 550) ' portrait photo
+                
+                'Set oPicture = oSlide.Shapes.AddPicture(xfilename, msoFalse, msoTrue, xleft, xtop, xwidth, xtall)
+                'xscale = 33
+                'Set oPicture = oSlide.Shapes.AddPicture(xfilename, msoFalse, msoTrue, 30, 10, 8 * xscale, 10 * xscale)
+                'Set oPicture = oSlide.Shapes.AddPicture(xfilename, msoFalse, msoTrue, 10, 15, 8 * xscale, 10 * xscale)
+                ' Now scale the picture to full size, with "Relative to original
+                ' picture size" set to true for both height and width.
+                
+                ' oPicture.ScaleHeight 1, msoTrue
+                ' oPicture.ScaleWidth 1, msoTrue
+                
+                ' Move the picture to the center of the slide. Select it.
+                'With ActivePresentation.PageSetup
+                '
+                '   oPicture.Left = (.SlideWidth \ 2) - (oPicture.Width \ 2)
+                '   oPicture.Top = (.SlideHeight \ 2) - (oPicture.Height \ 2)
+                '   oPicture.Select
+                'End With
+                
+                xname = Replace(xfilename, "Z:\public\site\CGAJ\Photos\", "")
+                ActivePresentation.Slides(xslideno).Shapes("Rectangle 3").TextFrame.TextRange.Text = xname
+        Next xslideno
+End Sub
+Attribute VB_Name = "name_shapes_on_slide"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub name_shapes_on_slide()
+On Error Resume Next
+Z = 14
+For Q = 1 To ActivePresentation.Slides(Z).Shapes.Count
+        xtype = ActivePresentation.Slides(Z).Shapes(Q).Type
+        xauto = ActivePresentation.Slides(Z).Shapes(Q).AutoShapeType
+        xtext = ActivePresentation.Slides(Z).Shapes(Q).TextFrame.TextRange.Text
+        Debug.Print xtype, xauto, Left(xtext, 50)
+Next Q
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub affect_shapes_on_slide()
+For Z = 14 To 27
+        
+        For Q = 1 To ActivePresentation.Slides(Z).Shapes.Count
+                
+                If ActivePresentation.Slides(Z).Shapes(Q).AutoShapeType = 105 Then
+                        '  9 = circle or disc, 105 = speach bubble
+                        
+                        '.Fill.Transparency = 0#
+                        '.LockAspectRatio = msoTrue
+                        '.Height = 200
+                        '.Width = 200
+                        
+                        xred = RGB(255, 0, 0)
+                        ActivePresentation.Slides(Z).Shapes(Q).Fill.ForeColor.SchemeColor = 5 '3 '5 is green
+                        ActivePresentation.Slides(Z).Shapes(Q).Fill.ForeColor.RGB = vbWhite
+                        
+                        ActivePresentation.Slides(Z).Shapes(Q).TextFrame.TextRange.Font.Color = vbBlack
+                        ActivePresentation.Slides(Z).Shapes(Q).TextFrame.TextRange.Font.Name = "arial"
+                        ActivePresentation.Slides(Z).Shapes(Q).TextFrame.TextRange.Font.Size = 13
+                        
+                        
+                        'http://pepitosolis.wordpress.com/2013/04/19/powerpoint-vba-formatting-a-shape-textbox/
+                        'change the line, word, sentence
+                        'http://cloford.com/resources/colours/namedcol.htm
+                        ActivePresentation.Slides(Z).Shapes(Q).TextFrame.TextRange.Lines(1).Font.Color = 36095
+                        
+                End If
+                
+                
+        Next Q
+        
+Next Z
+End Sub

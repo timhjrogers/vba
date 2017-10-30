@@ -1,0 +1,3434 @@
+
+Attribute VB_Name = "autotext_code"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub autotext_meet()
+x = x & vbCrLf & "#meet"
+x = x & vbCrLf & "t.XZXZXZ@gov.je"
+x = x & vbCrLf & "XZXZXZ@XZXZXZmail.com"
+x = x & vbCrLf & ""
+x = x & vbCrLf & ""
+x = x & vbCrLf & "Date/Time"
+x = x & vbCrLf & "Venue"
+x = x & vbCrLf & ""
+x = x & vbCrLf & "Background/Context"
+x = x & vbCrLf & ""
+x = x & vbCrLf & "Proposed Agenda"
+x = x & vbCrLf & ""
+x = x & vbCrLf & "Proposed Attendance"
+x = x & vbCrLf & ""
+x = x & vbCrLf & "Kind regards, Tim"
+x = x & vbCrLf & "XZXZXZHJ XZXZXZ"
+x = x & vbCrLf & "Mob 0XZXZXZXZXZXZ051 | Skype XZXZXZ"
+x = x & vbCrLf & "Founder ciChange Web: cichange.org | Twitter: @cichange"
+x = x & vbCrLf & "Curator TEDxStHelier Web: TEDxStHelier.com | Twitter: @TEDxStHelier"
+x = x & vbCrLf & ""
+Call PRINT_INFO(x, "c:\456789.txt")
+End Sub
+Attribute VB_Name = "calendar_list"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub calendar_listx()
+http://www.slipstick.com/developer/forward-meeting-details-to-another-address/
+On Error GoTo On_Error
+Dim Session As Outlook.Namespace
+Dim Report As String
+Dim AppointmentsFolder As Outlook.folder
+Dim currentItem As Object
+Dim currentAppointment As AppointmentItem
+Set Session = Application.Session
+Set AppointmentsFolder = Session.GetDefaultFolder(olFolderCalendar)
+For Each currentItem In AppointmentsFolder.Items
+        If (currentItem.Class = olAppointment) Then
+                Set currentAppointment = currentItem
+                
+                x = Int(Val(Format(currentAppointment.Start, "yyyymmdd")))
+                z = Int(Val(Format(Date, "yyyymmdd")))
+                'z = 20150510
+                
+                If x > z Then
+                        Debug.Print "tes", x, z
+                        Else
+                        Debug.Print "no", x, z
+                End If
+                
+                
+                If x > z Then
+                        Report = Report & currentAppointment.Start & ", "
+                        Report = Report & currentAppointment.End & ", "
+                        xtext = currentAppointment.Subject
+                        xtext = cleanCRLF(xtext)
+                        Report = Report & xtext & ", "
+                        
+                        xtext = currentAppointment.Body
+                        xtext = cleanCRLF(xtext)
+                        Report = Report & xtext & ", "
+                        
+                        
+                        xcount = xcount + 1
+                        
+                        ' If xcount < 5 Then Call newAppt_ItemAdd(currentItem)
+                        
+                        If xcount < 50 Then
+                                Set oForward = currentItem.ForwardAsVcal
+                                oForward.Recipients.Add "XZXZXZ@XZXZXZmail.com"
+                                'Send it
+                                'oForward.Send 'vcal doesn't seem to work for XZXZXZ so use this....
+                                
+                                xsubject = currentAppointment.Subject
+                                xlocation = currentAppointment.Location
+                                xstart = currentAppointment.Start
+                                xduration = currentAppointment.Duration
+                                
+                                
+                                
+                                Call CreateApptTR(xsubject, xlocation, xstart, xduration)
+                        End If ' xcount < 5
+                End If
+                
+                
+        End If
+        Report = Report & vbCrLf
+        
+        Next
+        
+        ' Debug.Print Report
+        Exiting:
+        Exit Sub
+        On_Error:
+        MsgBox "error=" & Err.Number & " " & Err.Description
+        Resume Exiting
+        
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function cleanCRLF(xtext)
+xtext = Replace(xtext, Chr(10), ";")
+xtext = Replace(xtext, ",", ";")
+xtext = Replace(xtext, vbCrLf, ";")
+xtext = Replace(xtext, vbCr, ";")
+xtext = Replace(xtext, vbLf, ";")
+xtext = Left(xtext, 500)
+cleanCRLF = xtext
+End Function
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function ForwardMeetingDetails(oRequest As MeetingItem)
+Dim oAppt As AppointmentItem
+Set oAppt = oRequest.GetAssociatedAppointment(True)
+Dim fwdAppt As MailItem
+Set fwdAppt = Application.CreateItem(olMailItem)
+strBody = "Organizer: " & oAppt.Organizer & vbCrLf _
+& "Start: " & oAppt.Start & vbCrLf & "End: " & oAppt.End _
+& vbCrLf & "Location: " & oAppt.Location & vbCrLf & "Message: " & oAppt.Body
+With fwdAppt
+.Recipients.Add "XZXZXZ@XZXZXZmail.com"
+.Subject = oAppt.Subject
+.Body = strBody
+.Send
+End With
+End Function
+Private Sub newAppt_ItemAdd(ByVal Item As Object)
+Dim fwdAppt As MailItem
+Set fwdAppt = Application.CreateItem(olMailItem)
+Dim strBody As String
+strBody = "Organizer: " & Item.Organizer & vbCrLf _
+& "Start: " & Item.Start & vbCrLf & "End: " & Item.End _
+& vbCrLf & "Location: " & Item.Location & vbCrLf & "Message: " & Item.Body
+With fwdAppt
+.Recipients.Add "XZXZXZ@XZXZXZmail.com"
+.Subject = Item.Subject
+.BodyFormat = olFormatPlain
+.Body = strBody
+Use Display to view onscreen and send yourself. Send will send it automatically
+.Display
+.Send
+End With
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub CreateAppt()
+Dim myItem As Object
+Dim myRequiredAttendee, myOptionalAttendee, myResourceAttendee As Outlook.Recipient
+Set myItem = Application.CreateItem(olAppointmentItem)
+myItem.MeetingStatus = olMeeting
+myItem.Subject = "Strategy Meeting"
+myItem.Location = "Conf Rm All Stars"
+myItem.Start = #5/10/2015 5:30:00 PM#
+myItem.Duration = 90
+Set myRequiredAttendee = myItem.Recipients.Add("XZXZXZ@XZXZXZ.com")
+myRequiredAttendee.Type = olRequired
+Set myOptionalAttendee = myItem.Recipients.Add("XZXZXZ@XZXZXZ.com")
+myOptionalAttendee.Type = olOptional
+Set myResourceAttendee = myItem.Recipients.Add("XZXZXZ@XZXZXZ.com")
+myResourceAttendee.Type = olResource
+myItem.Display
+myItem.Send
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub CreateApptTR(xsubject, xlocation, xstart, xduration)
+Dim myItem As Object
+Dim myRequiredAttendee, myOptionalAttendee, myResourceAttendee As Outlook.Recipient
+Set myItem = Application.CreateItem(olAppointmentItem)
+myItem.MeetingStatus = olMeeting
+myItem.Subject = xsubject
+myItem.Location = xlocation
+myItem.Start = xstart
+myItem.Duration = xduration
+Set myRequiredAttendee = myItem.Recipients.Add("XZXZXZ@XZXZXZ.com")
+myRequiredAttendee.Type = olRequired
+myItem.Display
+myItem.Send
+End Sub
+Attribute VB_Name = "choose_email"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub b1_fwd()
+x = "XZXZXZ@XZXZXZXZXZXZXZXZXZ.com; T.XZXZXZ@health.gov.je; XZXZXZXZXZXZci@XZXZXZ.com"
+x = "t.XZXZXZ@health.gov.je; XZXZXZ@XZXZXZXZXZXZXZXZXZ.com; tim@XZXZXZXZXZXZcompany.com; tim.XZXZXZ@XZXZXZi.co; XZXZXZXZXZXZci@XZXZXZ.com"
+x = " XZXZXZ@XZXZXZXZXZXZXZXZXZ.com; XZXZXZ@XZXZXZ.com;  XZXZXZXZXZXZci@XZXZXZ.com"
+x = InputBox(x, x, x)
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub a1_appt()
+UserForm1.Show
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub a1_XZXZXZ()
+ActiveInspector.currentItem.Actions("Reply to All").Enabled = False
+ActiveInspector.currentItem.Actions("Forward").Enabled = False
+MsgBox "locked"
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub a1_tedx()
+fname = "c:\temp67.txt"
+x = "DIARY Meeting with [person] on [date] at [time] at Coopers Coffee Waterfront (nr Cinema) "
+x = x & vbCrLf & "Regards, XZXZXZ0XZXZXZXZXZXZ051 Email XZXZXZ@XZXZXZXZXZXZXZXZXZ.com"
+x = x & vbCrLf & "http://www.XZXZXZXZXZXZcompany.com/company/"
+x = x & vbCrLf & ""
+x = x & vbCrLf & "XZXZXZ@XZXZXZXZXZXZXZXZXZ.com; XZXZXZ@XZXZXZ.com; XZXZXZXZXZXZci@XZXZXZ.com"
+x = x & vbCrLf & ""
+x = x & vbCrLf & ""
+Call PRINT_INFO(x, fname)
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub a1_cic()
+fname = "c:\temp67.txt"
+x = "DIARY Meeting with [person] on [date] at [time] at Coopers Coffee Waterfront (nr Cinema) "
+x = x & vbCrLf & "Regards, XZXZXZ0XZXZXZXZXZXZ051 Email XZXZXZ@XZXZXZXZXZXZXZXZXZ.com"
+x = x & vbCrLf & "http://www.XZXZXZXZXZXZcompany.com/company/"
+x = x & vbCrLf & ""
+x = x & vbCrLf & "XZXZXZ@XZXZXZXZXZXZXZXZXZ.com; XZXZXZ@XZXZXZ.com; XZXZXZXZXZXZci@XZXZXZ.com"
+x = x & vbCrLf & ""
+x = x & vbCrLf & ""
+Call PRINT_INFO(x, fname)
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function PRINT_INFO(ByVal PARAM_TEXT As String, ByVal xoutput As String)
+vba_excel report cells, create file, print file, notepad
+Dim FILENUMBER1 As Integer
+Dim xpath As String
+Dim xfilename As String
+xpath = ActiveWorkbook.Path & "\"
+xfilename = "TEMP" & Format(Now(), "yymmdd") & "-" & Format(Now(), "HHMM") & ".txt"
+xfilename = xoutput
+FILENUMBER1 = FreeFile
+Open xpath & xfilename For Output As #FILENUMBER1 '
+Print #FILENUMBER1, PARAM_TEXT
+Close #FILENUMBER1
+Call open_file(xpath & xfilename)
+End Function
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function open_file(xfilename As String)
+vba_excel report cells, create file, print file, notepad
+Dim ReturnValue, I
+ReturnValue = Shell("notepad.EXE " & xfilename, 1)  ' Run Calculator.
+AppActivate ReturnValue
+End Function
+Attribute VB_Name = "Email_HTML_WEB"
+VBA_OUTLOOK_20 SEPT 2011 1pm
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub aa_xform1()
+EmailForm.Show
+End Sub
+Private Sub UserForm_Initialize()
+CommandButton1.Caption = "Notes1"
+CommandButton2.Caption = "y:\docs tmpls"
+CommandButton3.Caption = "x:\docs dropbx"
+CommandButton4.Caption = "w:\docs downld"
+CommandButton4.Caption = "email_VBA"
+CommandButton5.Caption = "email_info"
+CommandButton6.Caption = "saveas_txt"
+CommandButton7.Caption = "FMT"
+CommandButton8.Caption = "SoJEmail"
+End Sub
+Private Sub CommandButton1_Click()
+xtext = xtext & vbCrLf & "AIDA / Data Diag Decision Do / Adult<>Adult"
+xtext = xtext & vbCrLf & "Social grooming"
+xtext = xtext & vbCrLf & "1.Reprocity.. (what can I do for you) I have.. Thought of you.."
+xtext = xtext & vbCrLf & "2.Consistency..If I, will you? As part of commitment, will you"
+xtext = xtext & vbCrLf & "3.Social proof..Works for TO, JA, etc"
+xtext = xtext & vbCrLf & "4.Authority..I've read, TO says, PRINCE2, or MBA suggests"
+xtext = xtext & vbCrLf & "5.Linking..I value you/ideas, teamwork, together, share, partners, win/win, things-right/right-things"
+xtext = xtext & vbCrLf & "6.Scarcity..Best use of time/diary,"
+xtext = xtext & vbCrLf & "Can we talk, I am keen to listen to your ideas/views"
+MsgBox xtext
+End Sub
+Private Sub CommandButton2_Click()
+ChangeFileOpenDirectory "Y:\personal\templates\"
+End Sub
+Private Sub CommandButton3_Click()
+ChangeFileOpenDirectory "x:\"
+End Sub
+Private Sub CommandButton4_Click()
+Call email_VBA
+End Sub
+Private Sub CommandButton5_Click()
+Call get_mail_info
+Call get_mail_info_properties
+End Sub
+Private Sub CommandButton6_Click()
+Call get_item_saveastxt
+End Sub
+Private Sub CommandButton7_Click()
+Call Make_MSG_RTF
+End Sub
+Private Sub CommandButton8_Click()
+Call SoJEmail
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub Email_treasury()
+xto = "tim.XZXZXZ@livetheXZXZXZ.com"
+xcc = "XZXZXZ@XZXZXZmail.com"
+xbcc = "tim.XZXZXZ@livetheXZXZXZ.com; XZXZXZ@XZXZXZmail.com;tim.XZXZXZ@livetheXZXZXZ.com "
+xbcc = "emailtosalesforce@h-6nhlfy8gcyn2cgvoy6c5q7v8r.2bwpueak.2.le.salesforce.com"
+xbcc = "emailtosalesforce@r-1g0ttmyzzwfbmkdwzwkks5vbwkpd74mt2d1yj70yfof8u8yhfo.31ff4keas.3.le.salesforce.com"
+xsubject = "Team Performance Framework - " & Format(Now, "ddd dd-mmm-yyyy HH:MM:SS")
+xbody = xbody & "Team Performance Framework"
+xbody = xbody & vbCrLf & ""
+xbody = xbody & vbCrLf & "Kind Regards, Tim"
+xbody = xbody & vbCrLf & ""
+xbody = xbody & vbCrLf & " "
+xbody = xbody & vbCrLf & "XZXZXZHJ XZXZXZ"
+xbody = xbody & vbCrLf & "Team Performance Framework Project"
+xbody = xbody & vbCrLf & "Office: Email t.XZXZXZ@gov.je"
+xbody = xbody & vbCrLf & "Mobile: Tel 0XZXZXZ XZXZXZ051 Email tim.XZXZXZ@livetheXZXZXZ.com"
+xbody = xbody & vbCrLf & ""
+xbody = xbody & vbCrLf & ""
+xbody = xbody & vbCrLf & "[Sent from mobile device]"
+Set myOlApp = CreateObject("Outlook.Application")
+Set newitem = myOlApp.CreateItem(MailItem)
+newitem.To = xto
+newitem.CC = xcc
+newitem.BCC = xbcc
+newitem.Subject = xsubject
+newitem.BodyFormat = olFormatRichText
+newitem.Body = xbody
+.BodyFormat = olFormatHTML
+.HTMLBody = "<HTML><H2>The body of this message will appear in HTML.</H2><BODY>Type the message text here. </BODY></HTML>"
+newitem.BillingInformation = "5Oaks Stores"
+newitem.Attachments.Add = xattachment
+newitem.Display
+newitem.Send
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub appointment_calendar()
+xto = "XZXZXZ@XZXZXZmail.com"
+xbcc = "XZXZXZ@XZXZXZmail.com; Tim.XZXZXZ@livetheXZXZXZ.com; t.XZXZXZ@gov.je"
+xbcc = "XZXZXZ@XZXZXZmail.com"
+xresource = "emailtosalesforce@r-1g0ttmyzzwfbmkdwzwkks5vbwkpd74mt2d1yj70yfof8u8yhfo.31ff4keas.3.le.salesforce.com"
+xsubject = "Coffee and catch-up meeting"
+xlocation = "Costa Coffee (Liberty Wharf), Pomme D'or Hotel or Radisson, Loving Spoonful(Snow Hill)"
+xdate = DateAdd("d", 7, Now)
+xduration = 20
+x = x & vbCrLf & "XZXZXZ& Clive Lunch Pomme D'or Hotel 1pm Tuesday 10 Oct"
+x = x & vbCrLf & "XZXZXZ& Clive Coffee & Catch-Up Pomme D'Or Hotel 1pm Tuesday 10 Oct"
+x = x & vbCrLf & ""
+x = x & vbCrLf & "I look forward to seeing you"
+x = x & vbCrLf & ""
+x = x & vbCrLf & "XZXZXZ@ XZXZXZ.com"
+x = x & vbCrLf & "Mob XZXZXZXZXZXZ051#"
+x = x & vbCrLf & "Skype XZXZXZ"
+x = x & vbCrLf & ""
+xbody = x
+Set myOlApp = CreateObject("Outlook.Application")
+For r = 2 To 1000
+        If Len(Range("a" & r).Value) > 1 Then
+                
+                xto = Range("b" & r).Value
+                xcc = Range("c" & r).Value
+                xsubject = Range("d" & r).Value
+                xbody = Range("e" & r).Value
+                xstart = Format(Range("f" & r).Value, "mm/dd/yyyy") 'xstarttime = Format(Range("G" & r).Value, "HH:MM:SS am/pm") 'xend = Range("g" & r).Value 'xdate = xstart & " " & xstarttime 'xlocation = Range("H" & r).Value 'xduration = Range("i" & r).Value
+                
+                'xbody = get_info_fileio("Y:\personal\templates\TEMPLATE_MSG.htm")
+                
+                Set myItem = myOlApp.CreateItem(olAppointmentItem)
+                myItem.MeetingStatus = olMeeting
+                myItem.Subject = xsubject
+                myItem.Location = xlocation
+                myItem.Body = xbody
+                'myItem.BCC = xresource
+                'myItem.Start = #9/24/2011 1:30:00 PM#
+                myItem.Start = xdate
+                
+                myItem.Duration = xduration
+                
+                Set myRequiredAttendee = myItem.Recipients.Add(xto)
+                myRequiredAttendee.Type = olRequired
+                
+                Set myOptionalAttendee = myItem.Recipients.Add(xbcc)
+                myOptionalAttendee.Type = olOptional
+                
+                
+                'Set myResourceAttendee = myItem.Recipients.Add(xresource)
+                'myResourceAttendee.Type = olResource
+                
+                myItem.Display
+                
+        End If
+        Next
+        
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub Email_HTML_WEB()
+xto = ""
+xcc = "XZXZXZ@XZXZXZmail.com"
+xbcc = ""
+nl = "<br/>"
+xbody = xbody & nl
+xbody = xbody & nl & "Kind Regards, Tim"
+xbody = xbody & nl & ""
+xbody = xbody & nl & " "
+xbody = xbody & nl & "XZXZXZHJ XZXZXZ"
+xbody = xbody & nl & "Mobile: Tel 0XZXZXZ XZXZXZ051 "
+xbody = xbody & nl & ""
+Set myOlApp = CreateObject("Outlook.Application")
+Set newitem = myOlApp.CreateItem(MailItem)
+newitem.To = xto
+newitem.CC = xcc
+newitem.BCC = xbcc
+newitem.Subject = xsubject
+newitem.Body = xbody
+newitem.BodyFormat = olFormatHTML
+newitem.HTMLBody = "<HTML><H2>The body of this message will appear in HTML.</H2><BODY>Type the message text here. </BODY></HTML>"
+xfilename = "V:/Data2017/web_sprint/zzhtmlForm.html"
+filecontent = get_info_fileio(xfilename)
+newitem.HTMLBody = filecontent & xbody
+newitem.BillingInformation = "Greenlight"
+newitem.Attachments.Add xfilename
+newitem.Display
+newitem.Send
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function get_info_fileio(ByVal xfilename As String) As String
+vba fileio text2html dirr
+http://www.eggheadcafe.com/articles/20030627b.asp
+Debug.Print vbCrLf & xfilename
+Const ForReading = 1
+Const ForWriting = 2
+Const ForAppending = 8
+Const TristateUseDefault = -2
+Const TristateTrue = -1
+Const TristateFalse = 0
+Dim oFS
+Dim oFile
+Dim oStream
+Dim xtext As String
+Set oFS = Server.CreateObject("Scripting.FileSystemObject")
+Set oFS = CreateObject("Scripting.FileSystemObject")
+Set oFile = oFS.GetFile(xfilename)
+Set oStream = oFile.OpenAsTextStream(ForReading, TristateUseDefault)
+Do While Not oStream.AtEndOfStream
+        srecord = oStream.ReadLine
+        xtext = xtext & vbCrLf & srecord
+        'Response.Write sRecord
+        Loop
+        oStream.Close
+        get_info_fileio = xtext
+End Function
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub email_KeyReference()
+xto = "tim.XZXZXZ@livetheXZXZXZ.com; t.XZXZXZ@gov.je"
+xcc = "XZXZXZ@XZXZXZmail.com"
+xsubject = "KeyReference " & Format(Now, "ddd dd-mmm-yyyy HH:MM:SS")
+xbody = xbody & "KeyReference " & Format(Now, "ddd dd-mmm-yyyy HH:MM:SS")
+xbody = xbody & vbCrLf & "(c)opyright XZXZXZ "
+xbody = xbody & vbCrLf & ""
+Set myOlApp = CreateObject("Outlook.Application")
+Set newitem = myOlApp.CreateItem(MailItem)
+newitem.To = xto
+newitem.CC = xcc
+newitem.Subject = xsubject
+newitem.BodyFormat = olFormatRichText
+newitem.BodyFormat = olText
+newitem.Body = xbody
+.BodyFormat = olFormatHTML
+.HTMLBody = "<HTML><H2>The body of this message will appear in HTML.</H2><BODY>Type the message text here. </BODY></HTML>"
+newitem.BillingInformation = "KeyReference"
+newitem.Attachments.Add = xattachment
+newitem.Display
+newitem.Send
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub xemail_SalesForce()
+xto = "tim.XZXZXZ@livetheXZXZXZ.com"
+xcc = "XZXZXZ@XZXZXZmail.com"
+xbcc = "emailtosalesforce@r-1g0ttmyzzwfbmkdwzwkks5vbwkpd74mt2d1yj70yfof8u8yhfo.31ff4keas.3.le.salesforce.com"
+xsubject = "VBA source-code " & Format(Now, "ddd dd-mmm-yyyy HH:MM:SS")'
+xbody = xbody & "VBA source-code " & Format(Now, "ddd dd-mmm-yyyy HH:MM:SS") 'xbody = xbody & vbCrLf & "(c)opyright XZXZXZ "
+xbody = xbody & vbCrLf & ""
+xbody = xbody & vbCrLf & "Kind Regards, Tim"
+xbody = xbody & vbCrLf & ""
+xbody = xbody & vbCrLf & " "
+xbody = xbody & vbCrLf & "XZXZXZHJ XZXZXZ"
+xbody = xbody & vbCrLf & "Manager, Five Oaks Procurement and Stores"
+xbody = xbody & vbCrLf & "Supply Chain Processes and Service Level Agreements"
+xbody = xbody & vbCrLf & "Office: Tel 445340  Email t.XZXZXZ@gov.je"
+xbody = xbody & vbCrLf & "Mobile: Tel 0XZXZXZ XZXZXZ051 Email tim.XZXZXZ@livetheXZXZXZ.com"
+xbody = xbody & vbCrLf & ""
+Set myOlApp = CreateObject("Outlook.Application")
+Set newitem = myOlApp.CreateItem(MailItem)
+newitem.To = xto
+newitem.CC = xcc
+newitem.BCC = xbcc
+newitem.Subject = xsubject
+newitem.BodyFormat = olFormatRichText
+newitem.Body = xbody
+.BodyFormat = olFormatHTML
+.HTMLBody = "<HTML><H2>The body of this message will appear in HTML.</H2><BODY>Type the message text here. </BODY></HTML>"
+newitem.BillingInformation = "from-thjr"
+newitem.Attachments.Add = xattachment
+newitem.Display
+newitem.Send
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub get_mail_info()
+Creates a new e-mail item and accesses its properties.
+Set myOlApp = CreateObject("Outlook.Application")
+http://msdn.microsoft.com/en-us/library/aa210946%28v=office.11%29.aspx
+For Each xitem In myOlApp.ActiveExplorer.Selection
+        DELIM = vbCrLf
+        MsgBox TypeName(xitem)
+        If TypeName(xitem) = "MailItem" Then
+                
+                xtext = xtext & "MAIL DETAILS"
+                
+                xtext = xtext & DELIM & UCase(".BillingInformation    ") & xitem.BillingInformation
+                xtext = xtext & DELIM & UCase(".Mileage   ") & xitem.Mileage
+                xtext = xtext & DELIM & UCase(".Body  ") & xitem.Body
+                xtext = xtext & DELIM & UCase(".Subject   ") & xitem.Subject
+                xtext = xtext & DELIM & UCase(".FlagStatus    ") & xitem.FlagStatus
+                xtext = xtext & DELIM & UCase(".SentOn    ") & xitem.SentOn
+                xtext = xtext & DELIM & UCase(".UnRead    ") & xitem.UnRead
+                xtext = xtext & DELIM & UCase(".Save  ") & xitem.Save
+                xtext = xtext & DELIM & UCase(".SentOnBehalfOfName    ") & xitem.SentOnBehalfOfName
+                xtext = xtext & DELIM & UCase(".SenderName    ") & xitem.SenderName
+                xtext = xtext & DELIM & UCase(".ReceivedByName    ") & xitem.ReceivedByName
+                xtext = xtext & DELIM & UCase(".ReceivedOnBehalfOfName    ") & xitem.ReceivedOnBehalfOfName
+                xtext = xtext & DELIM & UCase(".ReplyRecipientNames   ") & xitem.ReplyRecipientNames
+                xtext = xtext & DELIM & UCase(".To    ") & xitem.To
+                xtext = xtext & DELIM & UCase(".CC    ") & xitem.CC
+                xtext = xtext & DELIM & UCase(".BCC   ") & xitem.BCC
+                xtext = xtext & DELIM & UCase(".Body  ") & xitem.Body
+                xtext = xtext & DELIM & UCase(".HTMLBody  ") & xitem.HTMLBody
+                xtext = xtext & DELIM & UCase(".SenderEmailAddress    ") & xitem.SenderEmailAddress
+                
+                
+                xd = "|"
+                
+                sieve = xitem.Body
+                sieve = Left(tr_replace(sieve, Chr(10), ","), 99)
+                sieve = Left(tr_replace(sieve, Chr(13), ","), 99)
+                sieve = Left(tr_replace(sieve, vbCr, ","), 99)
+                sieve = Left(tr_replace(sieve, vbLf, ","), 99)
+                ADDTEXT = Date & xd & xitem.To & xd & sieve
+                XOLD = XFILEREAD("W:\CONTACTSLOG.TXT")
+                xnew = XOLD & vbCrLf & ADDTEXT
+                Call PRINT_INFO(xnew, "W:\CONTACTSLOG.TXT")
+                
+                
+        End If
+        
+        If TypeName(xitem) = "ContactItem" Then
+                
+                
+                
+                xtext = xtext & DELIM & UCase("CONTACT DETAILS")
+                xtext = xtext & DELIM & UCase(".Email1Address   ") & xitem.Email1Address
+                xtext = xtext & DELIM & UCase(".Email1AddressType    ") & xitem.Email1AddressType
+                xtext = xtext & DELIM & UCase(".Email1DisplayName ") & xitem.Email1DisplayName
+                xtext = xtext & DELIM & UCase(".Email1EntryID   ") & xitem.Email1EntryID
+                xtext = xtext & DELIM & UCase(".Email2Address  ") & xitem.Email2Address
+                xtext = xtext & DELIM & UCase(".Email2AddressType    ") & xitem.Email2AddressType
+                xtext = xtext & DELIM & UCase(".Email2DisplayName  ") & xitem.Email2DisplayName
+                xtext = xtext & DELIM & UCase(".Email2EntryID ") & xitem.Email2EntryID
+                xtext = xtext & DELIM & UCase(".Email3Address ") & xitem.Email3Address
+                xtext = xtext & DELIM & UCase(".Email3AddressType ") & xitem.Email3AddressType
+                xtext = xtext & DELIM & UCase(".Email3DisplayName  ") & xitem.Email3DisplayName
+                xtext = xtext & DELIM & UCase(".Email3EntryID  ") & xitem.Email3EntryID
+                xtext = xtext & DELIM & UCase(".NetMeetingAlias ") & xitem.NetMeetingAlias
+                xtext = xtext & DELIM & UCase(".ReferredBy ") & xitem.ReferredBy
+                xtext = xtext & DELIM & UCase(".IMAddress  ") & xitem.IMAddress
+                xtext = xtext & DELIM & UCase(".Body    ") & xitem.Body
+                
+                
+                xd = "|"
+                sieve = xitem.Body
+                sieve = Left(tr_replace(sieve, Chr(10), ","), 99)
+                sieve = Left(tr_replace(sieve, Chr(13), ","), 99)
+                sieve = Left(tr_replace(sieve, vbCr, ","), 99)
+                sieve = Left(tr_replace(sieve, vbLf, ","), 99)
+                ADDTEXT = Date & xd & xitem.Email1Address & xd & sieve
+                
+                XOLD = XFILEREAD("W:\CONTACTSLOG.TXT")
+                xnew = XOLD & vbCrLf & ADDTEXT
+                Call PRINT_INFO(xnew, "W:\CONTACTSLOG.TXT")
+                
+                
+        End If
+        delmin = ","
+        If TypeName(xitem) = "MeetingItem" Then
+                
+                xtext = xtext & DELIM & UCase(Actions) & delmin & xitem.Actions xtext = xtext & DELIM & UCase(Application) & delmin & xitem.Application xtext = xtext & DELIM & UCase(Attachments) & delmin & xitem.Attachments xtext = xtext & DELIM & UCase(AutoForwarded) & delmin & xitem.AutoForwarded xtext = xtext & DELIM & UCase(AutoResolvedWinner) & delmin & xitem.AutoResolvedWinner xtext = xtext & DELIM & UCase(BillingInformation) & delmin & xitem.BillingInformation xtext = xtext & DELIM & UCase(Body) & delmin & xitem.Body xtext = xtext & DELIM & UCase(Categories) & delmin & xitem.Categories xtext = xtext & DELIM & UCase(Class) & delmin & xitem.Class xtext = xtext & DELIM & UCase(Companies) & delmin & xitem.Companies xtext = xtext & DELIM & UCase(Conflicts) & delmin & xitem.Conflicts xtext = xtext & DELIM & UCase(ConversationIndex) & delmin & xitem.ConversationIndex xtext = xtext & DELIM & UCase(ConversationTopic) & delmin & xitem.ConversationTopic xtext = xtext & DELIM & UCase(CreationTime) & delmin & xitem.CreationTime
+                
+                xtext = xtext & DELIM & UCase(DeferredDeliveryTime) & delmin & xitem.DeferredDeliveryTime
+                xtext = xtext & DELIM & UCase(DeleteAfterSubmit) & delmin & xitem.DeleteAfterSubmit
+                xtext = xtext & DELIM & UCase(DownloadState) & delmin & xitem.DownloadState
+                xtext = xtext & DELIM & UCase(EntryID) & delmin & xitem.EntryID
+                xtext = xtext & DELIM & UCase(ExpiryTime) & delmin & xitem.ExpiryTime
+                xtext = xtext & DELIM & UCase(FlagDueBy) & delmin & xitem.FlagDueBy
+                xtext = xtext & DELIM & UCase(FlagIcon) & delmin & xitem.FlagIcon
+                xtext = xtext & DELIM & UCase(FlagRequest) & delmin & xitem.FlagRequest
+                xtext = xtext & DELIM & UCase(FlagStatus) & delmin & xitem.FlagStatus
+                xtext = xtext & DELIM & UCase(FormDescription) & delmin & xitem.FormDescription
+                xtext = xtext & DELIM & UCase(GetInspector) & delmin & xitem.GetInspector
+                xtext = xtext & DELIM & UCase(Importance) & delmin & xitem.Importance
+                xtext = xtext & DELIM & UCase(IsConflict) & delmin & xitem.IsConflict
+                xtext = xtext & DELIM & UCase(ItemProperties) & delmin & xitem.ItemProperties
+                xtext = xtext & DELIM & UCase(LastModificationTime) & delmin & xitem.LastModificationTime
+                xtext = xtext & DELIM & UCase(Links) & delmin & xitem.Links
+                xtext = xtext & DELIM & UCase(MarkForDownload) & delmin & xitem.MarkForDownload
+                xtext = xtext & DELIM & UCase(MeetingWorkspaceURL) & delmin & xitem.MeetingWorkspaceURL
+                xtext = xtext & DELIM & UCase(MessageClass) & delmin & xitem.MessageClass
+                xtext = xtext & DELIM & UCase(Mileage) & delmin & xitem.Mileage
+                xtext = xtext & DELIM & UCase(NoAging) & delmin & xitem.NoAging
+                xtext = xtext & DELIM & UCase(OriginatorDeliveryReportRequested) & delmin & xitem.OriginatorDeliveryReportRequested
+                xtext = xtext & DELIM & UCase(OutlookInternalVersion) & delmin & xitem.OutlookInternalVersion
+                xtext = xtext & DELIM & UCase(OutlookVersion) & delmin & xitem.OutlookVersion
+                xtext = xtext & DELIM & UCase(Parent) & delmin & xitem.Parent
+                xtext = xtext & DELIM & UCase(ReceivedTime) & delmin & xitem.ReceivedTime
+                xtext = xtext & DELIM & UCase(Recipients) & delmin & xitem.Recipients
+                xtext = xtext & DELIM & UCase(ReminderSet) & delmin & xitem.ReminderSet
+                xtext = xtext & DELIM & UCase(ReminderTime) & delmin & xitem.ReminderTime
+                xtext = xtext & DELIM & UCase(ReplyRecipients) & delmin & xitem.ReplyRecipients
+                xtext = xtext & DELIM & UCase(Saved) & delmin & xitem.Saved
+                xtext = xtext & DELIM & UCase(SaveSentMessageFolder) & delmin & xitem.SaveSentMessageFolder
+                xtext = xtext & DELIM & UCase(SenderEmailAddress) & delmin & xitem.SenderEmailAddress
+                xtext = xtext & DELIM & UCase(SenderEmailType) & delmin & xitem.SenderEmailType
+                xtext = xtext & DELIM & UCase(SenderName) & delmin & xitem.SenderName
+                xtext = xtext & DELIM & UCase(Sensitivity) & delmin & xitem.Sensitivity
+                xtext = xtext & DELIM & UCase(Sent) & delmin & xitem.Sent
+                xtext = xtext & DELIM & UCase(SentOn) & delmin & xitem.SentOn
+                xtext = xtext & DELIM & UCase(Session) & delmin & xitem.Session
+                xtext = xtext & DELIM & UCase(Size) & delmin & xitem.Size
+                xtext = xtext & DELIM & UCase(Subject) & delmin & xitem.Subject
+                xtext = xtext & DELIM & UCase(Submitted) & delmin & xitem.Submitted
+                xtext = xtext & DELIM & UCase(UnRead) & delmin & xitem.UnRead
+                xtext = xtext & DELIM & UCase(UserProperties) & delmin & xitem.UserProperties
+                
+                
+                xd = "|"
+                sieve = xitem.Body
+                sieve = Left(tr_replace(sieve, Chr(10), ","), 99)
+                sieve = Left(tr_replace(sieve, Chr(13), ","), 99)
+                sieve = Left(tr_replace(sieve, vbCr, ","), 99)
+                sieve = Left(tr_replace(sieve, vbLf, ","), 99)
+                ADDTEXT = Date & xd & xitem.Recipients & xd & sieve
+                
+                XOLD = XFILEREAD("W:\CONTACTSLOG.TXT")
+                xnew = XOLD & vbCrLf & ADDTEXT
+                Call PRINT_INFO(xnew, "W:\CONTACTSLOG.TXT")
+                
+        End If
+        
+        
+        
+        
+        
+Next xitem
+MsgBox xtext
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub xxx()
+Dim xtext, oldtext, billingnote, xdate As String
+Dim x As Integer
+Dim xarray(1000)
+Dim xitem As MailItem
+Dim tempitem As MailItem
+Dim xfound As Boolean
+Set myOlApp = CreateObject("Outlook.Application")
+For Each xitem In myOlApp.ActiveExplorer.Selection
+        
+        
+        Set tempitem = xitem.ReplyAll
+        For Each xrep In tempitem.Recipients
+                
+                '=====================================
+                xfound = False
+                For n = 1 To 1000
+                        If xarray(n) = xrep.Address Then xfound = True
+                                If Len(xarray(n)) < 1 Then Exit For
+                                Next n
+                                
+                                
+                                If xfound = True Then
+                                        'skip
+                                        Else
+                                        'add it
+                                        xarray(n) = xrep.Address
+                                End If
+                                '=====================================
+                                
+                                
+                                'Debug.Print "Adding " & xrep.Address
+                                'xtext = xtext & vbCrLf & "xx " & xrep.Address
+                                
+                                
+                        Next xrep
+                        Set tempitem = Nothing
+                        
+                        Next
+                        
+                        For n = 1 To 1000
+                                If Len(xarray(n)) > 1 Then
+                                        Debug.Print xarray(n)
+                                End If
+                        Next n
+                        Call vba_PRINT_INFO(xtext, "emailcontacts_jamesfok.txt")
+                        
+                        MsgBox "done"
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub AddRecipToContacts(objMail As MailItem)
+Dim strFind As String
+Dim strAddress As String
+Dim objSMail As Redemption.SafeMailItem
+Dim objSRecip As Redemption.SafeRecipient
+Dim objNS As Namespace
+Dim colContacts As Items
+Dim objContact As ContactItem
+Dim I As Integer
+ process message recipients
+Set objSMail = CreateObject("Redemption.SafeMailItem")
+objMail.Save
+objSMail.Item = objMail
+Set objNS = Application.GetNamespace("MAPI")
+Set colContacts = objNS.GetDefaultFolder(olFolderContacts).Items
+For Each objSRecip In objSMail.Recipients
+        ' check to see if the recip is already in Contacts
+        strAddress = objSRecip.Address
+        For I = 1 To 3
+                strFind = "[Email" & I & "Address] = " & _
+                AddQuote(strAddress)
+                Set objContact = colContacts.Find(strFind)
+                If Not objContact Is Nothing Then
+                        Exit For
+                End If
+                Next
+                
+                ' if not, add it
+                If objContact Is Nothing Then
+                        Set objContact = Application.CreateItem(olContactItem)
+                        With objContact
+                        .FullName = objSRecip.Name
+                        .Email1Address = strAddress
+                        .Save
+                        End With
+                End If
+                Set objContact = Nothing
+                Next
+                
+                Set objSMail = Nothing
+                Set objSRecip = Nothing
+                Set objNS = Nothing
+                Set colContacts = Nothing
+End Sub
+helper function - put in any module
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function AddQuote(MyText) As String
+AddQuote = Chr(34) & MyText & Chr(34)
+End Function
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub SoJEmail()
+xto = "tim.XZXZXZ@livetheXZXZXZ.com"
+xcc = "XZXZXZ@XZXZXZmail.com"
+xbcc = "XZXZXZ@XZXZXZmail.com;tim.XZXZXZ@livetheXZXZXZ.com "
+xsubject = "5Oaks Stores - " & Format(Now, "ddd dd-mmm-yyyy HH:MM:SS")
+xbody = xbody & "5Oaks Stores"
+xbody = xbody & vbCrLf & ""
+xbody = xbody & vbCrLf & "J.high@gov.je; D.fromage@gov.je; s.meldrum@gov.je"
+xbody = xbody & vbCrLf & "t.whitcombe@health.gov.je; c.hastings@gov.je"
+xbody = xbody & vbCrLf & "XZXZXZXZXZXZ <T.XZXZXZ@gov.je>; Michael Horman <M.Horman@health.gov.je>; Jennifer Elvidge <J.Elvidge@health.gov.je>; Joe Richardson <J.Richardson@health.gov.je>; Alicia Troy <A.Troy@health.gov.je>; Bronia Turner <B.Turner@health.gov.je>; Daniel Alfano <D.Alfano@health.gov.je>; Sally Somerville <S.Somerville@health.gov.je>"
+xbody = xbody & vbCrLf & "Kind Regards, Tim"
+xbody = xbody & vbCrLf & ""
+xbody = xbody & vbCrLf & " "
+xbody = xbody & vbCrLf & "XZXZXZHJ XZXZXZ"
+xbody = xbody & vbCrLf & "Manager, Five Oaks Procurement and Stores"
+xbody = xbody & vbCrLf & "Supply Chain Processes and Service Level Agreements"
+xbody = xbody & vbCrLf & "Office: Tel 445340  Email t.XZXZXZ@gov.je"
+xbody = xbody & vbCrLf & "Mobile: Tel 0XZXZXZ XZXZXZ051 Email tim.XZXZXZ@livetheXZXZXZ.com"
+xbody = xbody & vbCrLf & ""
+xbody = xbody & vbCrLf & ""
+xbody = xbody & vbCrLf & "[Sent from mobile device]"
+Set myOlApp = CreateObject("Outlook.Application")
+Set newitem = myOlApp.CreateItem(MailItem)
+newitem.To = xto
+newitem.CC = xcc
+newitem.BCC = xbcc
+newitem.Subject = xsubject
+newitem.BodyFormat = olFormatRichText
+newitem.Body = xbody
+.BodyFormat = olFormatHTML
+.HTMLBody = "<HTML><H2>The body of this message will appear in HTML.</H2><BODY>Type the message text here. </BODY></HTML>"
+newitem.BillingInformation = "5Oaks Stores"
+newitem.Attachments.Add = xattachment
+newitem.Display
+newitem.Send
+End Sub
+Attribute VB_Name = "Module_AddRecipToContacts"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub aaa_get_contact_addresses()
+Dim xtext, oldtext, billingnote, xdate As String
+Dim x As Integer
+Dim xitem As MailItem
+Set myOlApp = CreateObject("Outlook.Application")
+Set myOlApp = CreateObject("Outlook.Application")
+Set myNameSpace = myOlApp.GetNamespace("MAPI")
+On Error Resume Next
+xcount = 1
+For Each xitem In myOlApp.ActiveExplorer.Selection
+        xcount = xcount + 1
+        Debug.Print xcount, xitem.SenderEmailAddress
+        
+        For z = 700 To 800 '  myNameSpace.Folders(1).Folders(2).Items.Count
+                Debug.Print myNameSpace.Folders(1).Folders(2).Items(Z).To
+                If TypeName(myNameSpace.Folders(1).Folders(2).Items(z)) = "MailItem" Then
+                        
+                        Call AddRecipToContacts(myNameSpace.Folders(1).Folders(2).Items(z))
+                End If
+                
+                Call AddRecipToContacts(xitem)
+                
+                Next
+                MsgBox "done"
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub AddRecipToContacts(objMail As Outlook.MailItem)
+sample Outlook 2003 VBA application by Sue Mosher
+send questions/comments to webmaster@outlookcode.com
+Dim strFind As String
+Dim strAddress As String
+Dim objNS As Outlook.Namespace
+Dim colContacts As Outlook.Items
+Dim objContact As Outlook.ContactItem
+Dim objRecip As Outlook.Recipient
+Dim objSend As objMail.from
+Dim I As Integer
+On Error Resume Next
+ get Contacts folder and its Items collection
+Set objNS = Application.GetNamespace("MAPI")
+Set colContacts = _
+objNS.GetDefaultFolder(olFolderContacts).Items
+ process message recipients
+For Each objRecip In objMail.Recipients
+        ' check to see if the recip is already in Contacts
+        strAddress = AddQuote(objRecip.Address)
+        '============================================
+        If InStr(1, strAddress, "@") Then ' only for @ internet emails
+                
+                
+                For I = 1 To 3
+                        strFind = "[Email" & I & "Address] = " & _
+                        strAddress
+                        ztext = ztext & strAddress
+                        Debug.Print strFind
+                        Set objContact = colContacts.Find(strFind)
+                        If Not objContact Is Nothing Then
+                                Exit For
+                        End If
+                        Next
+                        ' if not, add it
+                        If objContact Is Nothing Then
+                                Debug.Print "Adding >>>", strAddress
+                                Set objContact = _
+                                Application.CreateItem(olContactItem)
+                                With objContact
+                                .FullName = objRecip.Name
+                                .Email1Address = strAddress
+                                .Save
+                                End With
+                        End If
+                        
+                End If ' only for @ internet emails
+                '============================================
+                
+                Set objContact = Nothing
+                Next
+                
+                
+                strAddress_sender = AddQuote(objMail.SenderEmailAddress)
+                strName_sender = objMail.senderName
+                ' check to see if the recip is already in Contacts
+                
+                For i = 1 To 3
+                        strFind = "[Email" & i & "Address] = " & _
+                        strAddress_sender
+                        Set objContact = colContacts.Find(strFind)
+                        If Not objContact Is Nothing Then
+                                Exit For
+                        End If
+                        Next
+                        
+                        ' if not, add it
+                        If objContact Is Nothing Then
+                                Set objContact = _
+                                Application.CreateItem(olContactItem)
+                                With objContact
+                                .FullName = strName_sender
+                                .Email1Address = strAddress_sender
+                                .Save
+                                End With
+                        End If
+                        
+                        
+                        
+                        Set objNS = Nothing
+                        Set objContact = Nothing
+                        Set colContacts = Nothing
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub DeleteDuplicateContacts()
+Set myNameSpace = myOlApp.GetNamespace("MAPI")
+Dim contactItems As Outlook.Items
+Dim contact As Outlook.ContactItem
+Dim contactFullName As String
+Dim contactEmail As String
+Dim filteredContacts As Outlook.Items
+Dim numberOfContacts As Long
+Dim I As Long
+Set contactItems = GetItems(GetNS(GetOutlookApp), olFolderContacts)
+numberOfContacts = contactItems.Count
+ loop through contact items folder
+On Error Resume Next
+For I = numberOfContacts To 1 Step -1
+        If IsContact(contactItems.Item(I)) Then
+                Set contact = contactItems.Item(I)
+                
+                contactFullName = contact.FullName
+                contactEmail = contact.email
+                
+                ' check if any other contacts have the same full name
+                Set filteredContacts = contactItems.Restrict("[FullName] = '" & contactFullName & "'")
+                
+                If Not filteredContacts.Count = 1 Then ' possible dupe
+                        
+                        'If MsgBox("Duplicate contact found, delete?" & vbCrLf & contactFullName, vbYesNo) = vbYes Then
+                        contact.Delete
+                        Debug.Print "zapped " & contactFullName & " -> " & contactEmail
+                        ' End If
+                End If
+                
+        End If
+Next I
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function GetNS(ByRef app As Outlook.Application) _
+As Outlook.Namespace
+http://www.jpsoftwaretech.com/outlook-vba/utility-functions-for-use-with-outlook-2003-vba/
+Set GetNS = app.GetNamespace("MAPI")
+End Function
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function GetOutlookApp() As Outlook.Application
+returns reference to native Application object
+Set GetOutlookApp = Outlook.Application
+End Function
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function GetItems(olNS As Outlook.Namespace, _
+folder As OlDefaultFolders) As Outlook.Items
+Set GetItems = olNS.GetDefaultFolder(folder).Items
+End Function
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function IsContactFolder(fldr As Outlook.MAPIFolder) As Boolean
+IsContactFolder = (fldr.DefaultItemType = olContactItem)
+End Function
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function IsContact(itm As Object) As Boolean
+IsContact = (TypeName(itm) = "ContactItem")
+End Function
+ption Explicit
+VBA Script that gets list of Outlook Contacts
+Use Tools->Macro->Security to allow Macros to run, then restart Outlook
+Run Outlook, Press Alt+F11 to open VBA
+Programming by Greg Thatcher, http://www.GregThatcher.com
+(see other scripts at http://www.GregThatcher.com for other ways to get contact properties)
+Public Sub if_contact_blank_use_email_add()
+On Error GoTo On_Error
+Dim Session As Outlook.Namespace
+Dim Report As String
+Dim ContactFolder As Outlook.folder
+Dim currentItem As Object
+Dim currentContact As ContactItem
+Set Session = Application.Session
+Set ContactFolder = Session.GetDefaultFolder(olFolderContacts)
+For Q = 1 To Session.Folders.Count
+        Debug.Print Trim(Session.Folders(Q).Name), "......", Q
+        For subf = 1 To Session.Folders(Q).Folders.Count
+                Debug.Print "...", Trim(Session.Folders(Q).Folders(subf).Name), subf
+                
+        Next subf
+Next Q
+Exit Sub
+Set ContactFolder = Session.Folders(6).Folders(2)
+Set ContactFolder = Session.Folders(1).Folders(2)
+For Each currentItem In ContactFolder.Items
+        If (currentItem.Class = olContact) Then
+                Set currentContact = currentItem
+                
+                If Len(currentContact.FullName) < 1 Then
+                        currentContact.FullName = currentContact.Email1Address
+                        currentContact.Save
+                End If
+                Debug.Print currentContact.FullName, currentContact.Email1Address
+                
+                '     Report = Report & AddToReportIfNotBlank("Full Name", currentContact.FullName)
+                '     Report = Report & AddToReportIfNotBlank("Email1Address", currentContact.Email1Address)
+                '     Report = Report & AddToReportIfNotBlank("Email1AddressType", currentContact.Email1AddressType)
+                '     Report = Report & AddToReportIfNotBlank("Email1DisplayName", currentContact.Email1DisplayName)
+                '     'Report = Report & AddToReportIfNotBlank("Email1EntryID", currentContact.Email1EntryID)
+                '     Report = Report & AddToReportIfNotBlank("Email2Address", currentContact.Email2Address)
+                '     Report = Report & AddToReportIfNotBlank("Email2AddressType", currentContact.Email2AddressType)
+                '     Report = Report & AddToReportIfNotBlank("Email2DisplayName", currentContact.Email2DisplayName)
+                '     Report = Report & AddToReportIfNotBlank("Email2EntryID", currentContact.Email2EntryID)
+                '     Report = Report & AddToReportIfNotBlank("Email3Address", currentContact.Email3Address)
+                '    Report = Report & AddToReportIfNotBlank("Email3AddressType", currentContact.Email3AddressType)
+                '     Report = Report & AddToReportIfNotBlank("Email3DisplayName ", currentContact.Email3DisplayName)
+                
+                
+                'Report = Report & vbCrLf & vbCrLf
+        End If
+        
+        Next
+        
+        
+        ' Call CreateReportAsEmail("List of Contacts", Report)
+        
+        Exiting:
+        Exit Sub
+        On_Error:
+        MsgBox "error=" & Err.Number & " " & Err.Description
+        Resume Exiting
+        
+End Sub
+Private Function AddToReportIfNotBlank(FieldName As String, FieldValue As String)
+AddToReportIfNotBlank = ""
+If (FieldValue <> "") Then
+        AddToReportIfNotBlank = FieldName & " : " & FieldValue & vbCrLf
+End If
+End Function
+VBA SubRoutine which displays a report inside an email
+Programming by Greg Thatcher, http://www.GregThatcher.com
+Public Sub CreateReportAsEmail(Title As String, Report As String)
+On Error GoTo On_Error
+Dim Session As Outlook.Namespace
+Dim mail As MailItem
+Dim MyAddress As AddressEntry
+Dim Inbox As Outlook.folder
+Set Session = Application.Session
+Set Inbox = Session.GetDefaultFolder(olFolderInbox)
+Set mail = Inbox.Items.Add("IPM.Mail")
+Set MyAddress = Session.CurrentUser.AddressEntry
+mail.Recipients.Add (MyAddress.Address)
+mail.Recipients.ResolveAll
+mail.Subject = Title
+mail.Body = Report
+mail.Save
+mail.Display
+Exiting:
+Set Session = Nothing
+Exit Sub
+On_Error:
+MsgBox "error=" & Err.Number & " " & Err.Description
+Resume Exiting
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub xnotes()
+ Report = Report & AddToReportIfNotBlank("Account", currentContact.Account)
+Report = Report & AddToReportIfNotBlank("Anniversary", currentContact.Anniversary)
+Report = Report & AddToReportIfNotBlank("AssistantName", currentContact.AssistantName)
+Report = Report & AddToReportIfNotBlank("AssistantTelephoneNumber", currentContact.AssistantTelephoneNumber)
+Report = Report & AddToReportIfNotBlank("BillingInformation", currentContact.BillingInformation)
+Report = Report & AddToReportIfNotBlank("Birthday", currentContact.Birthday)
+Report = Report & AddToReportIfNotBlank("Body", currentContact.Body)
+Report = Report & AddToReportIfNotBlank("XZXZXZ2TelephoneNumber", currentContact.XZXZXZ2TelephoneNumber)
+Report = Report & AddToReportIfNotBlank("XZXZXZAddress", currentContact.XZXZXZAddress)
+Report = Report & AddToReportIfNotBlank("XZXZXZAddressCity", currentContact.XZXZXZAddressCity)
+Report = Report & AddToReportIfNotBlank("XZXZXZAddressCountry", currentContact.XZXZXZAddressCountry)
+Report = Report & AddToReportIfNotBlank("XZXZXZAddressPostalCode", currentContact.XZXZXZAddressPostalCode)
+Report = Report & AddToReportIfNotBlank("XZXZXZAddressPostOfficeBox", currentContact.XZXZXZAddressPostOfficeBox)
+Report = Report & AddToReportIfNotBlank("XZXZXZAddressState", currentContact.XZXZXZAddressState)
+Report = Report & AddToReportIfNotBlank("XZXZXZAddressStreet", currentContact.XZXZXZAddressStreet)
+Report = Report & AddToReportIfNotBlank("XZXZXZCardLayoutXml", currentContact.XZXZXZCardLayoutXml)
+Report = Report & AddToReportIfNotBlank("XZXZXZCardType", currentContact.XZXZXZCardType)
+Report = Report & AddToReportIfNotBlank("XZXZXZFaxNumber", currentContact.XZXZXZFaxNumber)
+Report = Report & AddToReportIfNotBlank("XZXZXZHomePage", currentContact.XZXZXZHomePage)
+Report = Report & AddToReportIfNotBlank("XZXZXZTelephoneNumber", currentContact.XZXZXZTelephoneNumber)
+Report = Report & AddToReportIfNotBlank("CallbackTelephoneNumber", currentContact.CallbackTelephoneNumber)
+Report = Report & AddToReportIfNotBlank("CarTelephoneNumber", currentContact.CarTelephoneNumber)
+Report = Report & AddToReportIfNotBlank("Categories", currentContact.Categories)
+Report = Report & AddToReportIfNotBlank("Children", currentContact.Children)
+Report = Report & AddToReportIfNotBlank("Companies", currentContact.Companies)
+Report = Report & AddToReportIfNotBlank("CompanyAndFullName", currentContact.CompanyAndFullName)
+Report = Report & AddToReportIfNotBlank("CompanyLastFirstNoSpace", currentContact.CompanyLastFirstNoSpace)
+Report = Report & AddToReportIfNotBlank("CompanyLastFirstSpaceOnly", currentContact.CompanyLastFirstSpaceOnly)
+Report = Report & AddToReportIfNotBlank("CompanyMainTelephoneNumber", currentContact.CompanyMainTelephoneNumber)
+Report = Report & AddToReportIfNotBlank("CompanyName", currentContact.CompanyName)
+Report = Report & AddToReportIfNotBlank("ComputerNetworkName", currentContact.ComputerNetworkName)
+Report = Report & AddToReportIfNotBlank("ConversationIndex ", currentContact.ConversationIndex)
+Report = Report & AddToReportIfNotBlank("ConversationTopic", currentContact.ConversationTopic)
+Report = Report & AddToReportIfNotBlank("CreationTime", currentContact.CreationTime)
+Report = Report & AddToReportIfNotBlank("CustomerID", currentContact.CustomerID)
+Report = Report & AddToReportIfNotBlank("Department", currentContact.Department)
+Report = Report & AddToReportIfNotBlank("DownloadState", currentContact.DownloadState)
+Report = Report & AddToReportIfNotBlank("Email3EntryID ", currentContact.Email3EntryID)
+Report = Report & AddToReportIfNotBlank("EntryID", currentContact.Account)
+Report = Report & AddToReportIfNotBlank("FileAs", currentContact.FileAs)
+Report = Report & AddToReportIfNotBlank("FirstName", currentContact.FirstName)
+Report = Report & AddToReportIfNotBlank("FTPSite", currentContact.FTPSite)
+Report = Report & AddToReportIfNotBlank("FullName", currentContact.FullName)
+Report = Report & AddToReportIfNotBlank("FullNameAndCompany", currentContact.FullNameAndCompany)
+Report = Report & AddToReportIfNotBlank("Gender", currentContact.Gender)
+Report = Report & AddToReportIfNotBlank("GovernmentIDNumber", currentContact.GovernmentIDNumber)
+Report = Report & AddToReportIfNotBlank("HasPicture", currentContact.HasPicture)
+Report = Report & AddToReportIfNotBlank("Hobby", currentContact.Hobby)
+Report = Report & AddToReportIfNotBlank("Home2TelephoneNumber", currentContact.Home2TelephoneNumber)
+Report = Report & AddToReportIfNotBlank("HomeAddress ", currentContact.HomeAddress)
+Report = Report & AddToReportIfNotBlank("HomeAddressCity", currentContact.HomeAddressCity)
+Report = Report & AddToReportIfNotBlank("HomeAddressCountry", currentContact.HomeAddressCountry)
+Report = Report & AddToReportIfNotBlank("HomeAddressPostalCode ", currentContact.HomeAddressPostalCode)
+Report = Report & AddToReportIfNotBlank("HomeAddressPostOfficeBox", currentContact.HomeAddressPostOfficeBox)
+Report = Report & AddToReportIfNotBlank("HomeAddressState", currentContact.HomeAddressState)
+Report = Report & AddToReportIfNotBlank("HomeAddressStreet", currentContact.HomeAddressStreet)
+Report = Report & AddToReportIfNotBlank("HomeFaxNumber", currentContact.HomeFaxNumber)
+Report = Report & AddToReportIfNotBlank("HomeTelephoneNumber", currentContact.HomeTelephoneNumber)
+Report = Report & AddToReportIfNotBlank("IMAddress", currentContact.IMAddress)
+Report = Report & AddToReportIfNotBlank("Importance", currentContact.Importance)
+Report = Report & AddToReportIfNotBlank("Initials", currentContact.Initials)
+Report = Report & AddToReportIfNotBlank("InternetFreeBusyAddress", currentContact.InternetFreeBusyAddress)
+Report = Report & AddToReportIfNotBlank("IsConflict", currentContact.IsConflict)
+Report = Report & AddToReportIfNotBlank("ISDNNumber", currentContact.ISDNNumber)
+Report = Report & AddToReportIfNotBlank("IsMarkedAsTask", currentContact.IsMarkedAsTask)
+Report = Report & AddToReportIfNotBlank("JobTitle", currentContact.JobTitle)
+Report = Report & AddToReportIfNotBlank("Journal", currentContact.Journal)
+Report = Report & AddToReportIfNotBlank("Language", currentContact.Language)
+Report = Report & AddToReportIfNotBlank("LastFirstAndSuffix", currentContact.LastFirstAndSuffix)
+Report = Report & AddToReportIfNotBlank("LastFirstNoSpace", currentContact.LastFirstNoSpace)
+Report = Report & AddToReportIfNotBlank("LastFirstNoSpaceAndSuffix", currentContact.LastFirstNoSpaceAndSuffix)
+Report = Report & AddToReportIfNotBlank("LastFirstNoSpaceCompany", currentContact.LastFirstNoSpaceCompany)
+Report = Report & AddToReportIfNotBlank("LastFirstSpaceOnly", currentContact.LastFirstSpaceOnly)
+Report = Report & AddToReportIfNotBlank("LastFirstSpaceOnlyCompany", currentContact.LastFirstSpaceOnlyCompany)
+Report = Report & AddToReportIfNotBlank("LastModificationTime", currentContact.LastModificationTime)
+Report = Report & AddToReportIfNotBlank("LastName", currentContact.LastName)
+Report = Report & AddToReportIfNotBlank("LastNameAndFirstName", currentContact.LastNameAndFirstName)
+Report = Report & AddToReportIfNotBlank("Links", currentContact.Links)
+Report = Report & AddToReportIfNotBlank("MailingAddress", currentContact.MailingAddress)
+Report = Report & AddToReportIfNotBlank("MailingAddressCity", currentContact.MailingAddressCity)
+Report = Report & AddToReportIfNotBlank("MailingAddressCountry", currentContact.MailingAddressCountry)
+Report = Report & AddToReportIfNotBlank("MailingAddressPostalCode", currentContact.MailingAddressPostalCode)
+Report = Report & AddToReportIfNotBlank("MailingAddressPostOfficeBox", currentContact.MailingAddressPostOfficeBox)
+Report = Report & AddToReportIfNotBlank("MailingAddressState", currentContact.MailingAddressState)
+Report = Report & AddToReportIfNotBlank("MailingAddressStreet", currentContact.MailingAddressStreet)
+Report = Report & AddToReportIfNotBlank("ManagerName", currentContact.ManagerName)
+Report = Report & AddToReportIfNotBlank("MarkForDownload", currentContact.MarkForDownload)
+Report = Report & AddToReportIfNotBlank("MessageClass", currentContact.MessageClass)
+Report = Report & AddToReportIfNotBlank("MiddleName", currentContact.MiddleName)
+Report = Report & AddToReportIfNotBlank("Mileage", currentContact.Mileage)
+Report = Report & AddToReportIfNotBlank("MobileTelephoneNumber", currentContact.MobileTelephoneNumber)
+Report = Report & AddToReportIfNotBlank("NetMeetingAlias", currentContact.NetMeetingAlias)
+Report = Report & AddToReportIfNotBlank("NetMeetingServer", currentContact.NetMeetingServer)
+Report = Report & AddToReportIfNotBlank("NickName", currentContact.NickName)
+Report = Report & AddToReportIfNotBlank("NoAging", currentContact.NoAging)
+Report = Report & AddToReportIfNotBlank("OfficeLocation", currentContact.OfficeLocation)
+Report = Report & AddToReportIfNotBlank("OrganizationalIDNumber", currentContact.OrganizationalIDNumber)
+Report = Report & AddToReportIfNotBlank("OtherAddress", currentContact.OtherAddress)
+Report = Report & AddToReportIfNotBlank("OtherAddressCity", currentContact.OtherAddressCity)
+Report = Report & AddToReportIfNotBlank("OtherAddressCountry", currentContact.OtherAddressCountry)
+Report = Report & AddToReportIfNotBlank("OtherAddressPostalCode", currentContact.OtherAddressPostalCode)
+Report = Report & AddToReportIfNotBlank("OtherAddressPostOfficeBox", currentContact.OtherAddressPostOfficeBox)
+Report = Report & AddToReportIfNotBlank("OtherAddressState", currentContact.OtherAddressState)
+Report = Report & AddToReportIfNotBlank("OtherAddressStreet", currentContact.OtherAddressStreet)
+Report = Report & AddToReportIfNotBlank("OtherFaxNumber", currentContact.OtherFaxNumber)
+Report = Report & AddToReportIfNotBlank("OtherTelephoneNumber", currentContact.OtherTelephoneNumber)
+Report = Report & AddToReportIfNotBlank("OutlookInternalVersion", currentContact.OutlookInternalVersion)
+Report = Report & AddToReportIfNotBlank("OutlookVersion", currentContact.OutlookVersion)
+Report = Report & AddToReportIfNotBlank("PagerNumber", currentContact.PagerNumber)
+Report = Report & AddToReportIfNotBlank("PersonalHomePage", currentContact.PersonalHomePage)
+Report = Report & AddToReportIfNotBlank("PrimaryTelephoneNumber", currentContact.PrimaryTelephoneNumber)
+Report = Report & AddToReportIfNotBlank("Profession", currentContact.Profession)
+Report = Report & AddToReportIfNotBlank("RadioTelephoneNumber", currentContact.RadioTelephoneNumber)
+Report = Report & AddToReportIfNotBlank("ReferredBy", currentContact.ReferredBy)
+Report = Report & AddToReportIfNotBlank("ReminderOverrideDefault", currentContact.ReminderOverrideDefault)
+Report = Report & AddToReportIfNotBlank("ReminderPlaySound", currentContact.ReminderPlaySound)
+Report = Report & AddToReportIfNotBlank("ReminderSet", currentContact.ReminderSet)
+Report = Report & AddToReportIfNotBlank("ReminderSoundFile", currentContact.ReminderSoundFile)
+Report = Report & AddToReportIfNotBlank("ReminderTime", currentContact.ReminderTime)
+Report = Report & AddToReportIfNotBlank("Saved", currentContact.Saved)
+Report = Report & AddToReportIfNotBlank("SelectedMailingAddress", currentContact.SelectedMailingAddress)
+Report = Report & AddToReportIfNotBlank("Sensitivity", currentContact.Sensitivity)
+Report = Report & AddToReportIfNotBlank("Size", currentContact.Size)
+Report = Report & AddToReportIfNotBlank("Spouse", currentContact.Spouse)
+Report = Report & AddToReportIfNotBlank("Subject", currentContact.Subject)
+Report = Report & AddToReportIfNotBlank("Suffix", currentContact.Suffix)
+Report = Report & AddToReportIfNotBlank("TaskCompletedDate", currentContact.TaskCompletedDate)
+Report = Report & AddToReportIfNotBlank("TaskDueDate", currentContact.TaskDueDate)
+Report = Report & AddToReportIfNotBlank("TaskStartDate", currentContact.TaskStartDate)
+Report = Report & AddToReportIfNotBlank("TaskSubject", currentContact.TaskSubject)
+Report = Report & AddToReportIfNotBlank("TelexNumber", currentContact.TelexNumber)
+Report = Report & AddToReportIfNotBlank("Title", currentContact.Title)
+Report = Report & AddToReportIfNotBlank("ToDoTaskOrdinal", currentContact.ToDoTaskOrdinal)
+Report = Report & AddToReportIfNotBlank("TTYTDDTelephoneNumber", currentContact.TTYTDDTelephoneNumber)
+Report = Report & AddToReportIfNotBlank("UnRead", currentContact.UnRead)
+Report = Report & AddToReportIfNotBlank("User1", currentContact.User1)
+Report = Report & AddToReportIfNotBlank("User2", currentContact.User2)
+Report = Report & AddToReportIfNotBlank("User3", currentContact.User3)
+Report = Report & AddToReportIfNotBlank("User4", currentContact.User4)
+Report = Report & AddToReportIfNotBlank("WebPage", currentContact.WebPage)
+Report = Report & AddToReportIfNotBlank("YomiCompanyName", currentContact.YomiCompanyName)
+Report = Report & AddToReportIfNotBlank("YomiFirstName", currentContact.YomiFirstName)
+Report = Report & AddToReportIfNotBlank("YomiLastName", currentContact.YomiLastName)
+End Sub
+Attribute VB_Name = "Module_delete_appointments"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub delete_appointments()
+Dim objAppointment As Outlook.AppointmentItem
+Dim lngDeletedAppointements As Long
+Dim strSubject As String
+Dim strLocation As String
+Dim dteStartDate As Date
+******************************** Set Criteria for DELETION here ********************************
+strSubject = "t"
+strLocation = "HQ"
+dteStartDate = #11/15/2011#
+Set objOutlook = Outlook.Application
+Set objNamespace = objOutlook.GetNamespace("MAPI")
+Set objFolder = objNamespace.GetDefaultFolder(olFolderCalendar)
+For Each objAppointment In objFolder.Items
+        ' If objAppointment.Subject = strSubject And objAppointment.Location = strLocation And _
+        objAppointment.Start > dteStartDate Then
+        
+        If objAppointment.Subject = strSubject Then
+                
+                objAppointment.Delete
+                lngDeletedAppointements = lngDeletedAppointements + 1
+        End If
+        Next
+        
+        MsgBox lngDeletedAppointements & " appointment(s) DELETED.", vbInformation, "DETETE Appointments"
+        
+        
+End Sub
+Attribute VB_Name = "Module_email_and_PST"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub XFOLDER_NAME()
+Set myOlApp = CreateObject("Outlook.Application")
+Set myNameSpace = myOlApp.GetNamespace("MAPI")
+For a = 1 To myNameSpace.Folders.Count
+        ztext = ztext & vbCrLf & a & " -" & myNameSpace.Folders(a).Name
+        For b = 1 To myNameSpace.Folders(a).Folders.Count
+                ztext = ztext & vbCrLf & ">>" & " " & a & "-" & b & " " & myNameSpace.Folders(a).Folders(b).Name
+                
+                For c = 1 To myNameSpace.Folders(a).Folders(b).Folders.Count
+                        ztext = ztext & vbCrLf & ">>" & " " & a & "-" & b & "-" & c & " " & myNameSpace.Folders(a).Folders(b).Folders(c).Name
+                        
+                Next c
+        Next b
+        
+Next a
+Call PRINT_INFO(ztext, "c:\temp955.txt")
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub XFOLDER_move()
+Set myOlApp = CreateObject("Outlook.Application")
+Set myNameSpace = myOlApp.GetNamespace("MAPI")
+a = 1
+b = 1
+xd = ","
+On Error Resume Next
+For Each xitem In myNameSpace.Folders(a).Folders(b).Items
+        ztext = ztext & vbCrLf & xitem.Subject & xd & xitem.FlagStatus
+        Next
+        
+        For z = 0 To myNameSpace.Folders.Count
+                Debug.Print z, myNameSpace.Folders(z).Name
+        Next z
+        
+        myNameSpace.Folders(3).Name = "livetheXZXZXZ.com"
+        myNameSpace.Folders(2).Name = "PersonalArchive"
+        myNameSpace.Folders(1).Name = "GreenlightArchive"
+        myNameSpace.Folders(4).Name = "XZXZXZcolab.com"
+        
+        Call PRINT_INFO(ztext, "c:\temp955.txt")
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub xfolder_add()
+Set myOlApp = CreateObject("Outlook.Application")
+Set myNameSpace = myOlApp.GetNamespace("MAPI")
+Dim x As String
+xpath = "V:\Outlook\"
+x = "timXZXZXZ@XZXZXZcolab.com - tim.XZXZXZ@livetheXZXZXZ.com(2).pst"
+x = "timXZXZXZ@XZXZXZcolab.com - tim.XZXZXZ@livetheXZXZXZ.com.pst"
+x = "archive2012_greenlight.pst"
+x = "Copy of archive2012_greenlight.pst"
+x = "V:\Data2017\Client_XZXZXZ\outlook\XZXZXZ2017.pst"
+Set objname = myOlApp.GetNamespace("MAPI")
+Set objFolder = objname.Folders.Item(z)
+mynamespace.RemoveStore objFolder
+mynamespace.AddStore xpath & x
+myNameSpace.AddStore x
+For z = 1 To objname.Folders.Count
+        Debug.Print z, objname.Folders.Item(z).Name
+Next z
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub PstFiles()
+Dim f As MAPIFolder
+Set myOlApp = CreateObject("Outlook.Application")
+Set myNameSpace = myOlApp.GetNamespace("MAPI")
+For Each f In Session.Folders
+        ' Debug.Print f.StoreID, f.Name
+        Debug.Print f.Name
+        Debug.Print ">>", GetPathFromStoreID(f.StoreID)
+Next f
+End Sub
+Public Function GetPathFromStoreID(sStoreID As String) As String
+On Error Resume Next
+Dim I As Long
+Dim lPos As Long
+Dim sRes As String
+For I = 1 To Len(sStoreID) Step 2
+        sRes = sRes & Chr("&h" & Mid$(sStoreID, I, 2))
+        Next
+        
+        sRes = Replace(sRes, Chr(0), vbNullString)
+        lPos = InStr(sRes, ":\")
+        
+        If lPos Then
+                GetPathFromStoreID = Right$(sRes, (Len(sRes)) - (lPos - 2))
+        End If
+End Function
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub testSetNewStore()
+Call SetNewStore("v:\outlook\XZXZXZ_ARCHIVE2014Q2.pst", "V Archive 2014V")
+Call SetNewStore("v:\outlook\XZXZXZ_ARCHIVE2017.pst", "V Archive 2017")
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub SetNewStore(strFileName As String, strDisplayName As String)
+Dim objOL As Outlook.Application
+Dim objNS As Outlook.Namespace
+Dim objFolder As Outlook.MAPIFolder
+Set objOL = CreateObject("Outlook.Application")
+Set objNS = objOL.GetNamespace("MAPI")
+objNS.AddStore strFileName
+Set objFolder = objNS.Folders.GetLast
+objFolder.Name = strDisplayName
+Set objOL = Nothing
+Set objNS = Nothing
+Set objFolder = Nothing
+End Sub
+Attribute VB_Name = "Module_Email_TEDx"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub Email_TEDx()
+xto = "t.XZXZXZ@gov.je"
+xcc = "XZXZXZ@XZXZXZmail.com"
+xsubject = "TEDxStHelier-" & Format(Now, "ddd dd-mmm-yyyy HH:MM:SS")
+xbody = xbody & "TEDxStHelier-"
+xbody = xbody & vbCrLf & ""
+xbody = xbody & vbCrLf & "Kind Regards, Tim"
+xbody = xbody & vbCrLf & ""
+xbody = xbody & vbCrLf & " "
+xbody = xbody & vbCrLf & "XZXZXZHJ XZXZXZ"
+xbody = xbody & vbCrLf & "Mobile: Tel 0XZXZXZ XZXZXZ051"
+xbody = xbody & vbCrLf & "[Sent from mobile device]"
+Set myOlApp = CreateObject("Outlook.Application")
+Set newitem = myOlApp.CreateItem(MailItem)
+newitem.To = xto
+newitem.CC = xcc
+newitem.BCC = "tim@tedxsthelier.com"
+newitem.ReplyRecipients.Add "tim@tedxsthelier.com"
+newitem.SenderName = "tim@tedxsthelier.com"
+newitem.Subject = xsubject
+newitem.SentOnBehalfOfName = "tim@tedxsthelier.com"
+newitem.BodyFormat = olFormatRichText
+newitem.Body = xbody
+.BodyFormat = olFormatHTML
+.HTMLBody = "<HTML><H2>The body of this message will appear in HTML.</H2><BODY>Type the message text here. </BODY></HTML>"
+newitem.BillingInformation = "5Oaks Stores"
+newitem.Attachments.Add = xattachment
+newitem.Display
+newitem.Send
+End Sub
+Attribute VB_Name = "Module_encrypt"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub test()
+Dim x As String
+x = encrypt("the cat sat on the mat")
+Debug.Print x
+y = Decrypt(x)
+Debug.Print y
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function encrypt(strvalue As String) As String
+Const LowerAlpha    As String = "abcdefghijklmnopqrstuvwxyz"
+Const LowerSub      As String = "zebrascdfghijklmnopqtuvwxy" 'zebras
+Const UpperAlpha    As String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+Const UpperSub      As String = "ZEBRASCDFGHIJKLMNOPQTUVWXY" 'ZEBRAS
+Dim lngi            As Long
+Dim lngE            As Long
+Dim strEncrypt      As String
+Dim strLetter       As String
+If strvalue & "" = "" Then Exit Function
+        
+        For lngi = 1 To Len(strvalue)
+                
+                strLetter = Mid(strvalue, lngi, 1)
+                
+                Select Case Asc(strLetter)
+                
+                Case 65 To 90 'Uppercase
+                'Find position in alpha string
+                For lngE = 1 To Len(UpperAlpha)
+                        If Mid(UpperAlpha, lngE, 1) = strLetter Then GoTo USub
+                                Next
+                                USub:
+                                strEncrypt = strEncrypt & Mid(UpperSub, lngE, 1)
+                                
+                                Case 97 To 122 'Lowercase
+                                'Find position in alpha string
+                                For lngE = 1 To Len(LowerAlpha)
+                                        If Mid(LowerAlpha, lngE, 1) = strLetter Then GoTo LSub
+                                                Next
+                                                LSub:
+                                                strEncrypt = strEncrypt & Mid(LowerSub, lngE, 1)
+                                                
+                                                Case Else 'Do not substitute
+                                                
+                                                strEncrypt = strEncrypt & strLetter
+                                                
+End Select
+Next
+Now pass this string through ROT13 for another tier of security
+For lngi = 1 To Len(strEncrypt)
+        encrypt = encrypt & Chr(Asc(Mid(strEncrypt, lngi, 1)) + 13)
+        Next
+        
+End Function
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function Decrypt(strvalue As String) As String
+Const LowerAlpha    As String = "abcdefghijklmnopqrstuvwxyz"
+Const LowerSub      As String = "zebrascdfghijklmnopqtuvwxy" 'zebras
+Const UpperAlpha    As String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+Const UpperSub      As String = "ZEBRASCDFGHIJKLMNOPQTUVWXY" 'ZEBRAS
+Dim lngi            As Long
+Dim lngE            As Long
+Dim strDecrypt      As String
+Dim strLetter       As String
+If strvalue & "" = "" Then Exit Function
+        
+        Reverse the ROT13 cipher
+        
+        For lngi = 1 To Len(strvalue)
+                strDecrypt = strDecrypt & Chr(Asc(Mid(strvalue, lngi, 1)) - 13)
+                Next
+                
+                Now reverse the encryption
+                
+                For lngi = 1 To Len(strDecrypt)
+                        
+                        strLetter = Mid(strDecrypt, lngi, 1)
+                        
+                        Select Case Asc(strLetter)
+                        
+                        Case 65 To 90 'Uppercase
+                        'Find position in sub string
+                        For lngE = 1 To Len(UpperSub)
+                                If Mid(UpperSub, lngE, 1) = strLetter Then GoTo USub
+                                        Next
+                                        USub:
+                                        Decrypt = Decrypt & Mid(UpperAlpha, lngE, 1)
+                                        
+                                        Case 97 To 122 'Lowercase
+                                        'Find position in sub string
+                                        For lngE = 1 To Len(LowerSub)
+                                                If Mid(LowerSub, lngE, 1) = strLetter Then GoTo LSub
+                                                        Next
+                                                        LSub:
+                                                        Decrypt = Decrypt & Mid(LowerAlpha, lngE, 1)
+                                                        
+                                                        Case Else 'Do not substitute
+                                                        
+                                                        Decrypt = Decrypt & strLetter
+                                                        
+End Select
+Next
+End Function
+Attribute VB_Name = "Module_forms"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub aa_open_form()
+open_htmls.Show
+End Sub
+Attribute VB_Name = "Module_get_email_address"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub get_email_address()
+Dim xtext, oldtext, billingnote, xdate As String
+Dim x As Integer
+Dim strFind As String
+Dim strAddress As String
+Dim objNS As Outlook.Namespace
+Dim colContacts As Outlook.Items
+Dim objContact As Outlook.ContactItem
+Dim objRecip As Outlook.Recipient
+Dim I As Integer
+Dim xarray(200)
+Dim xitem As MailItem
+Set myOlApp = CreateObject("Outlook.Application")
+Set myOlApp = CreateObject("Outlook.Application")
+Set myNameSpace = myOlApp.GetNamespace("MAPI")
+On Error Resume Next
+xcount = 1
+Q = 6
+For Each xitem In myOlApp.ActiveExplorer.Selection
+        
+        
+        On Error Resume Next
+        For Each objRecip In xitem.Recipients
+                ' check to see if the recip is already in Contacts
+                strAddress = (objRecip.Address)
+                
+                '============================================
+                If InStr(1, strAddress, "@") Then ' only for @ internet emails
+                        '==============================
+                        add_record = True
+                        For zz = 1 To 200
+                                If xarray(zz) = strAddress Then add_record = False
+                                Next zz
+                                
+                                If add_record = True Then
+                                        Q = Q + 1
+                                        xarray(Q) = strAddress
+                                End If
+                                '==============================
+                                
+                                
+                        End If
+                        
+                        Next
+                        
+                        
+                        ' check to see if the recip is already in Contacts
+                        strAddress = (xitem.SenderName)
+                        
+                        '============================================
+                        If InStr(1, strAddress, "@") Then ' only for @ internet emails
+                                '==============================
+                                add_record = True
+                                For zz = 1 To 200
+                                        If xarray(zz) = strAddress Then add_record = False
+                                        Next zz
+                                        
+                                        If add_record = True Then
+                                                Q = Q + 1
+                                                'Debug.Print ">>", xitem.SenderName
+                                                xarray(Q) = strAddress
+                                        End If
+                                        '==============================
+                                        
+                                        
+                                End If
+                                
+                                
+                                
+                                
+                                Next
+                                
+                                
+                                Set objNS = Nothing
+                                Set objContact = Nothing
+                                Set colContacts = Nothing
+                                
+                                
+                                For Q = 1 To 200
+                                        
+                                        If Len(xarray(Q)) > 1 Then
+                                                If InStr(1, xarray(Q), "ogers") Then
+                                                        'skip
+                                                        Else
+                                                        Debug.Print xarray(Q)
+                                                End If
+                                        End If
+                                Next Q
+End Sub
+Attribute VB_Name = "Module_listofappointents"
+Option Explicit
+VBA Script that gets list of Outlook Calendar Appointments and their Properties and uses the Property Accessor
+Use Tools->Macro->Security to allow Macros to run, then restart Outlook
+Run Outlook, Press Alt+F11 to open VBA
+Programming by Greg Thatcher, http://www.GregThatcher.com
+See http://www.GregThatcher.com for other ways to get the properties of Appointments
+Public Sub dedupe_appointments()
+On Error GoTo On_Error
+Dim xtext, ztext As String
+Dim Q, z As Integer
+Dim xarray
+Dim zarray
+Dim Session As Outlook.Namespace
+Dim Report As String
+Dim AppointmentsFolder As Outlook.folder
+Dim currentItem As Object
+Dim currentAppointment As AppointmentItem
+Set Session = Application.Session
+Dim xprevious As String
+Set AppointmentsFolder = Session.GetDefaultFolder(olFolderCalendar)
+ get all the data
+For Q = 1 To 10
+        xtext = ""
+        For Each currentItem In AppointmentsFolder.Items
+                If (currentItem.Class = olAppointment) Then
+                        Set currentAppointment = currentItem
+                        ' ztext = ztext & "!!" & currentAppointment.EntryID
+                        ztext = currentAppointment.Start & " " & Left(currentAppointment.Subject, 20)
+                        If InStr(1, xtext, ztext) Then
+                                Debug.Print "Duplicate;" & ztext
+                                currentAppointment.Delete
+                                
+                        End If
+                        xtext = xtext & "!!" & ztext
+                End If
+                Next
+        Next Q
+        sort all the data to find duplicates
+        zarray = Split(ztext, "!!")
+        XARRAY = Split(XTEXT, "!!")
+        Call BubbleSort(XARRAY)
+        For Q = 1 To UBound(XARRAY)
+                If xprevious = XARRAY(Q) Then
+                        Debug.Print "Dupe?" & XARRAY(Q) & zarray(Q)
+                End If
+                xprevious = XARRAY(Q)
+        Next Q
+        
+        
+        
+        Exiting:
+        Exit Sub
+        On_Error:
+        MsgBox "error=" & Err.Number & " " & Err.Description
+        Resume Exiting
+        
+End Sub
+Public Sub GetListOfAppointmentsUsing3()
+On Error GoTo On_Error
+Dim Session As Outlook.Namespace
+Dim Report As String
+Dim AppointmentsFolder As Outlook.folder
+Dim currentItem As Object
+Dim currentAppointment As AppointmentItem
+Set Session = Application.Session
+Set AppointmentsFolder = Session.GetDefaultFolder(olFolderCalendar)
+For Each currentItem In AppointmentsFolder.Items
+        If (currentItem.Class = olAppointment) Then
+                Set currentAppointment = currentItem
+                
+                
+                'Call AddToReportIfNotBlank(Report, "Categories", currentAppointment.Categories)
+                If Len(currentAppointment.Categories) > 1 Then Debug.Print currentAppointment.Categories
+                        
+                        
+                        If InStr(1, currentAppointment.Subject, "4-weekly") Then currentAppointment.Categories = "Red Category"
+                                If InStr(1, currentAppointment.Subject, "2-weekly") Then currentAppointment.Categories = "Red Category"
+                                        If InStr(1, currentAppointment.Subject, "4weekly") Then currentAppointment.Categories = "Red Category"
+                                                If InStr(1, currentAppointment.Subject, "2weekly") Then currentAppointment.Categories = "Red Category"
+                                                        
+                                                        If InStr(1, currentAppointment.Subject, "Routine") Then currentAppointment.Categories = "Green Category"
+                                                                If InStr(1, currentAppointment.Subject, "Routine") Then currentAppointment.Categories = "Green Category"
+                                                                        If InStr(1, currentAppointment.Subject, "Clinic") Then currentAppointment.Categories = "Green Category"
+                                                                                If InStr(1, currentAppointment.Subject, "Personal") Then currentAppointment.Categories = "Orange Category"
+                                                                                        
+                                                                                        currentAppointment.Save
+                                                                                        'Report = Report & "--------------------------------------------------------------------------------------------------------"
+                                                                                        'Report = Report & vbCrLf & vbCrLf
+                                                                                End If
+                                                                                
+                                                                                Next
+                                                                                MsgBox "done"
+                                                                                
+                                                                                'Call CreateReportAsEmail("List of Appointments", Report)
+                                                                                
+                                                                                Exiting:
+                                                                                Exit Sub
+                                                                                On_Error:
+                                                                                MsgBox "error=" & Err.Number & " " & Err.Description
+                                                                                Resume Exiting
+                                                                                
+End Sub
+Public Sub GetListOfAppointmentsUsing2()
+On Error GoTo On_Error
+Dim Session As Outlook.Namespace
+Dim Report As String
+Dim AppointmentsFolder As Outlook.folder
+Dim currentItem As Object
+Dim currentAppointment As AppointmentItem
+Set Session = Application.Session
+Set AppointmentsFolder = Session.GetDefaultFolder(olFolderCalendar)
+For Each currentItem In AppointmentsFolder.Items
+        If (currentItem.Class = olAppointment) Then
+                Set currentAppointment = currentItem
+                
+                Call AddToReportIfNotBlank(Report, "Subject", currentAppointment.Subject)
+                Call AddToReportIfNotBlank(Report, "RequiredAttendees", currentAppointment.RequiredAttendees)
+                Call AddToReportIfNotBlank(Report, "Start", currentAppointment.Start)
+                Call AddToReportIfNotBlank(Report, "End", currentAppointment.End)
+                Call AddToReportIfNotBlank(Report, "Duration", currentAppointment.Duration)
+                Call AddToReportIfNotBlank(Report, "Location", currentAppointment.Location)
+                Call AddToReportIfNotBlank(Report, "Body", currentAppointment.Body)
+                Call AddToReportIfNotBlank(Report, "Categories", currentAppointment.Categories)
+                'Call AddToReportIfNotBlank(Report, "ConversationIndex", currentAppointment.ConversationIndex)
+                'Call AddToReportIfNotBlank(Report, "ConversationTopic", currentAppointment.ConversationTopic)
+                'Call AddToReportIfNotBlank(Report, "CreationTime", currentAppointment.CreationTime)
+                Call AddToReportIfNotBlank(Report, "IsRecurring", currentAppointment.IsRecurring)
+                
+                
+                
+                Report = Report & "--------------------------------------------------------------------------------------------------------"
+                Report = Report & vbCrLf & vbCrLf
+        End If
+        
+        Next
+        
+        
+        Call CreateReportAsEmail("List of Appointments", Report)
+        
+        Exiting:
+        Exit Sub
+        On_Error:
+        MsgBox "error=" & Err.Number & " " & Err.Description
+        Resume Exiting
+        
+End Sub
+Public Sub GetListOfAppointmentsUsingPropertyAccessor()
+On Error GoTo On_Error
+Dim Session As Outlook.Namespace
+Dim Report As String
+Dim AppointmentsFolder As Outlook.folder
+Dim currentItem As Object
+Dim currentAppointment As AppointmentItem
+Set Session = Application.Session
+Set AppointmentsFolder = Session.GetDefaultFolder(olFolderCalendar)
+For Each currentItem In AppointmentsFolder.Items
+        If (currentItem.Class = olAppointment) Then
+                Set currentAppointment = currentItem
+                
+                'Call AddToReportIfNotBlank(Report, "Actions", currentAppointment.Actions)
+                Call AddToReportIfNotBlank(Report, "AllDayEvent", currentAppointment.AllDayEvent)
+                ' Call AddToReportIfNotBlank(Report, "Attachments", currentAppointment.Attachments)
+                Call AddToReportIfNotBlank(Report, "AutoResolvedWinner", currentAppointment.AutoResolvedWinner)
+                Call AddToReportIfNotBlank(Report, "BillingInformation", currentAppointment.BillingInformation)
+                Call AddToReportIfNotBlank(Report, "Body", currentAppointment.Body)
+                Call AddToReportIfNotBlank(Report, "BusyStatus", currentAppointment.BusyStatus)
+                Call AddToReportIfNotBlank(Report, "Categories", currentAppointment.Categories)
+                Call AddToReportIfNotBlank(Report, "Class", currentAppointment.Class)
+                Call AddToReportIfNotBlank(Report, "Companies", currentAppointment.Companies)
+                ' Call AddToReportIfNotBlank(Report, "Conflicts", currentAppointment.Conflicts)
+                ' Call AddToReportIfNotBlank(Report, "ConversationID", currentAppointment.ConversationID)
+                Call AddToReportIfNotBlank(Report, "ConversationIndex", currentAppointment.ConversationIndex)
+                Call AddToReportIfNotBlank(Report, "ConversationTopic", currentAppointment.ConversationTopic)
+                Call AddToReportIfNotBlank(Report, "CreationTime", currentAppointment.CreationTime)
+                Call AddToReportIfNotBlank(Report, "DownloadState", currentAppointment.DownloadState)
+                Call AddToReportIfNotBlank(Report, "Duration", currentAppointment.Duration)
+                Call AddToReportIfNotBlank(Report, "End", currentAppointment.End)
+                Call AddToReportIfNotBlank(Report, "EndInEndTimeZone", currentAppointment.EndInEndTimeZone)
+                Call AddToReportIfNotBlank(Report, "EndTimeZone", currentAppointment.EndTimeZone)
+                Call AddToReportIfNotBlank(Report, "EndUTC", currentAppointment.EndUTC)
+                
+                Call AddToReportIfNotBlank(Report, "EntryID", currentAppointment.EntryID)
+                Call AddToReportIfNotBlank(Report, "ForceUpdateToAllAttendees", currentAppointment.ForceUpdateToAllAttendees)
+                Call AddToReportIfNotBlank(Report, "FormDescription", currentAppointment.FormDescription)
+                Call AddToReportIfNotBlank(Report, "GlobalAppointmentID", currentAppointment.GlobalAppointmentID)
+                Call AddToReportIfNotBlank(Report, "Importance", currentAppointment.Importance)
+                Call AddToReportIfNotBlank(Report, "InternetCodepage", currentAppointment.InternetCodepage)
+                Call AddToReportIfNotBlank(Report, "IsConflict", currentAppointment.IsConflict)
+                Call AddToReportIfNotBlank(Report, "IsRecurring", currentAppointment.IsRecurring)
+                ' Call AddToReportIfNotBlank(Report, "ItemProperties", currentAppointment.ItemProperties)
+                Call AddToReportIfNotBlank(Report, "LastModificationTime", currentAppointment.LastModificationTime)
+                
+                ' Call AddToReportIfNotBlank(Report, "Links", currentAppointment.Links)
+                Call AddToReportIfNotBlank(Report, "Location", currentAppointment.Location)
+                Call AddToReportIfNotBlank(Report, "MarkForDownload", currentAppointment.MarkForDownload)
+                Call AddToReportIfNotBlank(Report, "MeetingStatus", currentAppointment.MeetingStatus)
+                Call AddToReportIfNotBlank(Report, "MeetingWorkspaceURL", currentAppointment.MeetingWorkspaceURL)
+                Call AddToReportIfNotBlank(Report, "MessageClass", currentAppointment.MessageClass)
+                Call AddToReportIfNotBlank(Report, "Mileage", currentAppointment.Mileage)
+                Call AddToReportIfNotBlank(Report, "NoAging", currentAppointment.NoAging)
+                Call AddToReportIfNotBlank(Report, "OptionalAttendees", currentAppointment.OptionalAttendees)
+                Call AddToReportIfNotBlank(Report, "Organizer", currentAppointment.Organizer)
+                
+                Call AddToReportIfNotBlank(Report, "OutlookInternalVersion", currentAppointment.OutlookInternalVersion)
+                Call AddToReportIfNotBlank(Report, "OutlookVersion", currentAppointment.OutlookVersion)
+                ' Call AddToReportIfNotBlank(Report, "Recipients", currentAppointment.Recipients)
+                Call AddToReportIfNotBlank(Report, "RecurrenceState", currentAppointment.RecurrenceState)
+                Call AddToReportIfNotBlank(Report, "ReminderMinutesBeforeStart", currentAppointment.ReminderMinutesBeforeStart)
+                Call AddToReportIfNotBlank(Report, "ReminderOverrideDefault", currentAppointment.ReminderOverrideDefault)
+                Call AddToReportIfNotBlank(Report, "ReminderPlaySound", currentAppointment.ReminderPlaySound)
+                Call AddToReportIfNotBlank(Report, "ReminderSet", currentAppointment.ReminderSet)
+                Call AddToReportIfNotBlank(Report, "ReminderSoundFile", currentAppointment.ReminderSoundFile)
+                Call AddToReportIfNotBlank(Report, "ReplyTime", currentAppointment.ReplyTime)
+                
+                
+                Call AddToReportIfNotBlank(Report, "RequiredAttendees", currentAppointment.RequiredAttendees)
+                Call AddToReportIfNotBlank(Report, "Resources", currentAppointment.Resources)
+                Call AddToReportIfNotBlank(Report, "ResponseRequested", currentAppointment.ResponseRequested)
+                Call AddToReportIfNotBlank(Report, "ResponseStatus", currentAppointment.ResponseStatus)
+                ' Call AddToReportIfNotBlank(Report, "RTFBody", currentAppointment.RTFBody)
+                Call AddToReportIfNotBlank(Report, "Saved", currentAppointment.Saved)
+                ' Call AddToReportIfNotBlank(Report, "SendUsingAccount", currentAppointment.SendUsingAccount)
+                Call AddToReportIfNotBlank(Report, "Sensitivity", currentAppointment.Sensitivity)
+                Call AddToReportIfNotBlank(Report, "Size", currentAppointment.Size)
+                Call AddToReportIfNotBlank(Report, "Start", currentAppointment.Start)
+                
+                Call AddToReportIfNotBlank(Report, "StartTimeZone", currentAppointment.StartTimeZone)
+                Call AddToReportIfNotBlank(Report, "StartUTC", currentAppointment.StartUTC)
+                Call AddToReportIfNotBlank(Report, "Subject", currentAppointment.Subject)
+                Call AddToReportIfNotBlank(Report, "UnRead", currentAppointment.UnRead)
+                ' Call AddToReportIfNotBlank(Report, "UserProperties", currentAppointment.UserProperties)
+                
+                Report = Report & "--------------------------------------------------------------------------------------------------------"
+                Report = Report & vbCrLf & vbCrLf
+        End If
+        
+        Next
+        
+        
+        Call CreateReportAsEmail("List of Appointments", Report)
+        
+        Exiting:
+        Exit Sub
+        On_Error:
+        MsgBox "error=" & Err.Number & " " & Err.Description
+        Resume Exiting
+        
+End Sub
+Private Function AddToReportIfNotBlank(Report As String, FieldName As String, FieldValue)
+AddToReportIfNotBlank = ""
+If (IsNull(FieldValue) Or FieldValue <> "") Then
+        AddToReportIfNotBlank = FieldName & " : " & FieldValue & vbCrLf
+        Report = Report & AddToReportIfNotBlank
+End If
+End Function
+VBA SubRoutine which displays a report inside an email
+Programming by Greg Thatcher, http://www.GregThatcher.com
+Public Sub CreateReportAsEmail(Title As String, Report As String)
+On Error GoTo On_Error
+Dim Session As Outlook.Namespace
+Dim mail As MailItem
+Dim MyAddress As AddressEntry
+Dim Inbox As Outlook.folder
+Set Session = Application.Session
+Set Inbox = Session.GetDefaultFolder(olFolderInbox)
+Set mail = Inbox.Items.Add("IPM.Mail")
+Set MyAddress = Session.CurrentUser.AddressEntry
+mail.Recipients.Add (MyAddress.Address)
+mail.Recipients.ResolveAll
+mail.Subject = Title
+mail.Body = Report
+mail.Save
+mail.Display
+Exiting:
+Set Session = Nothing
+Exit Sub
+On_Error:
+MsgBox "error=" & Err.Number & " " & Err.Description
+Resume Exiting
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub BubbleSortTEST()
+Dim XSTRING As String
+Dim xarray
+Dim Q As Integer
+XSTRING = "5,4,2,1,W,T"
+xarray = Split(XSTRING, ",")
+Call BubbleSort(xarray)
+For Q = 1 To UBound(xarray)
+        Debug.Print xarray(Q)
+Next Q
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub BubbleSort(arr)
+http://social.msdn.microsoft.com/Forums/en-US/830b42cf-8c97-4aaf-b34b-d860773281f7/sorting-an-array-in-vba-without-excel-function
+Dim strTemp As String
+Dim I As Long
+Dim j As Long
+Dim lngMin As Long
+Dim lngMax As Long
+lngMin = LBound(arr)
+lngMax = UBound(arr)
+For I = lngMin To lngMax - 1
+        For j = I + 1 To lngMax
+                If arr(I) > arr(j) Then
+                        strTemp = arr(I)
+                        arr(I) = arr(j)
+                        arr(j) = strTemp
+                End If
+        Next j
+Next I
+End Sub
+Attribute VB_Name = "Module_open_xls_bypassYesClick"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function openExcel_bypass_yesclick()
+add reference to excel
+Dim xlApp As Object
+Dim sourceWB As Workbook
+Dim sourceWS As Worksheet
+Set xlApp = CreateObject("Excel.Application")
+With xlApp
+.Visible = True
+.EnableEvents = False
+End With
+xpath = "V:\Ports\Programme Management\TEMPLATE_NORMAL DOCS"
+xname = "\xVBA_OutlookDiaryCalendarAppts v0.3.XLS"
+strFile = xpath & xname 'Put your file path.
+Set sourceWB = Workbooks.Open(strFile, , False, , , , , , , True)
+Set sourceWH = sourceWB.Worksheets("appst")
+sourceWB.Activate
+Call excel_appointment_calendar("appst")
+End Function
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function excel_appointment_calendar(xtabname)
+Dim x As String
+Worksheets(xtabname).Activate
+Set myOlApp = CreateObject("Outlook.Application")
+x = "NO"
+x = InputBox("check american date format, and .display or .send status ", x, x)
+If x <> "YES" Then Exit Function
+        For r = 2 To 1000
+                If Len(Range("a" & r).Value) > 1 Then
+                        If UCase(Range("a" & r).Value) <> "NO" Then
+                                
+                                xto = Range("b" & r).Value
+                                xcc = Range("c" & r).Value
+                                xsubject = Range("d" & r).Value
+                                xbody = ""
+                                xbody = xbody & vbCrLf & Format(Range("f" & r).Value, "ddd dd/mmm/yyyy")
+                                xbody = xbody & vbCrLf & ""
+                                xbody = xbody & vbCrLf & Range("e" & r).Value
+                                xbody = xbody & vbCrLf & ""
+                                xbody = xbody & vbCrLf & "Regards, Tim"
+                                xbody = xbody & vbCrLf & ""
+                                xbody = xbody & vbCrLf & "XZXZXZXZXZXZ"
+                                xbody = xbody & vbCrLf & "Email t.XZXZXZ@gov.je"
+                                xbody = xbody & vbCrLf & "Mob 0XZXZXZXZXZXZ051"
+                                xbody = xbody & vbCrLf & "AutoNote:" & Format(Now, "yyyy-mm-dd-HH-MM")
+                                
+                                
+                                
+                                On Error Resume Next
+                                If Len(Range("e" & r).Comment.Text) > 10 Then
+                                        xbody = Range("e" & r).Comment.Text
+                                End If
+                                
+                                
+                                
+                                
+                                xstart = Format(Range("f" & r).Value, "mm/dd/yyyy")
+                                xstart = Format(Range("f" & r).Value, "dd/mm/yyyy")
+                                
+                                
+                                
+                                xstarttime = Format(Range("G" & r).Value, "HH:MM:SS am/pm")
+                                xend = Range("g" & r).Value
+                                xdate = xstart & " " & xstarttime
+                                xlocation = Range("H" & r).Value
+                                xduration = Range("i" & r).Value
+                                
+                                'xbody = get_info_fileio("Y:\personal\templates\TEMPLATE_MSG.htm")
+                                
+                                Set myItem = myOlApp.CreateItem(olAppointmentItem)
+                                myItem.MeetingStatus = olMeeting
+                                myItem.Subject = xsubject
+                                myItem.Location = xlocation
+                                myItem.Body = xbody
+                                'myItem.BCC = xresource
+                                'myItem.Start = #9/24/2011 1:30:00 PM#
+                                myItem.Start = xdate
+                                myItem.Sensitivity = olPrivate ' olnormal
+                                
+                                myItem.Duration = xduration
+                                
+                                Set myRequiredAttendee = myItem.Recipients.Add(xto)
+                                myRequiredAttendee.Type = olRequired
+                                
+                                'Set myOptionalAttendee = myItem.Recipients.Add(xbcc)
+                                '  myOptionalAttendee.Type = olOptional
+                                
+                                
+                                'Set myResourceAttendee = myItem.Recipients.Add(xresource)
+                                'myResourceAttendee.Type = olResource
+                                
+                                'With myItem.Recipients.Add(xresource)
+                                '.Type = olResource
+                                'End With
+                                
+                                'myitem.Display
+                                
+                                myItem.Send
+                                
+                        End If
+                End If
+                Next
+                
+End Function
+Attribute VB_Name = "Module_selection_to_notepad"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub selection_to_notepad()
+Dim Session As Outlook.Namespace
+Dim currentExplorer As Explorer
+Dim Selection As Selection
+Dim currentItem As Object
+Dim currentMail As MailItem
+http://msdn.microsoft.com/en-us/library/office/aa210279(v=office.11).aspx
+Set currentExplorer = Application.ActiveExplorer
+Set Selection = currentExplorer.Selection
+for all items do...
+For Each currentItem In Selection
+        On Error Resume Next
+        
+        If InStr(1, LCase(currentItem.Body), LCase("Myra")) Then
+                'XTEXT = XTEXT & vbCrLf & vbCrLf & currentItem.ReceivedTime
+                xtext = xtext & vbCrLf & currentItem.Subject
+                xtext = xtext & vbCrLf & currentItem.Body
+                currentItem.FlagStatus = 2
+                currentItem.FlagIcon = 6
+                
+                currentItem.BillingInformation = "YES"
+                currentItem.Save
+                'XTEXT = XTEXT & vbCrLf & "---------------------"
+                'XTEXT = XTEXT & vbCrLf & "---------------------"
+        End If
+        
+        Next
+        Call PRINT_INFO(xtext, "TEMP.TXT")
+End Sub
+vba_excel report cells, create file, print file, notepad
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub PRINT_INFO(PARAM_TEXT, xoutput)
+Dim FILENUMBER1 As Integer
+Dim xpath As String
+Dim xfilename As String
+xpath = ActiveWorkbook.Path & "\"
+xfilename = "TEMP" & Format(Now(), "yymmdd") & "-" & Format(Now(), "HHMM") & ".txt"
+xfilename = xoutput
+FILENUMBER1 = FreeFile
+Open xpath & xfilename For Output As #FILENUMBER1 '
+Print #FILENUMBER1, PARAM_TEXT
+Close #FILENUMBER1
+Call open_file(xpath & xfilename)
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function open_file(xfilename As String)
+vba_excel report cells, create file, print file, notepad
+Dim ReturnValue, I
+ReturnValue = Shell("notepad.EXE " & xfilename, 1)  ' Run Calculator.
+AppActivate ReturnValue
+End Function
+Attribute VB_Name = "Module_vba_macros"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub VBA_1()
+xfilename = Environ("temp") & "\vba_temp.TXT"
+xfilename = "H:\5Oaks Stores\vba_temp.TXT"
+vba_excel report cells, create file, print file, notepad
+Dim ReturnValue, I
+ReturnValue = Shell("notepad.EXE " & xfilename, 1)  ' Run Calculator.
+AppActivate ReturnValue
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub VBA_2_excel_xls()
+Dim olApp As Outlook.Application
+Set olApp = New Outlook.Application
+Dim olMail As MailItem
+Set olMail = olApp.CreateItem(olMailItem)
+xfilename = Environ("temp") & "\vba_temp.TXT"
+With olMail
+.To = "XZXZXZ@XZXZXZXZXZXZXZXZXZ.COM"
+.CC = "XZXZXZ@XZXZXZmail.com; t.XZXZXZ@gov.je; "
+.Subject = "vba_excel_xls_SOURCE_CODE " & Format(Now, "dd/mmm/yyyy HH:MM")
+.Attachments.Add xfilename
+.BodyFormat = olFormatPlain
+.Body = "PlainText"
+.Display
+End With
+Set olMail = Nothing
+olApp.Quit
+Set olApp = Nothing
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub VBA_2_word_doc()
+Dim olApp As Outlook.Application
+Set olApp = New Outlook.Application
+Dim olMail As MailItem
+Set olMail = olApp.CreateItem(olMailItem)
+xfilename = Environ("temp") & "\vba_temp.TXT"
+With olMail
+.To = "XZXZXZ@XZXZXZXZXZXZXZXZXZ.COM"
+.CC = "XZXZXZ@XZXZXZmail.com; t.XZXZXZ@gov.je; "
+.Subject = "vba_word_doc_SOURCE_CODE " & Format(Now, "dd/mmm/yyyy HH:MM")
+.Attachments.Add xfilename
+.BodyFormat = olFormatPlain
+.Body = "PlainText"
+.Display
+End With
+Set olMail = Nothing
+olApp.Quit
+Set olApp = Nothing
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub VBA_2_powerpoint_ppt()
+Dim olApp As Outlook.Application
+Set olApp = New Outlook.Application
+Dim olMail As MailItem
+Set olMail = olApp.CreateItem(olMailItem)
+xfilename = Environ("temp") & "\vba_temp.TXT"
+With olMail
+.To = "XZXZXZ@XZXZXZXZXZXZXZXZXZ.COM"
+.CC = "XZXZXZ@XZXZXZmail.com; t.XZXZXZ@gov.je; "
+.Subject = "vba_powerpoint_ppt_SOURCE_CODE " & Format(Now, "dd/mmm/yyyy HH:MM")
+.Attachments.Add xfilename
+.BodyFormat = olFormatPlain
+.Body = "PlainText"
+.Display
+End With
+Set olMail = Nothing
+olApp.Quit
+Set olApp = Nothing
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub VBA_2_project_mpp()
+Dim olApp As Outlook.Application
+Set olApp = New Outlook.Application
+Dim olMail As MailItem
+Set olMail = olApp.CreateItem(olMailItem)
+xfilename = Environ("temp") & "\vba_temp.TXT"
+With olMail
+.To = "XZXZXZ@XZXZXZXZXZXZXZXZXZ.COM"
+.CC = "XZXZXZ@XZXZXZmail.com; t.XZXZXZ@gov.je; "
+.Subject = "vba_project_mpp_SOURCE_CODE " & Format(Now, "dd/mmm/yyyy HH:MM")
+.Attachments.Add xfilename
+.BodyFormat = olFormatPlain
+.Body = "PlainText"
+.Display
+End With
+Set olMail = Nothing
+olApp.Quit
+Set olApp = Nothing
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub VBA_2_access()
+Dim olApp As Outlook.Application
+Set olApp = New Outlook.Application
+Dim olMail As MailItem
+Set olMail = olApp.CreateItem(olMailItem)
+xfilename = Environ("temp") & "\vba_temp.TXT"
+With olMail
+.To = "XZXZXZ@XZXZXZXZXZXZXZXZXZ.COM"
+.CC = "XZXZXZ@XZXZXZmail.com; t.XZXZXZ@gov.je; "
+.Subject = "vba_access_SOURCE_CODE " & Format(Now, "dd/mmm/yyyy HH:MM")
+.BodyFormat = olFormatPlain
+.Body = "PlainText"
+.Attachments.Add xfilename
+.Display
+End With
+Set olMail = Nothing
+olApp.Quit
+Set olApp = Nothing
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub VBA_2_outlook()
+Dim olApp As Outlook.Application
+Set olApp = New Outlook.Application
+Dim olMail As MailItem
+Set olMail = olApp.CreateItem(olMailItem)
+xfilename = Environ("temp") & "\vba_temp.TXT"
+With olMail
+.To = "XZXZXZ@XZXZXZXZXZXZXZXZXZ.COM"
+.CC = "XZXZXZ@XZXZXZmail.com; t.XZXZXZ@gov.je; "
+.Subject = "vba_outlook_SOURCE_CODE " & Format(Now, "dd/mmm/yyyy HH:MM")
+.Attachments.Add xfilename
+.BodyFormat = olFormatPlain
+.Body = "PlainText"
+.Display
+End With
+Set olMail = Nothing
+olApp.Quit
+Set olApp = Nothing
+End Sub
+Attribute VB_Name = "Module3_embedimage"
+Option Explicit
+Add reference to MS Outlook x.x Object Library
+Picture to be added as an attachment and modified src location for each embedded picture.
+Private Sub email_images_embedded()
+Dim XFILE, xpath As String
+Dim oApp As Outlook.Application
+Dim oEmail As MailItem
+Dim colAttach As Outlook.Attachments
+Dim oAttach As Outlook.Attachment
+create new Outlook MailItem
+Set oApp = CreateObject("Outlook.Application")
+Set oEmail = oApp.CreateItem(olMailItem)
+add graphic as attachment to Outlook message
+change path to graphic as needed
+Set colAttach = oEmail.Attachments
+Set oAttach = colAttach.Add("D:\my documents\[color=red]MyPic.jpg[/color]")
+xpath = "V:\Data\websites\XZXZXZcolab\images\"
+XFILE = "bridgesmodel.gif"
+Set oAttach = colAttach.Add(xpath & XFILE)
+oEmail.Close olSave
+change the src property to 'cid:your picture filename'
+it will be changed to the correct cid when its sent.
+oEmail.HTMLBody = "<BODY><FONT face=Arial color=#000080 size=2></FONT>" & _
+"<IMG alt='' hspace=0 src='cid:" & XFILE & "' align=baseline border=0>&nbsp;</BODY>"
+oEmail.Save
+oEmail.Display 'fill in the To, Subject, and Send. Or program it in.
+Set oEmail = Nothing
+Set colAttach = Nothing
+Set oAttach = Nothing
+Set oApp = Nothing
+End Sub
+Attribute VB_Name = "Module3_xmascardlist"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub these_items_tocontacts()
+VBA_these_items_tocontacts
+Dim xtext, oldtext, billingnote, xdate As String
+Dim x As Integer
+Dim xitem As MailItem
+On Error Resume Next
+Set myOlApp = CreateObject("Outlook.Application")
+For Each xitem In myOlApp.ActiveExplorer.Selection
+        x = x + 1
+        'For Each xrep In xitem.Recipients
+        'Debug.Print "Adding " & xrep.Address
+        'xtext = xtext & vbCrLf & "r " & xrep.Address
+        'xtext = xtext & vbCrLf & "t " & xitem.To
+        'xtext = xtext & vbCrLf & "s " & xitem.SenderName
+        xtext = xtext & vbCrLf & x & " " & xitem.SenderEmailAddress
+        'Next xrep
+        'Call AddRecipToContacts(xitem)
+        
+        Next
+        Debug.Print xtext
+        Call PRINT_INFO(xtext, "xtext.txt")
+        
+        MsgBox "done"
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub SetFlagIcon_xmas_card_email_list()
+Dim myOlApp As Outlook.Application
+Dim mpfInbox As Outlook.MAPIFolder
+Dim obj As Outlook.MailItem
+Dim xarray(1000)
+Dim I, Q, z, x As Integer
+Set myOlApp = CreateObject("Outlook.Application")
+Set mpfInbox = myOlApp.GetNamespace("MAPI").GetDefaultFolder(olFolderInbox).Folders("GreenlightArchive").Folders("Inbox")
+Set mpfInbox = myOlApp.GetNamespace("MAPI").Folders("GreenlightArchive").Folders("Inbox")
+ Loop all items in the Inbox\Test Folder
+For I = 1 To mpfInbox.Items.Count
+        If x > 999 Then Exit For
+                
+                If mpfInbox.Items(I).Class = olMail Then
+                        Set obj = mpfInbox.Items.Item(I)
+                        If InStr(1, obj.SenderEmailAddress, "@") Then
+                                'xtext = xtext & vbCrLf & obj.SenderEmailAddress
+                                '========================
+                                
+                                
+                                flag = "add"
+                                For Q = 1 To 1000
+                                        If xarray(Q) = LCase(obj.SenderEmailAddress) Then
+                                                flag = "dontadd"
+                                        End If
+                                Next Q
+                                
+                                If flag = "add" Then
+                                        xarray(x) = LCase(obj.SenderEmailAddress)
+                                        
+                                        x = x + 1
+                                End If
+                                
+                                '========================
+                                
+                        End If
+                        
+                        'If obj.SenderEmailAddress = "someone@example.com" Then
+                        'Set the yellow flag icon
+                        'obj.FlagIcon = olYellowFlagIcon
+                        'obj.Save
+                        'End If
+                End If
+                Next
+                
+                
+                For z = 1 To 500
+                        
+                        If Len(xarray(z)) > 1 Then
+                                xtext = xtext & vbCrLf & xarray(z)
+                        End If
+                Next z
+                Call PRINT_INFO(xtext, "xtext.txt")
+End Sub
+Attribute VB_Name = "Modulesaveas_doc"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub save_attachments()
+Dim Session As Outlook.Namespace
+Dim currentExplorer As Explorer
+Dim Selection As Selection
+Dim currentItem As Object
+Dim currentMail As MailItem
+http://msdn.microsoft.com/en-us/library/office/aa210279(v=office.11).aspx
+Set currentExplorer = Application.ActiveExplorer
+Set Selection = currentExplorer.Selection
+for all items do...
+xpath_filename = "v:\temp\xxx_"
+xpath_filename = InputBox(xpath_filename, xpath_filename, xpath_filename)
+On Error Resume Next
+For Each currentItem In Selection
+        
+        Call saveAttachtoDisk2(currentItem, xpath_filename)
+        
+        Next
+        
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function saveAttachtoDisk2(currentItem As Outlook.MailItem, ByVal xpath_filename As String)
+Dim objAtt As Outlook.Attachment
+Dim saveFolder As String
+Dim dateFormat
+Dim xcount As Integer
+dateFormat = Format(Now, "yyyy-mm-dd H-mm")
+saveFolder = xpath_filename ' "v:\Temp\" '"C:\Temp\"
+For Each objAtt In currentItem.Attachments
+        'objAtt.SaveAsFile saveFolder & "\" & dateFormat & objAtt.DisplayName
+        
+        xdate = currentItem.ReceivedTime
+        xdate = Replace(xdate, ":", "-")
+        xdate = Replace(xdate, "/", "-")
+        xfrom = currentItem.SenderName
+        sName = xfrom & " " & xdate & "-" & cleanfilename(currentItem.Subject, " ")
+        sName = xfrom & " " & xdate & "-" '
+        
+        xcount = xcount + 1
+        objAtt.SaveAsFile saveFolder & sName & " " & Format(xcount, " 00 ") & " " & objAtt.DisplayName
+        
+        
+        Set objAtt = Nothing
+        Next
+End Function
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub saveas_doc()
+Dim Session As Outlook.Namespace
+Dim currentExplorer As Explorer
+Dim Selection As Selection
+Dim currentItem As Object
+Dim currentMail As MailItem
+http://msdn.microsoft.com/en-us/library/office/aa210279(v=office.11).aspx
+Set currentExplorer = Application.ActiveExplorer
+Set Selection = currentExplorer.Selection
+for all items do...
+For Each currentItem In Selection
+        
+        
+        xdate = currentItem.ReceivedTime
+        xdate = Replace(xdate, ":", "-")
+        xdate = Replace(xdate, "/", "-")
+        xfrom = currentItem.SenderName
+        Debug.Print xdate
+        
+        spath = "v:\Temp\"
+        sName = Format(dtdate, "yyyymmdd", vbUseSystemDayOfWeek, vbUseSystem) & Format(dtdate, "-hhnnss", vbUseSystemDayOfWeek, vbUseSystem) & "-" & sName & sExt
+        sName = Format(Date, "yyyy-mm-dd") & "-" & cleanfilename(currentItem.Subject, " ") & ".doc"
+        sName = xfrom & " " & xdate & "-" & cleanfilename(currentItem.Subject, " ") & ".doc"
+        'Debug.Print currentItem.Subject
+        'currentItem.SaveAs "Z:\TempArea\test.doc", olDoc 'spath & sName, etype
+        currentItem.SaveAs spath & sName, olDoc 'spath & sName, etype
+        Call saveAttachtoDisk(currentItem)
+        
+        Next
+        Dim x As String
+        
+        x = "v:\Temp\"
+        x = InputBox(x, x, x)
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function cleanfilename(sName As String, sChr As String)
+sName = Replace(sName, "/", sChr)
+sName = Replace(sName, ":", sChr)
+sName = Replace(sName, "\", sChr)
+sName = Replace(sName, ";", sChr)
+sName = Replace(sName, "?", sChr)
+sName = Replace(sName, "<", sChr)
+sName = Replace(sName, ">", sChr)
+sName = Replace(sName, "|", sChr)
+sName = Replace(sName, "Chr(34)", sChr)
+cleanfilename = sName
+End Function
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function saveAttachtoDisk(currentItem As Outlook.MailItem)
+Dim objAtt As Outlook.Attachment
+Dim saveFolder As String
+Dim dateFormat
+Dim xcount As Integer
+dateFormat = Format(Now, "yyyy-mm-dd H-mm")
+saveFolder = "v:\Temp\" '"C:\Temp\"
+For Each objAtt In currentItem.Attachments
+        'objAtt.SaveAsFile saveFolder & "\" & dateFormat & objAtt.DisplayName
+        
+        xdate = currentItem.ReceivedTime
+        xdate = Replace(xdate, ":", "-")
+        xdate = Replace(xdate, "/", "-")
+        xfrom = currentItem.SenderName
+        sName = xfrom & " " & xdate & "-" & cleanfilename(currentItem.Subject, " ")
+        
+        xcount = xcount + 1
+        objAtt.SaveAsFile saveFolder & sName & " " & Format(xcount, " 00 ") & " " & objAtt.DisplayName
+        
+        
+        Set objAtt = Nothing
+        Next
+End Function
+Attribute VB_Name = "Modulethese_items_search"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub these_items_search()
+VBA_these_items_tocontacts
+Dim xtext, oldtext, xd, billingnote, xdate As String
+Dim x As Integer
+xd = ", "
+Dim xitem As MailItem
+Set myOlApp = CreateObject("Outlook.Application")
+Set myNameSpace = myOlApp.GetNamespace("MAPI")
+On Error Resume Next
+Debug.Print mynamespace.Folders(5).Name ' XZXZXZ
+Debug.Print mynamespace.Folders(5).Folders(2).Name
+Debug.Print mynamespace.Folders(5).Folders(2).Items.Count
+Exit Sub
+For Each xitem In mynamespace.Folders(5).Folders(2).Items
+        For z = 1 To myNameSpace.Folders(5).Folders(2).Items.Count
+                Set xitem = myNameSpace.Folders(5).Folders(2).Items(z)
+                x = x + 1
+                Debug.Print x, xitem.Subject, TypeName(xitem), xitem.Recipients
+                Debug.Print x, xitem.Sender
+                
+                
+                
+                For Each xitem In myOlApp.ActiveExplorer.Selection
+                        
+                        flag = "YES"
+                        
+                        If flag = "YES" Then
+                                If TypeName(xitem) = "MailItem" Then
+                                        
+                                        xitem.BillingInformation = "zz"
+                                        If InStr(1, LCase(xitem.Subject), "acc") Then xitem.BillingInformation = "acc"
+                                                If InStr(1, LCase(xitem.Subject), "workshop") Then xitem.BillingInformation = "workshop"
+                                                        If InStr(1, LCase(xitem.Subject), "sponsor") Then xitem.BillingInformation = "sanne"
+                                                                If InStr(1, LCase(xitem.Subject), "sanne") Then xitem.BillingInformation = "sanne"
+                                                                        
+                                                                        If InStr(1, LCase(xitem.Subject), "council") Then xitem.BillingInformation = "council"
+                                                                                If InStr(1, LCase(xitem.Subject), "athlete's rep") Then xitem.BillingInformation = "a_rep"
+                                                                                        If InStr(1, LCase(xitem.Subject), "athletes rep") Then xitem.BillingInformation = "a_rep"
+                                                                                                If InStr(1, LCase(xitem.Subject), "vip") Then xitem.BillingInformation = "protocol"
+                                                                                                        If InStr(1, LCase(xitem.Subject), "select") Then xitem.BillingInformation = "selection"
+                                                                                                                If InStr(1, LCase(xitem.Subject), "valid") Then xitem.BillingInformation = "selection"
+                                                                                                                        If InStr(1, LCase(xitem.Subject), "shoot") Then xitem.BillingInformation = "shoot"
+                                                                                                                                If InStr(1, LCase(xitem.Subject), "visit") Then xitem.BillingInformation = "HQ"
+                                                                                                                                        If InStr(1, LCase(xitem.Subject), "tickets") Then xitem.BillingInformation = "tickets"
+                                                                                                                                                If InStr(1, LCase(xitem.Subject), "contract") Then xitem.BillingInformation = "contract"
+                                                                                                                                                        If InStr(1, LCase(xitem.Subject), "newsletter") Then xitem.BillingInformation = "newsletter"
+                                                                                                                                                                If InStr(1, LCase(xitem.Subject), "travel") Then xitem.BillingInformation = "travel"
+                                                                                                                                                                        If InStr(1, LCase(xitem.Subject), "team management") Then xitem.BillingInformation = "team_mgmt"
+                                                                                                                                                                                If InStr(1, LCase(xitem.Sender), "saun") Then xitem.BillingInformation = "triclub"
+                                                                                                                                                                                        If InStr(1, LCase(xitem.Sender), "dill") Then xitem.BillingInformation = "a_rep"
+                                                                                                                                                                                                If InStr(1, LCase(xitem.Sender), "kemp") Then xitem.BillingInformation = "triclub"
+                                                                                                                                                                                                        If InStr(1, LCase(xitem.Sender), "rod") Then xitem.BillingInformation = "triclub"
+                                                                                                                                                                                                                If InStr(1, LCase(xitem.Sender), "doc") Then xitem.BillingInformation = "triclub"
+                                                                                                                                                                                                                        If InStr(1, LCase(xitem.Sender), "ellen") Then xitem.BillingInformation = "HQ"
+                                                                                                                                                                                                                                If InStr(1, LCase(xitem.Sender), "sophie") Then xitem.BillingInformation = "HQ"
+                                                                                                                                                                                                                                        
+                                                                                                                                                                                                                                        'xitem.ClearTaskFlag
+                                                                                                                                                                                                                                        'xitem.FlagRequest = xlNone
+                                                                                                                                                                                                                                        'xitem.FlagStatus = olNoFlag
+                                                                                                                                                                                                                                        xitem.Save
+                                                                                                                                                                                                                                        xtext = xtext & vbCrLf & xd & xitem.Subject ' & xd & xitem.FlagRequest
+                                                                                                                                                                                                                                        
+                                                                                                                                                                                                                                End If
+                                                                                                                                                                                                                        End If
+                                                                                                                                                                                                                Next z
+                                                                                                                                                                                                                
+                                                                                                                                                                                                                Call PRINT_INFO(xtext, "c:\temp22.txt")
+                                                                                                                                                                                                                
+                                                                                                                                                                                                                MsgBox XTEXT
+End Sub
+Attribute VB_Name = "Modulexfind_in_email"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub xfind_in_email()
+Creates a new e-mail item and accesses its properties.
+On Error Resume Next
+Set myOlApp = CreateObject("Outlook.Application")
+http://msdn.microsoft.com/en-us/library/aa210946%28v=office.11%29.aspx
+xd = ", "
+xthing2find = "managed"
+xthing2find = InputBox(xthing2find, xthing2find, xthing2find)
+xtext = ""
+For Each xitem In myOlApp.ActiveExplorer.Selection
+        
+        If InStr(1, LCase(xitem.From), LCase("jonathan")) Then
+                If InStr(1, LCase(xitem.Body), LCase(" ")) Then
+                        If InStr(1, LCase(xitem.To), LCase("scott")) Then
+                                
+                                
+                                xto = "x"
+                                xsubject = "x"
+                                xbody = "x"
+                                xdate = "x"
+                                xfrom = "x"
+                                
+                                xfrom = Left(xsieve(xitem.From), 200)
+                                xto = Left(xsieve(xitem.To), 200)
+                                xsubject = Left(xsieve(xitem.Subject), 200)
+                                xbody = Left(xsieve(xitem.Body), 200)
+                                xdate = Left(xsieve(xitem.ReceivedTime), 10)
+                                
+                                xtext = xtext & vbCrLf & "====================================================="
+                                xtext = xtext & vbCrLf & xfrom
+                                xtext = xtext & vbCrLf & xto
+                                xtext = xtext & vbCrLf & xdate
+                                xtext = xtext & vbCrLf & xsubject
+                                xtext = xtext & vbCrLf & xbody
+                        End If
+                End If
+        End If
+        
+Next xitem
+Debug.Print xtext
+Call PRINT_INFO(xtext, "c:\temp22.txt")
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function xsieve(xtext)
+xsieve = xtext
+End Function
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function PRINT_INFO(ByVal PARAM_TEXT As String, ByVal xoutput As String)
+vba_excel report cells, create file, print file, notepad
+Dim FILENUMBER1 As Integer
+Dim xpath As String
+Dim xfilename As String
+xpath = ActiveWorkbook.Path & "\"
+xfilename = "TEMP" & Format(Now(), "yymmdd") & "-" & Format(Now(), "HHMM") & ".txt"
+xfilename = xoutput
+FILENUMBER1 = FreeFile
+Open xpath & xfilename For Output As #FILENUMBER1 '
+Print #FILENUMBER1, PARAM_TEXT
+Close #FILENUMBER1
+Call open_file(xpath & xfilename)
+End Function
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function open_file(xfilename As String)
+vba_excel report cells, create file, print file, notepad
+Dim ReturnValue, I
+ReturnValue = Shell("notepad.EXE " & xfilename, 1)  ' Run Calculator.
+AppActivate ReturnValue
+End Function
+Attribute VB_Name = "OutlookMacro"
+-------------------------------------------------------------------------
+Goal        : VBA macro "DeleteDuplicatedEntries" to delete
+duplicated entries in Microsoft Outlook
+(emails, calendar's items, tasks, contacts).
+Author      : J.-C. Stritt
+Environment : tested with VBA for Outlook 2007 on Windows XP
+Releases    : V1.0 / 31-OCT-2002 (first release)
+V1.1 / 19-MAY-2009 (duplicated contacts remove added)
+V2.0 / 22-JUN-2009 (rewriting all with a class module)
+V2.1 / 24-JUN-2009 (small modifications)
+V2.2 / 18-SEP-2009 (better key management and progressbox)
+Remarks     : - first based on Microsoft Q294457 - OL2002
+"How to Programmatically Search a Folder Tree"
+- delete duplicates algorithm is based
+on a sort in a folder collection items
+and a string compare key
+- for emails, these macro give you the possibility
+to pickup an entry folder. Then, the macro process
+each entry (delete if match) in the folder
+and recursivly to all subfolders
+Licence     : You can copy this code freely, but it should
+be left accompanied by these comments.
+-------------------------------------------------------------------------
+Option Explicit
+Dim lCount As Long 'to count the deleted items
+the macro that delete the duplicated entries
+Public Sub DeleteDuplicatedEntries()
+Dim rep As String, choice As Integer
+Dim olCtx As OutlookContext
+loop for user interaction
+Do
+rep = InputBox("This macro delete duplicates entries" & vbNewLine _
+& "for a given category of items." & vbNewLine & vbNewLine _
+& "1 = emails" & vbNewLine _
+& "2 = calendar" & vbNewLine _
+& "3 = tasks" & vbNewLine _
+& "4 = contacts" & vbNewLine & vbNewLine _
+& "q = quit the macro", "Question")
+If IsNumeric(rep) Then
+        choice = CInt(rep)
+        If (choice >= 1) And (choice <= 4) Then
+                'initialize some global var
+                lCount = 0
+                
+                'get a reference to the Outlook application and session.
+                Set olCtx = New OutlookContext
+                olCtx.Create (choice)
+                
+                'ok to begin process ?
+                If MsgBox(olCtx.GetQuestion(), vbYesNo + vbQuestion, "Question") = vbYes Then
+                        
+                        'set a start folder
+                        If (olCtx.SetStartFolder()) Then
+                                
+                                'process the first folder (and other by recursive calls to ProcessFolder)
+                                ProgressBox.Show
+                                Call ProcessFolder(olCtx)
+                                ProgressBox.Hide
+                                Call MsgBox(CStr(lCount) & " " & olCtx.GetMessage(), vbOKOnly, "Info")
+                                
+                        End If
+                End If
+                Set olCtx = Nothing
+        End If
+End If
+Loop Until UCase(rep) = "Q"
+End Sub
+the process folder : each folder item is compared to the previous to delete duplicated entries
+Private Sub ProcessFolder(olCtx As OutlookContext)
+Dim I As Long
+Dim strLastKey As String, strNewKey As String
+Dim olNewFolder As Outlook.MAPIFolder
+Dim olTempItem As Object     'could be various item types
+Dim myItems As Outlook.Items 'a local copy of the collection
+initialize last key string
+strLastKey = ""
+copy the collection (it's obligatory for the sort) and sort them
+Set myItems = olCtx.GetFolder().Items
+On Error Resume Next
+Call myItems.Sort("[" & olCtx.GetSortKey() & "]", True)
+On Error GoTo 0
+loop through the items in the current folder (backwards in this case of items to delete)
+For I = myItems.Count To 1 Step -1
+        Set olTempItem = myItems(I)
+        
+        'process only if type is OK
+        If TypeName(olTempItem) = olCtx.GetTypeName() Then
+                With olTempItem
+                strNewKey = olCtx.GetCurrKey(olTempItem)
+                
+                'uncomment next lines for debugging
+                'Debug.Print strNewKey
+                'Debug.Print strLastKey
+                'Debug.Print
+                
+                'update percent in progressbox
+                ProgressBox.Increment (myItems.Count - I + 1) / myItems.Count * 100
+                
+                'check to see if a match is found
+                If strNewKey = strLastKey Then
+                        
+                        'comment the next line if you want just debug, not delete for this moment
+                        olTempItem.Delete
+                        
+                        'count deleted items
+                        lCount = lCount + 1
+                End If
+                
+                'memorize last key found
+                strLastKey = strNewKey
+                End With
+        End If
+        Next
+        
+        'loop through and search each subfolder of the current folder.
+        For Each olNewFolder In olCtx.GetFolder().Folders
+                Call olCtx.SetFolder(olNewFolder)
+                Call ProcessFolder(olCtx)
+                Next
+                
+End Sub
+Attribute VB_Name = "selection_clone2list"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub selection_clone2_list()
+Dim Session As Outlook.Namespace
+Dim currentExplorer As Explorer
+Dim Selection As Selection
+Dim currentItem As Object
+Dim currentMail As MailItem
+Dim newmail As MailItem
+http://msdn.microsoft.com/en-us/library/office/aa210279(v=office.11).aspx
+Set currentExplorer = Application.ActiveExplorer
+Set Selection = currentExplorer.Selection
+xto = "XZXZXZ@XZXZXZ.com; XZXZXZ@XZXZXZcolab.com; XZXZXZ@cichange.org"
+xto = InputBox(xto, xto, xto)
+for all items do...
+For Each currentItem In Selection
+        
+        xarray = Split(xto, ";")
+        For Q = LBound(xarray) To UBound(xarray)
+                zto = xarray(Q)
+                
+                Set newmail = currentItem.Forward
+                newmail.HTMLBody = currentItem.HTMLBody
+                newmail.Subject = currentItem.Subject
+                newmail.To = zto
+                newmail.Display
+                
+        Next Q
+        
+        Next
+        'Call PRINT_INFO(XTEXT, "TEMP.TXT")
+End Sub
+Attribute VB_Name = "selection_to_timesheet"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub timesheet()
+Dim xarray(100)
+Dim Session As Outlook.Namespace
+Dim currentExplorer As Explorer
+Dim Selection As Selection
+Dim currentItem As Object
+Dim currentMail As MailItem
+http://msdn.microsoft.com/en-us/library/office/aa210279(v=office.11).aspx
+Set currentExplorer = Application.ActiveExplorer
+Set Selection = currentExplorer.Selection
+for all items do...
+For Each currentItem In Selection
+        On Error Resume Next
+        z = z + 1
+        ' xarray(z) = "Item" & currentItem.ReceivedTime & " Subject: " & currentItem.Subject & " Sender: " & currentItem.SenderName & " To: " & currentItem.To
+        xarray(z) = "Item " & currentItem.ReceivedTime & " Subject: " & currentItem.Subject & " To: " & currentItem.To
+        Next
+        
+        For Q = UBound(xarray) To 0 Step -1
+                If Len(xarray(Q)) > 1 Then
+                        xtext = xtext & vbCrLf & xarray(Q)
+                End If
+        Next Q
+        
+        Call PRINT_INFO(xtext, "V:\Data2017\Temp\TEMP.TXT")
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function PRINT_INFO(ByVal PARAM_TEXT As String, ByVal xoutput As String)
+vba_excel report cells, create file, print file, notepad
+Dim FILENUMBER1 As Integer
+Dim xpath As String
+Dim xfilename As String
+xpath = ActiveWorkbook.Path & "\"
+xfilename = "TEMP" & Format(Now(), "yymmdd") & "-" & Format(Now(), "HHMM") & ".txt"
+xfilename = xoutput
+FILENUMBER1 = FreeFile
+Open xpath & xfilename For Output As #FILENUMBER1 '
+Print #FILENUMBER1, PARAM_TEXT
+Close #FILENUMBER1
+Call open_file(xpath & xfilename)
+End Function
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Function open_file(xfilename As String)
+vba_excel report cells, create file, print file, notepad
+Dim ReturnValue, I
+ReturnValue = Shell("notepad.EXE " & xfilename, 1)  ' Run Calculator.
+AppActivate ReturnValue
+End Function
+Attribute VB_Name = "selection_viatwitter"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub selection_viatwitter()
+Dim Session As Outlook.Namespace
+Dim currentExplorer As Explorer
+Dim Selection As Selection
+Dim currentItem As Object
+Dim currentMail As MailItem
+http://msdn.microsoft.com/en-us/library/office/aa210279(v=office.11).aspx
+Set currentExplorer = Application.ActiveExplorer
+Set Selection = currentExplorer.Selection
+for all items do...
+For Each currentItem In Selection
+        If InStr(1, currentItem.To, "@cga") Then currentItem.BillingInformation = "viatwitter"
+                
+                Next
+                
+End Sub
+Attribute VB_Name = "send_using_account"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub send_using_account()
+http://www.rondebruin.nl/win/s1/outlook/account.htm
+MVP OShon from VBATools.pl
+Dim objMailItem As MailItem, strHTML$
+Dim olNS As Outlook.Namespace
+Set olNS = Application.GetNamespace("MAPI")
+Set objMailItem = Application.CreateItem(olMailItem)
+strHTML = "<Body>" _
+& "This mail is redy to go from 2nd account." & "</Body>"
+With objMailItem
+.BodyFormat = olFormatHTML
+.To = "test@VBATools.pl"
+.Subject = "Email subject"
+.HTMLBody = strHTML
+.SendUsingAccount = olNS.Accounts.Item(2) '2nd account, work at 2007/10
+.SentOnBehalfOfName = "test2@VBATools.pl" '2nd email to reply
+.Display 'or .Send
+End With
+Set objMailItem = Nothing
+Set olNS = Nothing
+End Sub
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub Which_Account_Number()
+Don't forget to set a reference to Outlook in the VBA editor
+Dim OutApp As Outlook.Application
+Dim I As Long
+Set OutApp = CreateObject("Outlook.Application")
+For I = 1 To OutApp.Session.Accounts.Count
+        xtext = xtext & vbCrLf & OutApp.Session.Accounts.Item(I) & " : This is account number " & I
+Next I
+MsgBox xtext
+End Sub
+Attribute VB_Name = "these_items_to_flagx"
+ 
+ 
+########################################
+The code is provided "as is", without warranty of any kind, express or implied, 
+In no event shall the author be responsible for loss or damages arising from the installation or use of the code.
+The entire risk as to the quality and performance of the code is borne by you.
+You are obliged to review, test and generally assert that the code is OK.
+########################################
+Sub these_items_to_flag()
+VBA_these_items_tocontacts
+Dim xtext, oldtext, xd, billingnote, xdate As String
+Dim x As Integer
+xd = ", "
+Dim xitem As MailItem
+Set myOlApp = CreateObject("Outlook.Application")
+For Each xitem In myOlApp.ActiveExplorer.Selection
+        
+        ' For Each xrep In xitem.Recipients
+        ' Debug.Print "Adding " & xrep.Address
+        ' xtext = xtext & vbCrLf & "r " & xrep.Address
+        ' xtext = xtext & vbCrLf & "t " & xitem.To
+        ' xtext = xtext & vbCrLf & "s " & xitem.SenderName
+        ' Next xrep
+        ' Call AddRecipToContacts(xitem)
+        
+        xflag = "NO"
+        xitem.FlagIcon = olYellowFlagIcon
+        xitem.FlagRequest = "None"
+        xitem.FlagStatus = olFlagComplete
+        xitem.FlagStatus = olNone
+        xitem.BillingInformation = ""
+        xitem.ClearTaskFlag
+        xitem.Save
+        
+        
+        Debug.Print "xx", xitem.FlagStatus, xitem.FlagRequest, xitem.FlagIcon, xitem.Subject
+        
+        
+        xtext = xtext & vbCrLf & xitem.To & xd & xitem.ReceivedTime
+        If InStr(1, LCase(xitem.Body), "jpg") Then
+                acount = xitem.Attachments.Count
+                If acount > 0 Then
+                        xflag = "YES"
+                End If
+        End If
+        
+        If InStr(1, LCase(xitem.Body), "photo") Then
+                acount = xitem.Attachments.Count
+                If acount > 0 Then
+                        xflag = "YES"
+                End If
+        End If
+        
+        
+        xitem.ClearTaskFlag
+        xitem.FlagRequest = xlNone
+        xitem.FlagStatus = olNoFlag
+        If xflag = "YES" Then
+                xitem.BillingInformation = "xxx"
+                xitem.Save
+                xtext = xtext & vbCrLf & xd & xitem.Subject & xd & xitem.FlagRequest & xd & acount
+        End If
+        
+        Next
+        
+        Call PRINT_INFO(xtext, "c:\temp22.txt")
+        Debug.Print XTEXT
+        MsgBox XTEXT
+End Sub
